@@ -1,0 +1,306 @@
+---
+title: "ASR stuff"
+author: "Jimmy Choi"
+date: "2024-04-14"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "C:/Users/jimmy/OneDrive/Documents")
+```
+
+```{r}
+library(geiger)
+library(ape)
+library(plyr)
+library(CoordinateCleaner)
+library(countrycode)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(ggplot2)
+library(rgbif)
+library(sf)
+library(tidyverse)
+library(raster)
+library(readxl)
+library(effsize)
+library(terra)
+library(corHMM)
+```
+
+```{r}
+eel.data <- read.csv(file="elopomorph.csv",row.names=1,stringsAsFactors=TRUE)
+eel.tree <- read.tree("elopomorph.tre")
+## extract feeding mode as a vector
+feed.mode<-setNames(eel.data[,1],rownames(eel.data))
+## set colors for plotting
+cols<-setNames(c("red","lightblue"),levels(feed.mode))
+## plot the tree & data
+plotTree.datamatrix(eel.tree,as.data.frame(feed.mode),
+colors=list(cols),header=FALSE,fsize=0.45)
+## add legend
+legend("topright",legend=levels(feed.mode),pch=22,
+pt.cex=1.5,pt.bg=cols,bty="n",cex=0.8)
+```
+
+```{r}
+fit01<-fitMk(eel.tree,feed.mode,
+model=matrix(c(0,1,0,0),2,2,byrow=TRUE))
+fit01 ## bite -> suction
+```
+
+```{r}
+sexreference$species <- sub(" ", "_", sexreference$species)
+sexreference2 <- data.frame(sexreference[,-1], row.names=sexreference[,1])
+sexreference2$sexreference....1. <- as.factor(sexreference2$sexreference....1.)
+sexreference2
+```
+
+```{r}
+herp.only.tree <- force.ultrametric(herp.only.tree)
+herp.only.tree$tip.label <- sub(" ", "_", herp.only.tree$tip.label)
+sexchromosomes <- setNames(sexreference2[,1],rownames(sexreference2))
+cols <- setNames(c("red","lightblue"),levels(sexchromosomes))
+##
+plotTree.datamatrix(herp.only.tree,as.data.frame(sexchromosomes),
+colors=list(cols),header=FALSE,fsize=0.45)
+##
+legend("topright",legend=levels(sexchromosomes),pch=22,
+pt.cex=1.5,pt.bg=cols,bty="n",cex=0.8)
+## Herpestes ochraceus = UNKNOWN, made XY for convenience (ask about this later)
+```
+
+```{r}
+## create new data frame for corHMM
+sexreference2 <- data.frame(Genus_sp=names(sexchromosomes),
+sexchromosomes = as.numeric(sexchromosomes)-1)
+sexreference2$sexchromosomes <- as.factor(sexreference2$sexchromosomes)
+sexreference2 <- sexreference2[-c(34),]
+rownames(sexreference2) <- c(1:length(sexreference2$Genus_sp))
+```
+
+```{r}
+## fit ER model
+fitER <- fitMk(herp.only.tree,sexchromosomes,model="ER",pi=c(1,0))
+## fit ARD model
+fitARD <- fitMk(herp.only.tree,sexchromosomes,model="ARD",pi=c(1,0))
+## ask about
+fit01herp <- fitMk(herp.only.tree,sexchromosomes,
+model = matrix(c(0,1,0,0),2,2,byrow=TRUE), pi=c(1,0))
+## ordered states later!
+fit10herp <- fitMk(herp.only.tree,sexchromosomes,
+model = matrix(c(0,0,1,0),2,2,byrow=TRUE), pi=c(1,0)) 
+## extract AIC values for each model
+aic <- c(AIC(fitER),AIC(fitARD),AIC(fit01),AIC(fit10))
+## print summary table
+data.frame(model=c("ER","ARD","fit01herp",
+"fit10herp"),
+logL=c(logLik(fitER),logLik(fitARD),
+logLik(fit01),logLik(fit10)),
+AIC=aic,delta.AIC=aic-min(aic))
+## figured out the prior, but what's up with these numbers? ask later
+## double check that these are the correct models
+```
+
+
+```{r}
+fit.marginal <- corHMM(herp.only.tree, sexreference2, node.states="marginal", 
+                       rate.cat=1, rate.mat=matrix(c(NA,NA,1,NA),2,2), root.p = "estimated")
+```
+
+```{r}
+fit.marginal$states
+```
+
+```{r}
+## plot the tree & data
+plotTree.datamatrix(herp.only.tree,as.data.frame(sexchromosomes),
+colors=list(cols),header=FALSE,fsize=0.45)
+## add legend
+legend("topright",legend=levels(sexchromosomes),pch=22,
+pt.cex=1.5,pt.bg=cols,bty="n",cex=0.8)
+## add node labels showing marginal ancestral states
+nodelabels(pie=fit.marginal$states,piecol=cols,
+cex=0.5)
+```
+
+```{r}
+simtrees <- make.simmap(herp.only.tree,sexchromosomes,model=matrix(c(0,0,1,0),2,2),nsim=1000,Q="mcmc",vQ=0.01,pi=c(1,0),
+prior=list(use.empirical=TRUE),samplefreq=10)
+simtrees
+```
+
+```{r}
+## set plot margins
+par(mar=c(5.1,4.1,2.1,2.1))
+## create a plot of the posterior density from stochastic
+## mapping
+plot(d<-density(sapply(simtrees,function(x) x$Q[1,2]),
+bw=0.005),bty="n",main="",xlab="q",xlim=c(0,0.5),
+ylab="Posterior density from MCMC",las=1,
+cex.axis=0.8)
+polygon(d,col=make.transparent("blue",0.25))
+## add line indicating ML solution for the same parameter
+abline(v=fit.marginal$solution[1,2])
+text(x=fit.marginal$solution[1,2],y=max(d$y),"MLE(q)",
+pos=4)
+```
+
+```{r}
+## create a 10 x 10 grid of plot cells
+par(mfrow=c(10,10))
+## graph 100 stochastic map trees, sampled evenly from
+## our set of 1,000
+null<-sapply(simtrees[seq(10,1000,by=10)],
+plot,colors=cols,lwd=1,ftype="off")
+pd <- summary(simtrees)
+pd
+```
+
+```{r}
+## create a plot showing PP at all nodes of the tree
+plot(pd,colors=cols,fsize=0.4,ftype="i",lwd=2,
+offset=0.4,ylim=c(-1,Ntip(herp.only.tree)),
+cex=c(0.5,0.3))
+## add a legend
+legend("bottomleft",legend=levels(sexchromosomes),pch=22,
+pt.cex=1.5,pt.bg=cols,bty="n",cex=0.8)
+```
+
+```{r}
+## set margins
+par(mar=c(5.1,4.1,2.1,2.1))
+## graph marginal ancestral states and posterior
+## probabilities from stochastic mapping
+plot(fit.marginal$states[1:herp.only.tree$Nnode],pd$ace[1:herp.only.tree$Nnode],pch=21,
+     cex=1.2,bg="grey",xlab="Marginal scaled likelihoods",
+     ylab="Posterior probabilities",
+     bty="n",las=1,cex.axis=0.8)
+lines(c(0,1),c(0,1),col="blue",lwd=2)
+```
+
+```{r}
+## create a "densityMap" object
+herp.densityMap<-densityMap(simtrees,
+states=levels(sexchromosomes)[2:1],plot=FALSE)
+## update color gradient
+herp.densityMap<-setMap(herp.densityMap,cols[2:1])
+## plot it, adjusting the plotting parameters
+plot(herp.densityMap,fsize=c(0.3,0.7),lwd=c(3,4),cex=1.5)
+```
+
+```{r}
+fit.marginalARD <- corHMM(herp.only.tree, sexreference2, node.states="marginal", 
+               rate.cat=1, model = "ARD", root.p = c(1,0))
+```
+
+```{r}
+fit.marginalARD$states
+```
+
+```{r}
+## plot the tree & data
+plotTree.datamatrix(herp.only.tree,as.data.frame(sexchromosomes),
+colors=list(cols),header=FALSE,fsize=0.45)
+## add legend
+legend("topright",legend=levels(sexchromosomes),pch=22,
+pt.cex=1.5,pt.bg=cols,bty="n",cex=0.8)
+## add node labels showing marginal ancestral states
+nodelabels(pie=fit.marginalARD$states,piecol=cols,
+cex=0.5)
+```
+
+```{r}
+ARDsimtrees <- make.simmap(herp.only.tree,sexchromosomes,model="ARD",nsim=1000,Q="mcmc",vQ=0.01,pi=c(1,0),
+samplefreq=10)
+ARDsimtrees
+```
+
+```{r}
+## set plot margins
+par(mar=c(5.1,4.1,2.1,2.1))
+## create a plot of the posterior density from stochastic
+## mapping
+plot(d<-density(sapply(ARDsimtrees,function(x) x$Q[2,1]),
+bw=0.005),bty="n",main="",xlab="q",xlim=c(0,0.5),
+ylab="Posterior density from MCMC",las=1,
+cex.axis=0.8)
+polygon(d,col=make.transparent("blue",0.25))
+## add line indicating ML solution for the same parameter
+abline(v=fit.marginalARD$solution[2,1])
+text(x=fit.marginalARD$solution[2,1],y=max(d$y),"MLE(q)",
+pos=4)
+```
+
+```{r}
+## create a 10 x 10 grid of plot cells
+par(mfrow=c(10,10))
+## graph 100 stochastic map trees, sampled evenly from
+## our set of 1,000
+null<-sapply(ARDsimtrees[seq(10,1000,by=10)],
+plot,colors=cols,lwd=1,ftype="off")
+ARDpd <- summary(ARDsimtrees)
+ARDpd
+```
+
+```{r}
+## create a plot showing PP at all nodes of the tree
+plot(ARDpd,colors=cols,fsize=0.4,ftype="i",lwd=2,
+offset=0.4,ylim=c(-1,Ntip(herp.only.tree)),
+cex=c(0.5,0.3))
+## add a legend
+legend("bottomleft",legend=levels(sexchromosomes),pch=22,
+pt.cex=1.5,pt.bg=cols,bty="n",cex=0.8)
+```
+
+```{r}
+## set margins
+par(mar=c(5.1,4.1,2.1,2.1))
+## graph marginal ancestral states and posterior
+## probabilities from stochastic mapping
+plot(fit.marginalARD$states[1:herp.only.tree$Nnode],ARDpd$ace[1:herp.only.tree$Nnode],pch=21,
+     cex=1.2,bg="grey",xlab="Marginal scaled likelihoods",
+     ylab="Posterior probabilities",
+     bty="n",las=1,cex.axis=0.8)
+lines(c(0,1),c(0,1),col="blue",lwd=2)
+```
+
+```{r}
+## create a "densityMap" object
+ARDherp.densityMap<-densityMap(ARDsimtrees,
+states=levels(sexchromosomes)[2:1],plot=FALSE)
+## update color gradient
+ARDherp.densityMap<-setMap(ARDherp.densityMap,cols[2:1])
+## plot it, adjusting the plotting parameters
+plot(ARDherp.densityMap,fsize=c(0.3,0.7),lwd=c(3,4))
+```
+
+```{r}
+fit.marginalNOROOTPRIOR <- corHMM(herp.only.tree, sexreference2, node.states="marginal", 
+                       rate.cat=1, model = "ARD")
+```
+
+```{r}
+## plot the tree & data
+plotTree.datamatrix(herp.only.tree,as.data.frame(sexchromosomes),
+colors=list(cols),header=FALSE,fsize=0.45)
+## add legend
+legend("topright",legend=levels(sexchromosomes),pch=22,
+pt.cex=1.5,pt.bg=cols,bty="n",cex=0.8)
+## add node labels showing marginal ancestral states
+nodelabels(pie=fit.marginalNOROOTPRIOR$states,piecol=cols,
+cex=0.5)
+```
+
+
+
+
+
+
+
+
+
+
+
