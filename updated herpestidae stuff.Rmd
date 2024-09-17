@@ -1,0 +1,459 @@
+---
+title: "updated herpestidae stuff"
+author: "Jimmy Choi"
+date: "2023-11-22"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "C:/Users/jimmy/OneDrive/Documents")
+```
+
+```{r}
+library(geiger)
+library(ape)
+library(plyr)
+library(CoordinateCleaner)
+library(countrycode)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(ggplot2)
+library(rgbif)
+library(sf)
+library(tidyverse)
+library(raster)
+library(readxl)
+library(effsize)
+```
+
+```{r}
+mammal.phylo <- read.nexus(file = "bettermammalphylogeny.tre")
+mammal.phylo
+```
+
+```{r}
+all.mammal <- read.csv(file="mammaldiversityspecies.csv", row.names = 1)
+all.mammal
+```
+
+```{r}
+oops.all.herp <- all.mammal[which(all.mammal$family == "HERPESTIDAE"),]
+oops.all.herp
+```
+
+```{r}
+mammal.check <- name.check(mammal.phylo,oops.all.herp)
+mammal.check$data_not_tree
+```
+
+```{r}
+grep("xenogale", mammal.phylo$tip.label, value = TRUE)
+## Herpestes brachyurus -> Urva brachyura
+## Herpestes edwardsii -> Urva edwardsii
+## Herpestes fuscus -> Urva fusca
+## Herpestes semitorquatus -> Urva semitorquata
+## Herpestes smithii -> Urva smithii
+## Herpestes urva -> Urva urva
+## Herpestes vitticollis -> Urva vitticollis
+```
+
+```{r}
+variant.mamm <- read.csv(file="variant_mammals.csv", header=T)
+variant.mamm
+```
+
+```{r}
+variant.herp <- variant.mamm$X.2[31:39] 
+variant.herp.corrected <- mapvalues(variant.herp, from=c("Urva edwardsi","Urva fuscus"), to=c("Urva edwardsii","Urva fusca"))
+variant.herp.corrected
+```
+
+```{r}
+mammal.phylo.herps <- grep("HERPESTIDAE", mammal.phylo$tip.label, value = TRUE)
+mammal.phylo.herps
+```
+
+```{r}
+herpnode <- getMRCA(mammal.phylo,mammal.phylo.herps)
+herpnode
+```
+
+```{r}
+herp.only.tree <- extract.clade(mammal.phylo,herpnode)
+herp.only.tree
+```
+
+```{r}
+modded.tiplabels <- gsub('_',' ',herp.only.tree$tip.label)
+modded.tiplabels <- gsub('HERPESTIDAE CARNIVORA','',modded.tiplabels)
+modded.tiplabels <- gsub("[[:space:]]*$","",modded.tiplabels)
+new.tiplabels <- mapvalues(modded.tiplabels, from=c("Herpestes brachyurus","Herpestes edwardsii","Herpestes fuscus","Herpestes semitorquatus","Herpestes smithii","Herpestes urva","Herpestes vitticollis","Herpestes javanicus","Herpestes naso"), to=c("Urva brachyura","Urva edwardsii","Urva fusca","Urva semitorquata","Urva smithii","Urva urva","Urva vitticollis","Urva javanica","Xenogale naso"))
+herp.only.tree$tip.label <- new.tiplabels
+herp.only.tree <- ladderize(herp.only.tree)
+plotTree(herp.only.tree,ftype="i",fsize=0.6,lwd=1)
+add.arrow(herp.only.tree,tip = c("Atilax paludinosus","Herpestes ichneumon","Herpestes pulverulentus","Herpestes sanguineus","Urva javanica","Urva brachyura","Urva edwardsii","Urva fusca","Urva urva"),lwd=3,arrl=0.5,col="red",offset=2.5)
+## tip used to = variant.herp.corrected, changed to reflect javanica's new status
+```
+
+```{r}
+## GBIF.org (28 November 2023) GBIF Occurrence Download https://doi.org/10.15468/dl.mt83vk
+herpcoordinates <- read.csv(file = "herpoccurrences.csv")
+cleaned.herp.coords <- clean_coordinates(herpcoordinates)
+cleaned.herp.coords
+```
+
+```{r}
+corrected.herp.names <- mapvalues(cleaned.herp.coords$species, from=c("Herpestes smithii","Herpestes edwardsi","Galerella sanguinea","Herpestes vitticollis","Herpestes fuscus","Galerella pulverulenta","Herpestes urva","Herpestes brachyurus","Galerella flavescens","Herpestes semitorquatus","Herpestes penicillata","Herpestes javanicus","Herpestes naso"), to=c("Urva smithii","Urva edwardsii","Herpestes sanguineus","Urva vitticollis","Urva fusca","Herpestes pulverulentus","Urva urva","Urva brachyura","Herpestes flavescens","Urva semitorquata","Cynictis penicillata","Urva javanica","Xenogale naso"))
+cleaned.herp.coords$species <- corrected.herp.names
+cleaned.herp.coords
+## names are updated now :)
+```
+
+```{r}
+uniquenames <- unique(grep("auropunctata", cleaned.herp.coords$species, value = TRUE))
+uniquenames
+```
+
+```{r}
+A <- cleaned.herp.coords$species
+B <- herp.only.tree$tip.label
+intersect(A,B)
+```
+
+```{r}
+setdiff(A,B)
+```
+
+```{r}
+setdiff(B,A)
+## Herpestes smithii -> Urva smithii
+## Herpestes edwardsi -> Urva edwardsii
+## Galerella sanguinea -> Herpestes sanguineus
+## Herpestes vitticollis -> Urva vitticollis
+## Herpestes fuscus -> Urva fusca
+## Galerella pulverulenta -> Herpestes pulverulentus
+## Herpestes urva -> Urva urva 
+## Herpestes brachyurus -> Urva brachyura
+## Galerella flavescens -> Herpestes flavescens
+## Herpestes semitorquatus -> Urva semitorquata
+## Herpestes penicillata -> Cynictis penicillata
+## NO Herpestes ochraceus/Galerella ochracea
+## No Urva auropunctata in either data set? Worry?
+## use $verbatimscientificname instead of $species probably, use regex to remove everything after second space for subspecies names
+```
+
+```{r}
+sexreference <- read.csv(file="sexreferencedf.csv")
+sexreference
+```
+
+```{r}
+cleaned.herp.coords <- add_column(cleaned.herp.coords,sex="",.before = 1)
+cleaned.herp.coords$sex <- sexreference[match(cleaned.herp.coords$species, sexreference$species),2]
+cleaned.herp.coords <- cleaned.herp.coords[!sapply(cleaned.herp.coords, function(x) all(x == ""))]
+cleaned.herp.coords
+## third line in this chunk is for removing empty columns in case this script/chunk is run multiple times
+## why the hell does add_column have to be semi permanent? ugh
+## auropunctata as a subspecies of javanica
+```
+
+
+#########################################################################################################################################
+
+```{r}
+cleaned.herp.coords.2 <- subset(cleaned.herp.coords, taxonRank != "GENUS" & taxonRank != "FAMILY")
+cleaned.herp.coords.2
+```
+
+```{r}
+cleaned.herp.coords.2$species <- sub("^(\\S*\\s+\\S+).*", "\\1", cleaned.herp.coords.2$verbatimScientificName)
+cleaned.herp.coords.2
+```
+
+```{r}
+cleaned.herp.coords.2$species <- mapvalues(cleaned.herp.coords.2$species, from = c("Herpestes smithii","Herpestes edwardsi","Galerella sanguinea","Herpestes auropunctatus","Herpestes vitticollis","Herpestes fuscus","Galerella pulverulenta","Cynictis pencillata","Herpestes edwardsii","Herpestes urva","Herpestes auropuctatus","Helogale undulata","Herpestes brachyurus","Galerella flavescens","Herpestes gracilis","Herpestes semitorquatus","BDEOGALE NIGRIPES","CROSSARCHUS ALEXANDRI","Galerella sanguineus","Galerella pulverulentus","Herpestes sanguinea","Urva javanicus","Herpestes naso","Herpestes javanicus"), to = c("Urva smithii","Urva edwardsii","Herpestes sanguineus","Urva auropunctata","Urva vitticollis","Urva fusca","Herpestes pulverulentus","Cynictis penicillata","Urva edwardsii","Urva urva","Urva auropunctata","Helogale parvula","Urva brachyura","Herpestes flavescens","Herpestes flavescens","Urva semitorquata","Bdeogale nigripes","Crossarchus alexandri","Herpestes sanguineus","Herpestes pulverulentus","Herpestes sanguineus","Urva javanica","Xenogale naso","Urva javanica"))
+cleaned.herp.coords.2[13835,11] = "Herpestes sanguineus"
+```
+
+```{r}
+cleaned.herp.coords.2$sex <- sexreference[match(cleaned.herp.coords.2$species, sexreference$species),2]
+cleaned.herp.coords.2
+```
+
+
+```{r}
+head(cleaned.herp.coords.2)
+## start with occurrence data, take the coordinates, extrapolate climatic data, average data out, and use it to form new dataset
+```
+
+```{r}
+meantemp <- raster("wc2.1_5m_bio_1.tif")
+meandiurnalrange <- raster("wc2.1_5m_bio_2.tif")
+isotherm <- raster("wc2.1_5m_bio_3.tif")
+tempseason <- raster("wc2.1_5m_bio_4.tif")
+maxtemp <- raster("wc2.1_5m_bio_5.tif")
+mintemp <- raster("wc2.1_5m_bio_6.tif")
+annutemprange <- raster("wc2.1_5m_bio_7.tif")
+annurain <- raster("wc2.1_5m_bio_12.tif")
+rainseason <- raster("wc2.1_5m_bio_15.tif")
+meantemp
+```
+
+```{r}
+sradjan <- raster("wc2.1_5m_srad_01.tif")
+sradfeb <- raster("wc2.1_5m_srad_02.tif")
+sradmar <- raster("wc2.1_5m_srad_03.tif")
+sradapr <- raster("wc2.1_5m_srad_04.tif")
+sradmay <- raster("wc2.1_5m_srad_05.tif")
+sradjun <- raster("wc2.1_5m_srad_06.tif")
+sradjul <- raster("wc2.1_5m_srad_07.tif")
+sradaug <- raster("wc2.1_5m_srad_08.tif")
+sradsep <- raster("wc2.1_5m_srad_09.tif")
+sradoct <- raster("wc2.1_5m_srad_10.tif")
+sradnov <- raster("wc2.1_5m_srad_11.tif")
+sraddec <- raster("wc2.1_5m_srad_12.tif")
+sradjan
+```
+
+
+```{r}
+cleaned.herp.coords.2 <- add_column(cleaned.herp.coords.2,absoluteLatitude="",.after = 24)
+cleaned.herp.coords.2$absoluteLatitude <- abs(cleaned.herp.coords.2$decimalLatitude)
+cleaned.herp.coords.2 <- cleaned.herp.coords.2[!sapply(cleaned.herp.coords.2, function(x) all(x == ""))]
+cleaned.herp.coords.2
+```
+
+```{r}
+points <- SpatialPoints(data.frame(lon=cleaned.herp.coords.2$decimalLongitude, lat=cleaned.herp.coords.2$decimalLatitude))
+points
+```
+
+
+```{r}
+cleaned.herp.coords.2 <- add_column(cleaned.herp.coords.2,meantemp="",.before = 1)
+cleaned.herp.coords.2$meantemp <- extract(meantemp,points,cellnumbers=TRUE,df=TRUE)
+cleaned.herp.coords.2 <- add_column(cleaned.herp.coords.2,meandiurnalrange="",.before = 1)
+cleaned.herp.coords.2$meandiurnalrange <- extract(meandiurnalrange,points)
+cleaned.herp.coords.2 <- add_column(cleaned.herp.coords.2,isotherm="",.before = 1)
+cleaned.herp.coords.2$isotherm <- extract(isotherm,points)
+cleaned.herp.coords.2 <- add_column(cleaned.herp.coords.2,tempseason="",.before = 1)
+cleaned.herp.coords.2$tempseason <- extract(tempseason,points)
+cleaned.herp.coords.2 <- add_column(cleaned.herp.coords.2,maxtemp="",.before = 1)
+cleaned.herp.coords.2$maxtemp <- extract(maxtemp,points)
+cleaned.herp.coords.2 <- add_column(cleaned.herp.coords.2,mintemp="",.before = 1)
+cleaned.herp.coords.2$mintemp <- extract(mintemp,points)
+cleaned.herp.coords.2 <- add_column(cleaned.herp.coords.2,annutemprange="",.before = 1)
+cleaned.herp.coords.2$annutemprange <- extract(annutemprange,points)
+cleaned.herp.coords.2 <- add_column(cleaned.herp.coords.2,annurain="",.before = 1)
+cleaned.herp.coords.2$annurain <- extract(annurain,points)
+cleaned.herp.coords.2 <- add_column(cleaned.herp.coords.2,rainseason="",.before = 1)
+cleaned.herp.coords.2$rainseason <- extract(rainseason,points)
+cleaned.herp.coords.2 <- cleaned.herp.coords.2[!sapply(cleaned.herp.coords.2, function(x) all(x == ""))]
+cleaned.herp.coords.2
+## tried terra, cells don't show up, using raster pkg's version of extract() for now
+```
+
+```{r}
+cleaned.herp.coords.2 <- add_column(cleaned.herp.coords.2,cellno="",.before = 1)
+cleaned.herp.coords.2 <- add_column(cleaned.herp.coords.2,meanannutemp="",.before = 1)
+cleaned.herp.coords.2$cellno <- cleaned.herp.coords.2$meantemp$cells
+cleaned.herp.coords.2$meanannutemp <- cleaned.herp.coords.2$meantemp$wc2.1_5m_bio_1
+cleaned.herp.coords.2 <- cleaned.herp.coords.2[!sapply(cleaned.herp.coords.2, function(x) all(x == ""))]
+cleaned.herp.coords.2
+```
+
+```{r}
+cleaned.herp.coords.2 = subset(cleaned.herp.coords.2, select = -c(meantemp))
+cleaned.herp.coords.2
+```
+
+```{r}
+cleaned.herp.coords.3 <- cleaned.herp.coords.2[order(cleaned.herp.coords.2[,'cellno'],-cleaned.herp.coords.2[,'gbifID']),]
+cleaned.herp.coords.3 <- cleaned.herp.coords.3[!duplicated(cleaned.herp.coords.3$cellno),]
+cleaned.herp.coords.3
+```
+## remake maps with the new data(?)
+
+```{r}
+cleaned.herp.coords.3 <- add_column(cleaned.herp.coords.3,speciesjavauro="",.before = 24)
+cleaned.herp.coords.3$speciesjavauro <- mapvalues(cleaned.herp.coords.3$species, from=c("Urva auropunctata"), to=c("Urva javanica"))
+cleaned.herp.coords.3 <- cleaned.herp.coords.3[!sapply(cleaned.herp.coords.3, function(x) all(x == ""))]
+cleaned.herp.coords.3
+## specifically renamed the column to keep a note that the names have been modified like this
+```
+
+```{r}
+cleaned.herp.coords.3 <- cleaned.herp.coords.3[which(cleaned.herp.coords.3$countryCode != "US" & cleaned.herp.coords.3$countryCode != "CU" & cleaned.herp.coords.3$countryCode != "JM" & cleaned.herp.coords.3$countryCode != "HT" & cleaned.herp.coords.3$countryCode != "PR" & cleaned.herp.coords.3$countryCode != "VI" & cleaned.herp.coords.3$countryCode != "KY" & cleaned.herp.coords.3$countryCode != "ES" & cleaned.herp.coords.3$countryCode != "DE" & cleaned.herp.coords.3$countryCode != "HR" & cleaned.herp.coords.3$countryCode != "ME" & cleaned.herp.coords.3$countryCode != "BA" & cleaned.herp.coords.3$countryCode != "JP" & cleaned.herp.coords.3$countryCode != "PT" & cleaned.herp.coords.3$countryCode != "DO" & cleaned.herp.coords.3$countryCode != "AI" & cleaned.herp.coords.3$countryCode != "MS" & cleaned.herp.coords.3$countryCode != "GP" & cleaned.herp.coords.3$countryCode != "FR" & cleaned.herp.coords.3$countryCode != "DM" & cleaned.herp.coords.3$countryCode != "MQ" & cleaned.herp.coords.3$countryCode != "LC" & cleaned.herp.coords.3$countryCode != "LC" & cleaned.herp.coords.3$countryCode != "VC" & cleaned.herp.coords.3$countryCode != "BB"), ]
+cleaned.herp.coords.3
+```
+
+```{r}
+herp.species.mean.by.temp <- cleaned.herp.coords.3 %>%
+  group_by(cleaned.herp.coords.3$speciesjavauro) %>%
+  summarise_at(vars(1,3:10,36), list(mean), na.rm=T) ## can also add statistics like ,median here if needed
+herp.species.mean.by.temp
+```
+
+```{r}
+herp.species.mean.by.temp %>% 
+  rename(
+    speciesjavauro = `cleaned.herp.coords.3$speciesjavauro`,
+    )
+```
+
+```{r}
+write.table(herp.species.mean.by.temp, file = "herp_species_annual_mean_temp.txt", quote = FALSE, sep = "\t", row.names = FALSE)
+```
+
+```{r}
+herpgeo <- read.csv("herp_species_annual_mean_temp.txt", sep='\t')
+herp.sex.chr <- read.csv("sexreferencedf.csv", header = TRUE)
+herpgeo
+```
+
+```{r}
+herp.merged <- merge(herpgeo, herp.sex.chr, by.x = 'cleaned.herp.coords.3.speciesjavauro', by.y = 'species')
+herp.merged
+```
+
+```{r}
+ggplot(herp.merged, aes(x = reorder(cleaned.herp.coords.3.speciesjavauro, meanannutemp), y = meanannutemp, fill = sex)) + 
+geom_bar(stat="identity") +
+scale_x_discrete(guide = guide_axis(angle = 45))
+## figure out color scheme <- he said, months ago when he first wrote this script 6/21/2024
+```
+
+```{r}
+ggplot(herp.merged, aes(x = reorder(cleaned.herp.coords.3.speciesjavauro, annutemprange), y = annutemprange, fill = sex)) + 
+geom_bar(stat="identity") +
+scale_x_discrete(guide = guide_axis(angle = 45))
+```
+
+```{r}
+ggplot(herp.merged, aes(x = reorder(cleaned.herp.coords.3.speciesjavauro, meandiurnalrange), y = meandiurnalrange, fill = sex)) + 
+geom_bar(stat="identity") +
+scale_x_discrete(guide = guide_axis(angle = 45))
+```
+
+```{r}
+ggplot(herp.merged, aes(x = reorder(cleaned.herp.coords.3.speciesjavauro, annurain), y = annurain, fill = sex)) + 
+geom_bar(stat="identity") +
+scale_x_discrete(guide = guide_axis(angle = 45))
+```
+
+```{r}
+ggplot(herp.merged, aes(x = reorder(cleaned.herp.coords.3.speciesjavauro, rainseason), y = rainseason, fill = sex)) + 
+geom_bar(stat="identity") +
+scale_x_discrete(guide = guide_axis(angle = 45))
+```
+
+```{r}
+ggplot(herp.merged, aes(x = reorder(cleaned.herp.coords.3.speciesjavauro, tempseason), y = tempseason, fill = sex)) + 
+geom_bar(stat="identity") +
+scale_x_discrete(guide = guide_axis(angle = 45))
+```
+
+```{r}
+ggplot(herp.merged, aes(x = reorder(cleaned.herp.coords.3.speciesjavauro, isotherm), y = isotherm, fill = sex)) + 
+geom_bar(stat="identity") +
+scale_x_discrete(guide = guide_axis(angle = 45))
+```
+
+```{r}
+ggplot(herp.merged, aes(x = reorder(cleaned.herp.coords.3.speciesjavauro, mintemp), y = mintemp, fill = sex)) + 
+geom_bar(stat="identity") +
+scale_x_discrete(guide = guide_axis(angle = 45))
+```
+
+```{r}
+wm <- borders("world", colour = "gray80", fill = "gray80")
+ggplot() +
+  coord_fixed() +
+  wm +
+  geom_point(data = cleaned.herp.coords.3,
+             aes(x = decimalLongitude, y = decimalLatitude, color = sex),
+             size = 0.5) +
+  theme_bw()
+```
+
+
+```{r}
+wm <- borders("world", colour = "gray80", fill = "gray80")
+ggplot() +
+  coord_fixed() +
+  wm +
+  geom_point(data = cleaned.herp.coords.3,
+             aes(x = decimalLongitude, y = decimalLatitude, color = species),
+             size = 0.7) +
+  theme_bw()
+```
+
+
+```{r}
+rownames(herp.merged) <- unlist(herp.merged$cleaned.herp.coords.3.speciesjavauro)
+var_names <- colnames(herp.merged[c(2:11)])
+cohens_d <- c()
+anova_p <- c()
+
+for (var in var_names) {
+    
+x <- cohen.d(na.omit(herp.merged[herp.merged$sex=='YAfusion',][[var]]), na.omit(herp.merged[herp.merged$sex=='XY',][[var]]))
+cohens_d <- c(cohens_d, x$estimate)
+
+y <- herp.merged[[var]]
+names(y) <- unlist(herp.merged$cleaned.herp.coords.3.speciesjavauro)
+group <- factor(herp.merged$sex)
+names(group) <- unlist(herp.merged$cleaned.herp.coords.3.speciesjavauro) 
+test <- aov.phylo(y ~ group, keep.tip(herp.only.tree, herp.merged[!(is.na(herp.merged[[var]])),]$cleaned.herp.coords.3.speciesjavauro), nsim = 1000)
+anova_p <- c(anova_p, summary(test)$coefficients[2,4])
+    
+}
+results_table <- data.frame(var = var_names, cohens.d = cohens_d, anova.p = anova_p)
+##write.table(results_table, 'Herp_table.txt', quote = FALSE, row.names = FALSE, sep = '\t')
+
+sig_vars <- results_table[results_table$anova.p < 0.05/length(var_names),]$var
+res <- Map(combn, list(sig_vars), seq_along(sig_vars), simplify = FALSE)
+res <- unlist(res, recursive = FALSE)
+## bonferroni correction
+```
+
+```{r}
+ggplot(herp.merged, aes(x = reorder(cleaned.herp.coords.3.speciesjavauro, absoluteLatitude), y = absoluteLatitude, fill = sex)) + 
+geom_bar(stat="identity") +
+scale_x_discrete(guide = guide_axis(angle = 45))
+```
+
+```{r}
+herp.species.sd.by.temp <- cleaned.herp.coords.3 %>%
+  group_by(cleaned.herp.coords.3$speciesjavauro) %>%
+  summarise_at(vars(1,3:10,36), list(sd), na.rm=T) ## can also add ,median here if needed
+herp.species.sd.by.temp
+## graph this data on its own using a bar graph? find distributions of all of these variables by species and graph them out somehow?
+```
+
+```{r}
+biome.shapefile <- st_read("Ecoregions2017.shp", stringsAsFactors=FALSE)
+biome.shapefile.fixed <- st_transform(biome.shapefile, "+proj=longlat +ellps=WGS84 +datum=WGS84")
+head(biome.shapefile.fixed)
+## thanks Dr. Hughes! :D
+```
+
+```{r}
+shapefile.coords <- st_as_sf(cleaned.herp.coords.3, coords = c("decimalLongitude", "decimalLatitude"), crs = 4326)
+head(shapefile.coords)
+## did not expect to have to make the OCCURRENCE data into a shapefile, but seems to work fine
+```
+
+```{r}
+st_join(shapefile.coords, biome.shapefile.fixed["BIOME_NUM"], join = st_intersects)
+```
+
+## Before leaving: Added biome shapefile into R, corrected it to use lat/long and WGS84, converted cleaned.herp.coords.3 into a shapefile, attempted to intersect them
+## To do when I get back: Find a good way to intersect these two shapefiles, reread those conflict and ecology papers for more specific bioclimatic variables, use sapply to repeat analyses on vertlife trees (still waiting), filter out straggler occurrences in Caribbean
+
+
+
+
+
