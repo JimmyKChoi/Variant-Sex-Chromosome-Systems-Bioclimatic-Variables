@@ -1,0 +1,298 @@
+---
+title: "BAT TALK"
+author: "Jimmy Choi"
+date: "2024-03-06"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "C:/Users/jimmy/OneDrive/Documents")
+```
+
+```{r}
+library(geiger)
+library(ape)
+library(plyr)
+library(CoordinateCleaner)
+library(countrycode)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(ggplot2)
+library(rgbif)
+library(sf)
+library(tidyverse)
+library(raster)
+library(readxl)
+library(effsize)
+```
+
+## taxa of interest: Phyllostomidae
+## very ecologically diverse!
+
+```{r}
+phyllostom <- all.mammal[which(all.mammal$family == "PHYLLOSTOMIDAE"),]
+phyllostom
+```
+
+```{r}
+phyllostom.taxa <- grep("PHYLLOSTOMIDAE", mammal.phylo$tip.label, value = TRUE)
+phyllonode <- getMRCA(mammal.phylo,phyllostom.taxa)
+phyllo.only.tree <- extract.clade(mammal.phylo,phyllonode)
+```
+
+
+```{r}
+variant.phyllo <- variant.mamm$X.2[40:69]
+variant.phyllo
+```
+
+```{r}
+phyllo.tiplabels <- gsub('_',' ',phyllo.only.tree$tip.label)
+phyllo.tiplabels <- gsub('PHYLLOSTOMIDAE CHIROPTERA','',phyllo.tiplabels)
+phyllo.tiplabels <- gsub("[[:space:]]*$","",phyllo.tiplabels)
+phyllo.only.tree$tip.label <- phyllo.tiplabels
+```
+
+
+```{r}
+phyllo.only.tree <- ladderize(phyllo.only.tree)
+plotTree(phyllo.only.tree,ftype="i",fsize=0.2,lwd=0.5)
+add.arrow(phyllo.only.tree,tip = variant.phyllo,lwd=3,arrl=0.5,col="red",offset=2.5)
+```
+
+```{r}
+## GBIF.org (06 March 2024) GBIF Occurrence Download https://doi.org/10.15468/dl.vx7hve
+batcoordinates <- read.csv(file = "batoccurrencesfixed.csv", head = TRUE, sep=",")
+cleaned.bat.coords <- clean_coordinates(batcoordinates)
+```
+
+```{r}
+cleaned.bat.coords <- subset(cleaned.bat.coords, taxonRank != "GENUS" & taxonRank != "FAMILY")
+cleaned.bat.coords
+```
+
+```{r}
+uniquebatnames <- unique(cleaned.bat.coords$species)
+uniquebatnames
+## compare to mammal database names with name fixing script and setdiff()
+## set it to $verbatimScientificName and you can see why i'm not doing the regex thing
+## maybe still worth doing, just with additional parameters? talk to jon about this
+```
+
+```{r}
+setdiff(phyllo.only.tree$tip.label,uniquebatnames)
+## Diaemus youngi -> youngii (issue with tree)
+## Desmodus draculae -> extinct
+## Scleronycteris ega -> data deficient, monotypic
+## Neonycteris pusilla -> DD, M
+## Dryadonycteris capixaba -> DD, M
+## Micronycteris sanborni -> DD
+## Micronycteris matses -> DD
+## Micronycteris buriri -> DD
+## Micronycteris giovanniae -> DD (they have a holotype and that's IT)
+## Mimon koepckeae -> Gardnerycteris koepckeae -> DD (issue with tree)
+## Anoura canishina -> DD
+## Lonchophylla thomasi -> Hsunycteris thomasi (both branches exist?? far away from each other too, ask about this)
+## Lonchophylla fornicata -> DD
+## Lonchophylla orcesi -> DD
+## Lonchophylla inexpectata -> DD
+## Lonchophylla chocoana -> DD
+## Lonchophylla peracchii -> recently described as distinct from L. bokermanni, DD
+## Artibeus toltecus -> Dermanura toltecus -> Dermanura tolteca (tree AND occurrence problem)
+## Artibeus phaeotis -> Dermanura phaeotis (occurrence)
+## Dermanura rosenbergii -> Artibeus rosenbergi -> Dermanura rosenbergi (tree AND occurrence problem)
+## Artibeus watsoni -> Dermanura watsoni (occurrence)
+## Dermanura incomitatus -> Dermanura watsoni (Yasuni issue, see below)
+## Dermanura aztecus -> Artibeus aztecus -> Dermanura azteca (tree AND occurrence problem)
+## Dermanura glaucus -> Artibeus glaucus -> D. glauca (ditto)
+## Dermanura cinereus -> A. cinereus -> D. cinerea (ditto)
+## Dermanura gnomus -> A. gnomus -> Dermanura gnoma (ditto)
+## Artibeus bogotensis -> Dermanura bogotensis (occurrence issue)
+## Artibeus ravus -> Dermanura rava (ditto)
+## Artibeus anderseni -> Dermanura anderseni (ditto)
+## Vampyressa elisabethae -> DD
+## Platyrrhinus guianensis -> DD
+## Platyrrhinus nigellus -> DD
+## Platyrrhinus chocoensis -> DD
+## Platyrrhinus aurarius -> DD
+## Vampyressa bidens -> Vampyriscus bidens (tree)
+## Vampyressa brocki -> Vampyriscus brocki (tree)
+## Vampyressa nymphaea -> Vampyriscus nymphaeus (tree)
+## Chiroderma vizottoi -> DD
+## Sturnira nana -> DD
+## Sturnira perla -> DD
+## Sturnira koopmanhilli -> DD
+## Sturnira paulsoni -> DD
+## Carollia manu -> DD
+## Carollia brevicauda -> DD
+## Glyphonycteris behnii -> DD
+## Lonchorhina inusitata -> DD
+## Mimon crenulatum -> Gardnerycteris crenulatum -> Gardnerycteris crenulata (tree AND occurrence problem)
+## Lophostoma aequatorialis -> Lophostoma occidentale (tree)
+## Lophostoma silvicolum -> Lophostoma silvicola (ditto)
+## Lophostoma kalkoae -> DD
+## Lophostoma yasuni -> Lophostoma carrikeri (occurrence problem, L. yasuni relatively recently described as separate from carrikeri, auropunctata issue except this time both branches are there)
+## Lonchorhina fernandezi -> DD
+## resolved with MDD excel database
+```
+
+```{r}
+grep("yasuni", unique(cleaned.bat.coords$species), value = TRUE)
+## cleaned.bat.coords$species
+## phyllo.only.tree$tip.label
+```
+
+```{r}
+phyllo.only.tree$tip.label <- mapvalues(phyllo.only.tree$tip.label, from = c("Diaemus youngi","Mimon koepckeae","Dermanura toltecus","Dermanura rosenbergii","Dermanura aztecus","Dermanura glaucus","Dermanura cinereus","Dermanura gnomus","Vampyressa bidens","Vampyressa brocki","Vampyressa nymphaea","Mimon crenulatum","Lophostoma aequatorialis","Lophostoma silvicolum"), to = c("Diaemus youngii","Gardnerycteris koepckeae","Dermanura tolteca","Dermanura rosenbergi","Dermanura azteca","Dermanura glauca","Dermanura cinerea","Dermanura gnoma","Vampyriscus bidens","Vampyriscus brocki","Vampyriscus nymphaeus","Gardnerycteris crenulata","Lophostoma occidentale","Lophostoma silvicola"))
+cleaned.bat.coords$species <- mapvalues(cleaned.bat.coords$species, from = c("Artibeus toltecus","Artibeus phaeotis","Artibeus rosenbergi","Artibeus watsoni","Artibeus aztecus","Artibeus glaucus","Artibeus cinereus","Artibeus gnomus","Artibeus bogotensis","Artibeus ravus","Artibeus anderseni","Gardnerycteris crenulatum","Vampyriscus nymphaea","Carollia brevicaudum"), to = c("Dermanura tolteca","Dermanura phaeotis","Dermanura rosenbergi","Dermanura watsoni","Dermanura azteca","Dermanura glauca","Dermanura cinerea","Dermanura gnoma","Dermanura bogotensis","Dermanura rava","Dermanura anderseni","Gardnerycteris crenulata","Vampyriscus nymphaeus","Carollia brevicauda"))
+```
+
+```{r}
+paste(phyllo.only.tree$tip.label, collapse=', ' )
+## Platyrrhinus incarum NOT in the tree, previously conspecific with P. helleri 
+```
+
+```{r}
+sexreference <- read.csv(file="sexreferencedf.csv")
+sexreference
+```
+
+```{r}
+cleaned.bat.coords <- add_column(cleaned.bat.coords,sex="",.before = 1)
+cleaned.bat.coords$sex <- sexreference[match(cleaned.bat.coords$species, sexreference$species),2]
+cleaned.bat.coords <- cleaned.bat.coords[!sapply(cleaned.bat.coords, function(x) all(x == ""))]
+cleaned.bat.coords
+```
+
+
+
+```{r}
+NA.rows <- cleaned.bat.coords[is.na(cleaned.bat.coords$sex),]
+NA.names <- unique(NA.rows$species)
+NA.names
+## no Platyrrhinus incarum on tree
+## Carollia brevicaudum -> Carollia brevicauda
+## no Uroderma convexum on tree
+## no Glossophaga mutica on tree
+## no Vampyrodes major on tree
+## no Tonatia bakeri on tree
+## no Glossophaga valens on tree
+## no Tonatia maresi on tree
+## no Anoura aequatoria on tree
+## no Chiroderma scopaeum on tree
+## no Sturnira giannae on tree
+## no Glossophaga mexicana on tree
+## no Uroderma davisi on tree
+## no Gardnerycteris keenani ...
+## no Carollia monohernandezi ...
+## no Desmodus stocki ...
+## no Glossophaga antillarum ...
+## no Anoura peruana ...
+## no Anoura cadenai ...
+## no Artibeus aequatorialis ...
+## no Micronycteris tresamici ...
+cleaned.bat.coords.2 <- cleaned.bat.coords[!is.na(cleaned.bat.coords$sex),]
+```
+
+```{r}
+cleaned.bat.coords.2 <- add_column(cleaned.bat.coords.2,absoluteLatitude="")
+cleaned.bat.coords.2$absoluteLatitude <- abs(cleaned.bat.coords.2$decimalLatitude)
+cleaned.bat.coords.2 <- cleaned.bat.coords.2[!sapply(cleaned.bat.coords.2, function(x) all(x == ""))]
+cleaned.bat.coords.2
+```
+
+```{r}
+points <- SpatialPoints(data.frame(lon=cleaned.bat.coords.2$decimalLongitude, lat=cleaned.bat.coords.2$decimalLatitude))
+points
+```
+
+```{r}
+cleaned.bat.coords.2 <- add_column(cleaned.bat.coords.2,meantemp="")
+cleaned.bat.coords.2$meantemp <- extract(meantemp,points,cellnumbers=TRUE,df=TRUE)
+cleaned.bat.coords.2 <- add_column(cleaned.bat.coords.2,cellno="",.before = 1)
+cleaned.bat.coords.2 <- add_column(cleaned.bat.coords.2,meanannutemp="")
+cleaned.bat.coords.2$cellno <- cleaned.bat.coords.2$meantemp$cells
+cleaned.bat.coords.2$meanannutemp <- cleaned.bat.coords.2$meantemp$wc2.1_5m_bio_1
+cleaned.bat.coords.2 <- cleaned.bat.coords.2[!sapply(cleaned.bat.coords.2, function(x) all(x == ""))]
+cleaned.bat.coords.2
+```
+
+```{r}
+cleaned.bat.coords.3 <- cleaned.bat.coords.2[order(cleaned.bat.coords.2[,'cellno'],-cleaned.bat.coords.2[,'gbifID']),]
+cleaned.bat.coords.3 <- cleaned.bat.coords.3[!duplicated(cleaned.bat.coords.3$cellno),]
+cleaned.bat.coords.3
+## 29000 occurrences to 5700? is this ok? suggest using a higher resolution than the paper due to smaller dataset?
+```
+
+```{r}
+wm <- borders("world", colour = "gray80", fill = "gray80")
+ggplot() +
+  coord_fixed() +
+  wm +
+  geom_point(data = cleaned.bat.coords.3,
+             aes(x = decimalLongitude, y = decimalLatitude, color = sex),
+             size = 0.7) +
+  theme_bw()
+```
+
+```{r}
+bat.species.mean.and.sd <- cleaned.bat.coords.3 %>%
+  group_by(cleaned.bat.coords.3$species) %>%
+  summarise_at(vars(63,65), list(mean,sd), na.rm=T) ## can also add ,median here if needed
+bat.species.mean.and.sd ## fn1 = mean, fn2 = sd (as far as i can tell)
+```
+
+```{r}
+phyllo.merged <- merge(bat.species.mean.and.sd, sexreference, by.x = 'cleaned.bat.coords.3$species', by.y = 'species')
+phyllo.merged
+```
+
+```{r}
+ggplot(phyllo.merged, aes(x = reorder(`cleaned.bat.coords.3$species`, absoluteLatitude_fn1), y = absoluteLatitude_fn1, fill = sex)) + 
+geom_bar(stat="identity") +
+scale_x_discrete(guide = guide_axis(angle = 45))
+```
+
+```{r}
+phyllo.merged <- add_column(phyllo.merged,XYorvariant="",.after = 6)
+phyllo.merged$XYorvariant <- phyllo.merged$sex
+phyllo.merged$XYorvariant <- mapvalues(phyllo.merged$XYorvariant, from = c("XAfusion","XAYAfusion"), to = c("variant","variant"))
+phyllo.merged <- phyllo.merged[!sapply(phyllo.merged, function(x) all(x == ""))]
+phyllo.merged
+```
+
+```{r}
+rownames(phyllo.merged) <- unlist(phyllo.merged$`cleaned.bat.coords.3$species`)
+var_names <- colnames(phyllo.merged[c(2:5)])
+cohens_d <- c()
+anova_p <- c()
+```
+
+```{r}
+for (var in var_names) {
+    
+x <- cohen.d(na.omit(phyllo.merged[phyllo.merged$XYorvariant=='XY',][[var]]), na.omit(phyllo.merged[phyllo.merged$XYorvariant=='variant',][[var]]))
+cohens_d <- c(cohens_d, x$estimate)
+
+y <- phyllo.merged[[var]]
+names(y) <- unlist(phyllo.merged$`cleaned.bat.coords.3$species`)
+group <- factor(phyllo.merged$XYorvariant)
+names(group) <- unlist(phyllo.merged$`cleaned.bat.coords.3$species`) 
+test <- aov.phylo(y ~ group, keep.tip(phyllo.only.tree, phyllo.merged[!(is.na(phyllo.merged[[var]])),]$`cleaned.bat.coords.3$species`), nsim = 1000)
+anova_p <- c(anova_p, summary(test)$coefficients[2,4])
+    
+}
+results_table <- data.frame(var = var_names, cohens.d = cohens_d, anova.p = anova_p)
+##write.table(results_table, 'Herp_table.txt', quote = FALSE, row.names = FALSE, sep = '\t')
+
+sig_vars <- results_table[results_table$anova.p < 0.05/length(var_names),]$var
+res <- Map(combn, list(sig_vars), seq_along(sig_vars), simplify = FALSE)
+res <- unlist(res, recursive = FALSE)
+## bonferroni correction
+```
+## Bug appears during phylogenetic ANOVA where a bunch of tips are dropped - but why? A lot of these tips are actually on the tree
+## Before leaving: added the `XYorvariant` column in phyllo.merged, ran analyses with them, pretty straightforward
+## To do when I get back: Reread those conflict and ecology papers to see what bioclimatic variables I should be analyzing specifically (for both Phyllostomidae and Herpestidae), try getting those vertlife trees again, filter out "old world" Phyllostomidae occurrences, do Herpestidae biome stuff here too, start using that new Excel table that Jon sent me
+
