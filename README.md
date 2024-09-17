@@ -15,3 +15,4 @@ to do:
 - start Soricidae analyses
 - further literature reading for ecology/climate and its effects on sexual conflict
 - flesh out Phyllostomidae script
+- make data more available
