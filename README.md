@@ -16,3 +16,6 @@ to do:
 - further literature reading for ecology/climate and its effects on sexual conflict
 - flesh out Phyllostomidae script
 - make data more available
+
+Citations:
+- cite Kyle T David paper, some code modified from original scripts
