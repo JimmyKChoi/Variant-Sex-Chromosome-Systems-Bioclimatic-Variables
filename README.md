@@ -3,8 +3,6 @@ various R packages.
 
 Other tangentially related stuff includes ancestral state reconstruction, etc.
 
-Credit @KyleTDavid for script framework (ask how to properly credit)
-
 **updated herpestidae stuff.Rmd** - Original (and most complete) script for this project, analyses of species in family Herpestidae with variant sex chromosome systems, plus data visualizations
 
 **batproject.Rmd** - Under construction, analyses of species in family Phyllostomidae with variant sex chromosome system
@@ -18,4 +16,4 @@ to do:
 - make data more available
 
 Citations:
-- cite Kyle T David paper, some code modified from original scripts
+K. T. David, Global gradients in the distribution of animal polyploids. Proc. Natl. Acad. Sci. U.S.A. 119, e2214070119 (2022). Code modified from original scripts.
