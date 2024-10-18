@@ -1,0 +1,90 @@
+---
+title: "tetrapodtraits"
+author: "Jimmy Choi"
+date: "2024-10-06"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "C:/Users/jimmy/OneDrive/Documents")
+library(ape)
+library(plyr)
+library(ggplot2)
+library(tibble)
+library(readxl)
+library(dplyr)
+library(geiger)
+library(effsize)
+```
+
+```{r}
+tetrapodtraits <- read.csv(file = "TetrapodTraits_1.0.0.csv", stringsAsFactors = FALSE)
+tetrapodtraits.herp <- tetrapodtraits[which(tetrapodtraits$Family == "Herpestidae"),]
+tetrapodtraits.herp
+```
+
+```{r}
+mammal.phylo <- read.nexus(file = "bettermammalphylogeny.tre")
+short.tip.labels <- gsub('^([^_]+_[^_]+).*', '\\1',mammal.phylo$tip.label)
+short.tip.labels <- gsub('_',' ',short.tip.labels)
+mammal.phylo$tip.label <- short.tip.labels
+## fix taxonomy to be congruous with MDD at some point but it works for now... bleh
+```
+
+```{r}
+herp.node <- getMRCA(mammal.phylo,tetrapodtraits.herp$Scientific.Name) ## do i know if this tree is node dated or tip dated?
+herpestidae.tree <- extract.clade(mammal.phylo,herp.node)
+herpestidae.tree$tip.label
+herpestidae.tree$tip.label <- mapvalues(herpestidae.tree$tip.label, from=c("Herpestes brachyurus","Herpestes edwardsii","Herpestes fuscus","Herpestes semitorquatus","Herpestes smithii","Herpestes urva","Herpestes vitticollis","Herpestes javanicus","Herpestes naso"), to=c("Urva brachyura","Urva edwardsii","Urva fusca","Urva semitorquata","Urva smithii","Urva urva","Urva vitticollis","Urva javanica","Xenogale naso"))
+tetrapodtraits.herp$Scientific.Name <- mapvalues(tetrapodtraits.herp$Scientific.Name, from=c("Herpestes brachyurus","Herpestes edwardsii","Herpestes fuscus","Herpestes semitorquatus","Herpestes smithii","Herpestes urva","Herpestes vitticollis","Herpestes javanicus","Herpestes naso"), to=c("Urva brachyura","Urva edwardsii","Urva fusca","Urva semitorquata","Urva smithii","Urva urva","Urva vitticollis","Urva javanica","Xenogale naso"))
+```
+
+```{r}
+sex.reference <- read.csv(file="sexreferencedf.csv")
+tetrapodtraits.herp <- add_column(tetrapodtraits.herp,sex="",.before = 1)
+tetrapodtraits.herp$sex <- sex.reference[match(tetrapodtraits.herp$Scientific.Name, sexreference$species),2]
+tetrapodtraits.herp <- add_column(tetrapodtraits.herp,AbsoluteLatitude="",.after = 63)
+tetrapodtraits.herp$AbsoluteLatitude <- abs(tetrapodtraits.herp$Latitude)
+tetrapodtraits.herp <- tetrapodtraits.herp[!sapply(tetrapodtraits.herp, function(x) all(x == ""))]
+tetrapodtraits.herp
+```
+
+```{r}
+ggplot(tetrapodtraits.herp, aes(x = reorder(tetrapodtraits.herp$Scientific.Name, RangeSize), y = RangeSize, fill = sex)) + 
+geom_bar(stat="identity") +
+scale_x_discrete(guide = guide_axis(angle = 45))
+```
+
+```{r}
+rownames(tetrapodtraits.herp) <- unlist(tetrapodtraits.herp$Scientific.Name)
+var_names <- c("BodyLength_mm", "BodyMass_g", "RangeSize", "Latitude", "AbsoluteLatitude", "AnnuMeanTemp","AnnuPrecip","TempSeasonality","PrecipSeasonality","Elevation")
+tetrapodtraits.herp[,var_names] <- sapply(tetrapodtraits.herp[,var_names], as.numeric)
+cohens_d <- c()
+anova_p <- c()
+
+for (var in var_names) {
+    
+x <- cohen.d(na.omit(tetrapodtraits.herp[tetrapodtraits.herp$sex=='YAfusion',][[var]]), na.omit(tetrapodtraits.herp[tetrapodtraits.herp$sex=='XY',][[var]]))
+cohens_d <- c(cohens_d, x$estimate)
+
+y <- tetrapodtraits.herp[[var]]
+names(y) <- unlist(tetrapodtraits.herp$Scientific.Name)
+group <- factor(tetrapodtraits.herp$sex)
+names(group) <- unlist(tetrapodtraits.herp$Scientific.Name) 
+test <- aov.phylo(y ~ group, keep.tip(herpestidae.tree, tetrapodtraits.herp[!(is.na(tetrapodtraits.herp[[var]])),]$Scientific.Name), nsim = 1000)
+anova_p <- c(anova_p, summary(test)$coefficients[2,4])
+    
+}
+results_table <- data.frame(var = var_names, cohens.d = cohens_d, anova.p = anova_p)
+##write.table(results_table, 'Herp_table.txt', quote = FALSE, row.names = FALSE, sep = '\t')
+
+sig_vars <- results_table[results_table$anova.p < 0.05/length(var_names),]$var
+res <- Map(combn, list(sig_vars), seq_along(sig_vars), simplify = FALSE)
+res <- unlist(res, recursive = FALSE)
+## bonferroni correction
+```
+
+
+
+
