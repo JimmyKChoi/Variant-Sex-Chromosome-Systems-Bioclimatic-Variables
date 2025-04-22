@@ -16,6 +16,8 @@ library(readxl)
 library(dplyr)
 library(geiger)
 library(effsize)
+library(phylolm)
+library(sensiPhy)
 ```
 
 ```{r}
@@ -41,27 +43,35 @@ tetrapodtraits.herp$Scientific.Name <- mapvalues(tetrapodtraits.herp$Scientific.
 ```
 
 ```{r}
-sex.reference <- read.csv(file="sexreferencedf.csv")
+sex.reference <- read.csv(file = "sexreferencedf.csv")
 tetrapodtraits.herp <- add_column(tetrapodtraits.herp,sex="",.before = 1)
-tetrapodtraits.herp$sex <- sex.reference[match(tetrapodtraits.herp$Scientific.Name, sexreference$species),2]
+tetrapodtraits.herp$sex <- sex.reference[match(tetrapodtraits.herp$Scientific.Name, sex.reference$species),2]
 tetrapodtraits.herp <- add_column(tetrapodtraits.herp,AbsoluteLatitude="",.after = 63)
 tetrapodtraits.herp$AbsoluteLatitude <- abs(tetrapodtraits.herp$Latitude)
 tetrapodtraits.herp <- tetrapodtraits.herp[!sapply(tetrapodtraits.herp, function(x) all(x == ""))]
 tetrapodtraits.herp
 ```
 
+
 ```{r}
-ggplot(tetrapodtraits.herp, aes(x = reorder(tetrapodtraits.herp$Scientific.Name, RangeSize), y = RangeSize, fill = sex)) + 
-geom_bar(stat="identity") +
-scale_x_discrete(guide = guide_axis(angle = 45))
+tetrapodtraits.herp <- add_column(tetrapodtraits.herp,XYorvariant="",.before = 1)
+tetrapodtraits.herp$XYorvariant <- tetrapodtraits.herp$sex
+tetrapodtraits.herp$XYorvariant <- mapvalues(tetrapodtraits.herp$XYorvariant, from = c("XY","YAfusion"), to = c(0,1))
+tetrapodtraits.herp$XYorvariant <- as.numeric(tetrapodtraits.herp$XYorvariant)
+## XY = 0, variant = 1
+tetrapodtraits.herp <- tetrapodtraits.herp[!sapply(tetrapodtraits.herp, function(x) all(x == ""))]
+tetrapodtraits.herp
 ```
 
 ```{r}
 rownames(tetrapodtraits.herp) <- unlist(tetrapodtraits.herp$Scientific.Name)
-var_names <- c("BodyLength_mm", "BodyMass_g", "RangeSize", "Latitude", "AbsoluteLatitude", "AnnuMeanTemp","AnnuPrecip","TempSeasonality","PrecipSeasonality","Elevation")
+var_names <- c("RangeSize","AbsoluteLatitude","AnnuMeanTemp","AnnuPrecip","TempSeasonality","PrecipSeasonality","Elevation") 
 tetrapodtraits.herp[,var_names] <- sapply(tetrapodtraits.herp[,var_names], as.numeric)
+tetrapodtraits.herp$XYorvariant <- as.numeric(tetrapodtraits.herp$XYorvariant)
 cohens_d <- c()
-anova_p <- c()
+log_reg <- c()
+log_reg2 <- c()
+## alpha_values <- c()
 
 for (var in var_names) {
     
@@ -70,19 +80,29 @@ cohens_d <- c(cohens_d, x$estimate)
 
 y <- tetrapodtraits.herp[[var]]
 names(y) <- unlist(tetrapodtraits.herp$Scientific.Name)
-group <- factor(tetrapodtraits.herp$sex)
-names(group) <- unlist(tetrapodtraits.herp$Scientific.Name) 
-test <- aov.phylo(y ~ group, keep.tip(herpestidae.tree, tetrapodtraits.herp[!(is.na(tetrapodtraits.herp[[var]])),]$Scientific.Name), nsim = 1000)
-anova_p <- c(anova_p, summary(test)$coefficients[2,4])
-    
+group <- tetrapodtraits.herp$XYorvariant
+#names(group) <- unlist(tetrapodtraits.herp$Scientific.Name)
+test <- phyloglm(group ~ y, phy = keep.tip(herpestidae.tree, tetrapodtraits.herp[!(is.na(tetrapodtraits.herp[[var]])),]$Scientific.Name), data = tetrapodtraits.herp, method = c("logistic_MPLE"), boot = 10)
+## test2<-binaryPGLMM(group ~ y, phy = keep.tip(herpestidae.tree, tetrapodtraits.herp[!(is.na(tetrapodtraits.herp[[var]])),]$Scientific.Name), data = tetrapodtraits.herp,tol.pql = 1e-6,maxit.pql = 400,maxit.reml = 200)
+log_reg <- rbind(log_reg, summary(test))
+## log_reg2 <- rbind(log_reg2, test2)
+## alpha_values <- rbind(alpha_values, test)
+print(test$alphaWarn)
 }
-results_table <- data.frame(var = var_names, cohens.d = cohens_d, anova.p = anova_p)
-##write.table(results_table, 'Herp_table.txt', quote = FALSE, row.names = FALSE, sep = '\t')
+## vectorization?, pivot table? tidyr, dplyr
+## log_reg_p_values <- log_reg[1:8,2]
+## log_reg_p_values[[8]][12]
+## herp_log_reg_p
+## also check out PhyR package? PGLMM function (phylo generalized linear mixed model)
+## divide all branch lengths by the mean of all branch lengths for phyloglm() analysis
+## see if optimization problem still happens w/ reduced trees (trees w only known sex)
+## drop Sorex kozlovi/label as a fusion?
+```
 
-sig_vars <- results_table[results_table$anova.p < 0.05/length(var_names),]$var
-res <- Map(combn, list(sig_vars), seq_along(sig_vars), simplify = FALSE)
-res <- unlist(res, recursive = FALSE)
-## bonferroni correction
+```{r}
+color <- recode(tetrapodtraits.herp$sex, "XY" = "black", "YAfusion" = "red")
+herp.mycol <- with(tetrapodtraits.herp, as.character(color[match(herpestidae.tree$tip.label, tetrapodtraits.herp$Scientific.Name)]))
+plot(herpestidae.tree, no.margin = TRUE, cex = 0.5, tip.color = herp.mycol)
 ```
 
 ```{r}
@@ -103,60 +123,73 @@ setdiff(tetrapodtraits.phyllostom$Scientific.Name, phyllostom.tree$tip.label)
 ## D_draculae -> D. draculae
 ```
 
-```{r}
-tetrapodtraits.phyllostom <- add_column(tetrapodtraits.phyllostom,sex="",.before = 1)
-tetrapodtraits.phyllostom$sex <- sex.reference[match(tetrapodtraits.phyllostom$Scientific.Name, sexreference$species),2]
-tetrapodtraits.phyllostom <- add_column(tetrapodtraits.phyllostom,AbsoluteLatitude="",.after = 63)
-tetrapodtraits.phyllostom$AbsoluteLatitude <- abs(tetrapodtraits.phyllostom$Latitude)
-tetrapodtraits.phyllostom <- tetrapodtraits.phyllostom[!sapply(tetrapodtraits.phyllostom, function(x) all(x == ""))]
-tetrapodtraits.phyllostom
-```
 
 ```{r}
 ## problem.taxa <- tetrapodtraits.phyllostom[is.na(tetrapodtraits.phyllostom$sex),]
 ## problem.taxa$Scientific.Name
 
-tetrapodtraits.phyllostom$Scientific.Name <- mapvalues(tetrapodtraits.phyllostom$Scientific.Name, from=c("Dermanura aztecus", "Dermanura cinereus", "Dermanura glaucus", "Dermanura gnomus", "Dermanura rosenbergii", "Dermanura toltecus", "Lophostoma aequatorialis", "Lophostoma silvicolum", "Mimon crenulatum", "Mimon koepckeae", "Vampyressa bidens", "Vampyressa brocki", "Vampyressa nymphaea", "Desmodus_draculae"), to=c("Dermanura azteca", "Dermanura cinerea", "Dermanura glauca", "Dermanura gnoma", "Dermanura rosenbergi", "Dermanura tolteca", "Lophostoma occidentale", "Lophostoma silvicola", "Gardnerycteris crenulata", "Gardnerycteris koepckeae", "Vampyriscus bidens", "Vampyriscus brocki", "Vampyriscus nymphaeus", "Desmodus draculae"))
-phyllostom.tree$tip.label <- mapvalues(phyllostom.tree$tip.label, from=c("Dermanura aztecus", "Dermanura cinereus", "Dermanura glaucus", "Dermanura gnomus", "Dermanura rosenbergii", "Dermanura toltecus", "Lophostoma aequatorialis", "Lophostoma silvicolum", "Mimon crenulatum", "Mimon koepckeae", "Vampyressa bidens", "Vampyressa brocki", "Vampyressa nymphaea"), to=c("Dermanura azteca", "Dermanura cinerea", "Dermanura glauca", "Dermanura gnoma", "Dermanura rosenbergi", "Dermanura tolteca", "Lophostoma occidentale", "Lophostoma silvicola", "Gardnerycteris crenulata", "Gardnerycteris koepckeae", "Vampyriscus bidens", "Vampyriscus brocki", "Vampyriscus nymphaeus"))
+tetrapodtraits.phyllostom$Scientific.Name <- mapvalues(tetrapodtraits.phyllostom$Scientific.Name, from=c("Dermanura aztecus", "Dermanura cinereus", "Dermanura glaucus", "Dermanura gnomus", "Dermanura rosenbergii", "Dermanura toltecus", "Lophostoma aequatorialis", "Lophostoma silvicolum", "Mimon crenulatum", "Mimon koepckeae", "Vampyressa bidens", "Vampyressa brocki", "Vampyressa nymphaea", "Desmodus_draculae", "Diaemus youngi"), to=c("Dermanura azteca", "Dermanura cinerea", "Dermanura glauca", "Dermanura gnoma", "Dermanura rosenbergi", "Dermanura tolteca", "Lophostoma occidentale", "Lophostoma silvicola", "Gardnerycteris crenulata", "Gardnerycteris koepckeae", "Vampyriscus bidens", "Vampyriscus brocki", "Vampyriscus nymphaeus", "Desmodus draculae", "Diaemus youngii"))
+phyllostom.tree$tip.label <- mapvalues(phyllostom.tree$tip.label, from=c("Dermanura aztecus", "Dermanura cinereus", "Dermanura glaucus", "Dermanura gnomus", "Dermanura rosenbergii", "Dermanura toltecus", "Lophostoma aequatorialis", "Lophostoma silvicolum", "Mimon crenulatum", "Mimon koepckeae", "Vampyressa bidens", "Vampyressa brocki", "Vampyressa nymphaea", "Diaemus youngi"), to=c("Dermanura azteca", "Dermanura cinerea", "Dermanura glauca", "Dermanura gnoma", "Dermanura rosenbergi", "Dermanura tolteca", "Lophostoma occidentale", "Lophostoma silvicola", "Gardnerycteris crenulata", "Gardnerycteris koepckeae", "Vampyriscus bidens", "Vampyriscus brocki", "Vampyriscus nymphaeus", "Diaemus youngii"))
 ```
 
 
 ```{r}
+tetrapodtraits.phyllostom <- add_column(tetrapodtraits.phyllostom,sex="",.before = 1)
+tetrapodtraits.phyllostom$sex <- sex.reference[match(tetrapodtraits.phyllostom$Scientific.Name, sex.reference$species),2]
+tetrapodtraits.phyllostom <- add_column(tetrapodtraits.phyllostom,AbsoluteLatitude="",.after = 63)
+tetrapodtraits.phyllostom$AbsoluteLatitude <- abs(tetrapodtraits.phyllostom$Latitude)
 tetrapodtraits.phyllostom <- add_column(tetrapodtraits.phyllostom,XYorvariant="",.before = 1)
-tetrapodtraits.phyllostom$XYorvariant <- tetrapodtraits.phyllostom$sex
-tetrapodtraits.phyllostom$XYorvariant <- mapvalues(tetrapodtraits.phyllostom$XYorvariant, from = c("XAfusion","XAYAfusion"), to = c("variant","variant"))
+tetrapodtraits.phyllostom$XYorvariant <- mapvalues(tetrapodtraits.phyllostom$sex, from = c("XY","XAfusion","XAYAfusion"), to = c(0,1,1))
+## XY = 0, variant = 1
+tetrapodtraits.phyllostom$XYorvariant <- as.numeric(tetrapodtraits.phyllostom$XYorvariant)
 tetrapodtraits.phyllostom <- tetrapodtraits.phyllostom[!sapply(tetrapodtraits.phyllostom, function(x) all(x == ""))]
 tetrapodtraits.phyllostom
 ```
 
+
+```{r}
+ggplot(tetrapodtraits.phyllostom, aes(x = reorder(tetrapodtraits.phyllostom$Scientific.Name, RangeSize), y = RangeSize, fill = sex)) + 
+geom_bar(stat="identity") +
+scale_x_discrete(guide = guide_axis(angle = 45))
+```
+
+```{r}
+ggplot(tetrapodtraits.phyllostom, aes(x = reorder(tetrapodtraits.phyllostom$Scientific.Name, AbsoluteLatitude), y = AbsoluteLatitude, fill = sex)) + 
+geom_bar(stat="identity") +
+scale_x_discrete(guide = guide_axis(angle = 45)) +
+scale_fill_manual(values=c("#FF0000", "#E69F00", "#56B4E9"))
+```
+
 ```{r}
 rownames(tetrapodtraits.phyllostom) <- unlist(tetrapodtraits.phyllostom$Scientific.Name)
-var_names <- c("BodyLength_mm", "BodyMass_g", "RangeSize", "Latitude", "AbsoluteLatitude", "AnnuMeanTemp","AnnuPrecip","TempSeasonality","PrecipSeasonality","Elevation")
-## tetrapodtraits.phyllostom[,var_names] <- sapply(tetrapodtraits.phyllostom[,var_names], as.numeric)
+var_names <- c("RangeSize","AbsoluteLatitude","AnnuMeanTemp","AnnuPrecip","TempSeasonality","PrecipSeasonality","Elevation")
+tetrapodtraits.phyllostom[,var_names] <- sapply(tetrapodtraits.phyllostom[,var_names], as.numeric)
 cohens_d <- c()
-anova_p <- c()
+log_reg <- c()
 
 for (var in var_names) {
     
-x <- cohen.d(na.omit(tetrapodtraits.phyllostom[tetrapodtraits.phyllostom$XYorvariant=='variant',][[var]]), na.omit(tetrapodtraits.phyllostom[tetrapodtraits.phyllostom$XYorvariant=='XY',][[var]]))
+x <- cohen.d(na.omit(tetrapodtraits.phyllostom[tetrapodtraits.phyllostom$XYorvariant==0,][[var]]), na.omit(tetrapodtraits.phyllostom[tetrapodtraits.phyllostom$XYorvariant==1,][[var]]))
 cohens_d <- c(cohens_d, x$estimate)
 
 y <- tetrapodtraits.phyllostom[[var]]
 names(y) <- unlist(tetrapodtraits.phyllostom$Scientific.Name)
 group <- factor(tetrapodtraits.phyllostom$XYorvariant)
 names(group) <- unlist(tetrapodtraits.phyllostom$Scientific.Name) 
-test <- aov.phylo(y ~ group, keep.tip(phyllostom.tree, tetrapodtraits.phyllostom[!(is.na(tetrapodtraits.phyllostom[[var]])),]$Scientific.Name), nsim = 1000)
-anova_p <- c(anova_p, summary(test)$coefficients[2,4])
-    
+test <- phyloglm(group ~ y, phy = keep.tip(phyllostom.tree, tetrapodtraits.phyllostom[!(is.na(tetrapodtraits.phyllostom[[var]])),]$Scientific.Name), data = tetrapodtraits.phyllostom, method = c("logistic_MPLE"), boot = 10)
+log_reg <- rbind(log_reg, summary(test))
+print(test$alphaWarn)
 }
-results_table <- data.frame(var = var_names, cohens.d = cohens_d, anova.p = anova_p)
-##write.table(results_table, 'Herp_table.txt', quote = FALSE, row.names = FALSE, sep = '\t')
-
-sig_vars <- results_table[results_table$anova.p < 0.05/length(var_names),]$var
-res <- Map(combn, list(sig_vars), seq_along(sig_vars), simplify = FALSE)
-res <- unlist(res, recursive = FALSE)
-## bonferroni correction
+## check each variable in each clade for corresponding warning messages
+## phyllo_log_reg_p
 ```
+
+```{r}
+color <- recode(tetrapodtraits.phyllostom$sex, "XY" = "black", "XAYAfusion" = "purple", "XAfusion" = "blue")
+phyllo.mycol <- with(tetrapodtraits.phyllostom, as.character(color[match(phyllostom.tree$tip.label, tetrapodtraits.phyllostom$Scientific.Name)]))
+plot(phyllostom.tree, no.margin = TRUE, cex = 0.5, tip.color = phyllo.mycol)
+```
+
 
 ```{r}
 tetrapodtraits.sorex <- tetrapodtraits[which(tetrapodtraits$Family == "Soricidae"),]
@@ -174,9 +207,9 @@ setdiff(sorex.tree$tip.label, tetrapodtraits.sorex$Scientific.Name)
 ```
 
 ```{r}
+variant.mamm <- read.csv(file = "variant_mammals.csv", header=T)
 variant.sorex <- variant.mamm$X.2[77:86]
 variant.sorex
-## variant.mamm is not an object on this script, fix this at some point, also make sure table of variant mammals is up to date, and this is the first time it comes up here so probably good practice to call back to it for the other families
 ```
 
 ```{r}
@@ -184,44 +217,298 @@ tetrapodtraits.sorex <- add_column(tetrapodtraits.sorex,sex="",.before = 1)
 tetrapodtraits.sorex$sex <- sex.reference[match(tetrapodtraits.sorex$Scientific.Name, sex.reference$species),2]
 tetrapodtraits.sorex <- add_column(tetrapodtraits.sorex,AbsoluteLatitude="",.after = 63)
 tetrapodtraits.sorex$AbsoluteLatitude <- abs(tetrapodtraits.sorex$Latitude)
+tetrapodtraits.sorex <- add_column(tetrapodtraits.sorex,XYorvariant="",.before = 1)
+tetrapodtraits.sorex$XYorvariant <- mapvalues(tetrapodtraits.sorex$sex, from = c("XY","XAfusion"), to = c(0,1))
+## XY = 0, variant = 1
+tetrapodtraits.sorex$XYorvariant <- as.numeric(tetrapodtraits.sorex$XYorvariant)
 tetrapodtraits.sorex <- tetrapodtraits.sorex[!sapply(tetrapodtraits.sorex, function(x) all(x == ""))]
 tetrapodtraits.sorex
 ```
 
-```{r}
-tetrapodtraits.sorex <- add_column(tetrapodtraits.sorex,XYorvariant="",.before = 1)
-tetrapodtraits.sorex$XYorvariant <- tetrapodtraits.sorex$sex
-tetrapodtraits.sorex$XYorvariant <- mapvalues(tetrapodtraits.sorex$XYorvariant, from = c("XAfusion"), to = c("variant"))
-tetrapodtraits.sorex <- tetrapodtraits.sorex[!sapply(tetrapodtraits.sorex, function(x) all(x == ""))]
-tetrapodtraits.sorex
-```
 
 ```{r}
 rownames(tetrapodtraits.sorex) <- unlist(tetrapodtraits.sorex$Scientific.Name)
-var_names <- c("BodyLength_mm", "BodyMass_g", "RangeSize", "Latitude", "AbsoluteLatitude", "AnnuMeanTemp","AnnuPrecip","TempSeasonality","PrecipSeasonality","Elevation")
+var_names <- c("RangeSize","AbsoluteLatitude","AnnuMeanTemp","AnnuPrecip","TempSeasonality","PrecipSeasonality","Elevation")
 cohens_d <- c()
-anova_p <- c()
+log_reg <- c()
 
 for (var in var_names) {
     
-x <- cohen.d(na.omit(tetrapodtraits.sorex[tetrapodtraits.sorex$XYorvariant=='variant',][[var]]), na.omit(tetrapodtraits.sorex[tetrapodtraits.sorex$XYorvariant=='XY',][[var]]))
+x <- cohen.d(na.omit(tetrapodtraits.sorex[tetrapodtraits.sorex$XYorvariant==1,][[var]]), na.omit(tetrapodtraits.sorex[tetrapodtraits.sorex$XYorvariant==0,][[var]]))
 cohens_d <- c(cohens_d, x$estimate)
 
 y <- tetrapodtraits.sorex[[var]]
 names(y) <- unlist(tetrapodtraits.sorex$Scientific.Name)
 group <- factor(tetrapodtraits.sorex$XYorvariant)
 names(group) <- unlist(tetrapodtraits.sorex$Scientific.Name) 
-test <- aov.phylo(y ~ group, keep.tip(sorex.tree, tetrapodtraits.sorex[!(is.na(tetrapodtraits.sorex[[var]])),]$Scientific.Name), nsim = 1000)
-anova_p <- c(anova_p, summary(test)$coefficients[2,4])
+test <- phyloglm(group ~ y, phy = keep.tip(sorex.tree, tetrapodtraits.sorex[!(is.na(tetrapodtraits.sorex[[var]])),]$Scientific.Name), data = tetrapodtraits.sorex, method = c("logistic_MPLE"), boot = 10)
+log_reg <- rbind(log_reg, summary(test))
+print(test$alphaWarn)
     
 }
-results_table <- data.frame(var = var_names, cohens.d = cohens_d, anova.p = anova_p)
-##write.table(results_table, 'Herp_table.txt', quote = FALSE, row.names = FALSE, sep = '\t')
-
-sig_vars <- results_table[results_table$anova.p < 0.05/length(var_names),]$var
-res <- Map(combn, list(sig_vars), seq_along(sig_vars), simplify = FALSE)
-res <- unlist(res, recursive = FALSE)
-## bonferroni correction
+## maybe actually use cohens_d at some point for analysis?
+## sorex_log_reg_p
 ```
+
+
+```{r}
+ggplot(tetrapodtraits.sorex, aes(x = reorder(tetrapodtraits.sorex$Scientific.Name, AbsoluteLatitude), y = AbsoluteLatitude, fill = sex)) + 
+geom_bar(stat="identity") +
+scale_x_discrete(guide = guide_axis(angle = 45)) +
+theme(axis.text=element_text(size=2.5)) +
+labs(x = "Soricidae species sorted by AbsoluteLat")
+## map species ranges, get other ecovariables from the same dataset as tetrapodtraits integrated, read more lit!
+```
+
+```{r}
+ggplot(tetrapodtraits.sorex, aes(x = reorder(tetrapodtraits.sorex$Scientific.Name, RangeSize), y = RangeSize, fill = sex)) + 
+geom_bar(stat="identity") +
+scale_x_discrete(guide = guide_axis(angle = 45))
+```
+
+```{r}
+herp.multiphylo <- read.nexus(file = "herpoutput.nex")
+herp.multiphylo
+```
+
+```{r}
+phy.replace.herp <- function(tree) {
+  tree$tip.label <- sub("_", " ", tree$tip.label)
+  tree$tip.label <- mapvalues(tree$tip.label, from=c("Herpestes brachyurus","Herpestes edwardsii","Herpestes fuscus","Herpestes semitorquatus","Herpestes smithii","Herpestes urva","Herpestes vitticollis","Herpestes javanicus","Herpestes naso"), to=c("Urva brachyura","Urva edwardsii","Urva fusca","Urva semitorquata","Urva smithii","Urva urva","Urva vitticollis","Urva javanica","Xenogale naso"))
+  return(tree)
+}
+```
+
+```{r}
+herp.multiphylo <- lapply(herp.multiphylo, phy.replace.herp)
+class(herp.multiphylo) <- "multiPhylo"
+```
+
+```{r}
+var_names <- c("RangeSize","AbsoluteLatitude","AnnuMeanTemp","AnnuPrecip","TempSeasonality","PrecipSeasonality","Elevation")
+sensiphy_analyses <- c()
+
+for (var in var_names) {
+
+herp.sensiphy <- tree_phyglm(XYorvariant ~ tetrapodtraits.herp[[var]], data = tetrapodtraits.herp, phy = herp.multiphylo, n.tree = 10)
+sensiphy_analyses <- rbind(sensiphy_analyses, summary(herp.sensiphy))
+
+}
+```
+
+```{r}
+herp.sensiphy <- tree_phyglm(XYorvariant ~ Elevation, data = tetrapodtraits.herp, phy = herp.multiphylo, n.tree = 10)
+herp.sensiphy
+## assumption that all non-variant species are XY?
+```
+
+```{r}
+phyllostom.multiphylo <- read.nexus(file = "phyllostomoutput.nex")
+phyllostom.multiphylo
+```
+
+```{r}
+phy.replace.phyllostom <- function(tree) {
+  tree$tip.label <- sub("_", " ", tree$tip.label)
+  tree$tip.label <- mapvalues(tree$tip.label, from=c("Dermanura aztecus", "Dermanura cinereus", "Dermanura glaucus", "Dermanura gnomus", "Dermanura rosenbergii", "Dermanura toltecus", "Lophostoma aequatorialis", "Lophostoma silvicolum", "Mimon crenulatum", "Mimon koepckeae", "Vampyressa bidens", "Vampyressa brocki", "Vampyressa nymphaea", "Diaemus youngi"), to=c("Dermanura azteca", "Dermanura cinerea", "Dermanura glauca", "Dermanura gnoma", "Dermanura rosenbergi", "Dermanura tolteca", "Lophostoma occidentale", "Lophostoma silvicola", "Gardnerycteris crenulata", "Gardnerycteris koepckeae", "Vampyriscus bidens", "Vampyriscus brocki", "Vampyriscus nymphaeus", "Diaemus youngii"))
+  return(tree)
+}
+```
+
+```{r}
+phyllostom.multiphylo <- lapply(phyllostom.multiphylo, phy.replace.phyllostom)
+class(phyllostom.multiphylo) <- "multiPhylo"
+```
+
+```{r}
+phyllostom.sensiphy <- tree_phyglm(XYorvariant ~ Elevation, data = tetrapodtraits.phyllostom, phy = phyllostom.multiphylo, n.tree = 10)
+```
+
+```{r}
+sorex.multiphylo <- read.nexus(file = "sorexoutput.nex")
+sorex.multiphylo
+```
+
+```{r}
+phy.replace.sorex <- function(tree) {
+  tree$tip.label <- sub("_", " ", tree$tip.label)
+  return(tree)
+}
+```
+
+```{r}
+sorex.multiphylo <- lapply(sorex.multiphylo, phy.replace.sorex)
+class(sorex.multiphylo) <- "multiPhylo"
+```
+
+```{r}
+sorex.sensiphy <- tree_phyglm(XYorvariant ~ Elevation, data = tetrapodtraits.sorex, phy = sorex.multiphylo, n.tree = 10)
+summary(sorex.sensiphy)
+```
+
+```{r}
+color <- recode(tetrapodtraits.sorex$sex, "XY" = "black", "XAfusion" = "blue")
+sorex.mycol <- with(tetrapodtraits.sorex, as.character(color[match(sorex.tree$tip.label, tetrapodtraits.sorex$Scientific.Name)]))
+plot(sorex.tree, no.margin = TRUE, cex = 0.2, tip.color = sorex.mycol)
+```
+
+```{r}
+sorex.variant.node <- getMRCA(sorex.tree, c("Sorex antinorii","Sorex araneus","Sorex arcticus","Sorex asper","Sorex coronatus","Sorex daphaenodon","Sorex granarius","Sorex maritimensis","Sorex satunini","Sorex tundrensis"))
+sorex.variant.node
+```
+
+```{r}
+plotTree(sorex.variant.tree, ftype="i", fsize=1, lwd=1)
+add.arrow(sorex.variant.tree, tip = c("Sorex antinorii","Sorex araneus","Sorex arcticus","Sorex asper","Sorex coronatus","Sorex daphaenodon","Sorex granarius","Sorex maritimensis","Sorex satunini","Sorex tundrensis"),lwd=0.5,arrl=0.1,col="red",offset=2)
+## setting Sorex kozlovi as XY is an unsafe assumption, should do something about this
+```
+
+```{r}
+karyotype.data <- read.csv(file = "chroms.csv")
+karyotype.data
+## check out jon's review paper too, only analyze species with known karyotype data and compare to all species (w assumptions)? trait evolution modeling?
+```
+
+```{r}
+karyotype.data$Species <- gsub('_', ' ', karyotype.data$Species)
+karyotype.data
+```
+
+```{r}
+tetrapodtraits.herp <- add_column(tetrapodtraits.herp, perc.acro = "")
+tetrapodtraits.herp$perc.acro <- karyotype.data[match(tetrapodtraits.herp$Scientific.Name, karyotype.data$Species),5]
+tetrapodtraits.herp <- tetrapodtraits.herp[!sapply(tetrapodtraits.herp, function(x) all(x == ""))]
+tetrapodtraits.herp
+```
+
+```{r}
+ggplot(tetrapodtraits.herp, aes(x = reorder(tetrapodtraits.herp$Scientific.Name, perc.acro), y = perc.acro, fill = sex)) +
+geom_bar(stat="identity") +
+scale_x_discrete(guide = guide_axis(angle = 45))
+```
+
+```{r}
+## tetrapodtraits.herp.variant
+herp.no.acro.data <- tetrapodtraits.herp$Scientific.Name[which(is.na(tetrapodtraits.herp$perc.acro))]
+```
+
+```{r}
+jon.karyotype.data <- read.csv(file = "family_level_known_karyotypes.csv")
+jon.karyotype.data
+```
+
+```{r}
+jon.karyotype.data$mdd_species <- gsub('_', ' ', jon.karyotype.data$mdd_species)
+jon.karyotype.data
+```
+
+```{r}
+jon.karyotype.data.herps <- jon.karyotype.data[jon.karyotype.data$family == "HERPESTIDAE",]
+jon.karyotype.data.herps$mdd_species[which(is.na(jon.karyotype.data.herps$sex_chr))]
+```
+
+
+```{r}
+tetrapodtraits.herp <- add_column(tetrapodtraits.herp, sex.imputed = "", .before = 2)
+tetrapodtraits.herp$sex.imputed <- tetrapodtraits.herp$XYorvariant
+## sex.imputed == 1 means we made XY assumption, sex.imputed == 0 means we have source
+tetrapodtraits.herp$sex.imputed <- mapvalues(tetrapodtraits.herp$XYorvariant, from = c(1,0), to = c(0,"XY"))
+## XY because we're not sure yet, but should be safe to say if it's XX/XY and has perc.acro value and/or a citation in jon.karyotype.data, there's a source for its XX/XYness
+tetrapodtraits.herp <- tetrapodtraits.herp[!sapply(tetrapodtraits.herp, function(x) all(x == ""))]
+tetrapodtraits.herp
+```
+
+```{r}
+XY.with.blackmon.data <- intersect(tetrapodtraits.herp$Scientific.Name[tetrapodtraits.herp$sex.imputed == "XY"], tetrapodtraits.herp$Scientific.Name[which(!is.na(tetrapodtraits.herp$perc.acro))])
+XY.with.blackmon.data
+```
+
+```{r}
+tetrapodtraits.herp$sex.imputed[which(tetrapodtraits.herp$Scientific.Name %in% XY.with.blackmon.data)] <- 0
+tetrapodtraits.herp
+```
+
+```{r}
+XY.with.jon.data <- intersect(jon.karyotype.data.herps$mdd_species[which(!is.na(jon.karyotype.data.herps$sex_chr))], tetrapodtraits.herp$Scientific.Name[tetrapodtraits.herp$sex.imputed == "XY"])
+XY.with.jon.data
+```
+
+```{r}
+tetrapodtraits.herp$sex.imputed[which(tetrapodtraits.herp$Scientific.Name %in% XY.with.jon.data)] <- 0
+tetrapodtraits.herp
+```
+
+```{r}
+tetrapodtraits.herp$sex.imputed <- mapvalues(tetrapodtraits.herp$sex.imputed, from=c("XY"), to=c(1))
+tetrapodtraits.herp
+```
+
+```{r}
+tetrapodtraits.herp$perc.acro[4] <- tetrapodtraits.herp$Scientific.Name[4]
+tetrapodtraits.herp$perc.acro[28] <- tetrapodtraits.herp$Scientific.Name[28]
+tetrapodtraits.herp$perc.acro[34] <- tetrapodtraits.herp$Scientific.Name[34]
+tetrapodtraits.herp$perc.acro <- mapvalues(tetrapodtraits.herp$perc.acro, from = c("Bdeogale nigripes", "Ichneumia albicauda", "Suricata suricatta"), to = c(0.16666667, 0.16666667, 0.16666667))
+tetrapodtraits.herp$perc.acro
+```
+
+```{r}
+tetrapodtraits.herp.known.karyo <- tetrapodtraits.herp[!is.na(tetrapodtraits.herp$perc.acro),]
+tetrapodtraits.herp.known.karyo$perc.acro <- as.numeric(tetrapodtraits.herp.known.karyo$perc.acro)
+tetrapodtraits.herp.known.karyo <- tetrapodtraits.herp.known.karyo %>% mutate(perc.acro.binned = cut(perc.acro, breaks = c(0, 0.01, 0.25, 0.4)))
+tetrapodtraits.herp.known.karyo$perc.acro.binned[is.na(tetrapodtraits.herp.known.karyo$perc.acro.binned)] <- 0
+tetrapodtraits.herp.known.karyo
+```
+
+```{r}
+ggplot(tetrapodtraits.herp.known.karyo, aes(x=perc.acro.binned, color=sex)) +
+  geom_bar(fill="white", position="dodge", alpha=0.5)
+```
+
+```{r}
+tetrapodtraits.phyllostom <- add_column(tetrapodtraits.phyllostom, perc.acro = "")
+tetrapodtraits.phyllostom$perc.acro <- karyotype.data[match(tetrapodtraits.phyllostom$Scientific.Name, karyotype.data$Species),5]
+tetrapodtraits.phyllostom <- tetrapodtraits.phyllostom[!sapply(tetrapodtraits.phyllostom, function(x) all(x == ""))]
+tetrapodtraits.phyllostom
+```
+
+```{r}
+tetrapodtraits.phyllostom$perc.acro[which(tetrapodtraits.phyllostom$Scientific.Name %in% c("Carollia perspicillata", "Ariteus flavescens", "Artibeus fimbriatus", "Artibeus jamaicensis", "Artibeus lituratus", "Artibeus obscurus", "Artibeus planirostris", "Dermanura cinerea", "Dermanura phaeotis", "Dermanura tolteca", "Mesophylla macconnelli", "Phyllops falcatus", "Uroderma magnirostrum"))] <- c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0.16666667)
+tetrapodtraits.phyllostom$perc.acro
+```
+
+```{r}
+tetrapodtraits.phyllo.known.karyo <- tetrapodtraits.phyllostom[!is.na(tetrapodtraits.phyllostom$perc.acro),]
+tetrapodtraits.phyllo.known.karyo
+```
+
+```{r}
+ggplot(tetrapodtraits.phyllo.known.karyo, aes(fill=sex, x=perc.acro)) +
+  geom_bar(position = "dodge")
+```
+
+```{r}
+tetrapodtraits.sorex <- add_column(tetrapodtraits.sorex, perc.acro = "")
+tetrapodtraits.sorex$perc.acro <- karyotype.data[match(tetrapodtraits.sorex$Scientific.Name, karyotype.data$Species),5]
+tetrapodtraits.sorex <- tetrapodtraits.sorex[!sapply(tetrapodtraits.sorex, function(x) all(x == ""))]
+tetrapodtraits.sorex
+```
+
+
+```{r}
+tetrapodtraits.sorex$perc.acro[which(tetrapodtraits.sorex$Scientific.Name %in% c("Sorex antinorii", "Sorex maritimensis", "Sorex satunini"))] <- c(0.33333333, 0.71428571, 0.33333333)
+tetrapodtraits.sorex$perc.acro
+```
+
+```{r}
+tetrapodtraits.sorex.known.karyo <- tetrapodtraits.sorex[!is.na(tetrapodtraits.sorex$perc.acro),]
+tetrapodtraits.sorex.known.karyo
+```
+
+```{r}
+ggplot(tetrapodtraits.sorex.known.karyo, aes(x=perc.acro, color=sex)) +
+  geom_bar(fill="white", alpha=0.5)
+```
+
+
 
 
