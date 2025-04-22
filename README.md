@@ -9,13 +9,13 @@ Other tangentially related stuff includes ancestral state reconstruction, etc.
 
 **asr stuff.Rmd** - Ancestral state reconstruction script for variant Herpestidae species
 
-**sex chromosome project updated.Rmd** - Under construction, new & updated version of analysis scripts hopefully integrating all three mammal clades of interest, using data from Moura _et al._ (2024)
+**sex chromosome project updated.Rmd** - Script actively being worked on, new & updated version of analysis scripts integrating all three mammal clades of interest, using data from Moura _et al._ (2024). Includes single-tree analyses using _phylolm_ (phylo. log regression) and multiPhylo analyses using _sensiPhy_
 
 to do: 
-- start Soricidae analyses
-- further literature reading for ecology/climate and its effects on sexual conflict
-- flesh out Phyllostomidae script
-- make data more available
+- find good statistical methods for testing meiotic polarity hypothesis
+- rerun analyses while dropping _Sorex kozlovi_ or setting it as XAfusion
+- make more graphs!
+- write this paper already...
 
 Citations:
 K. T. David, Global gradients in the distribution of animal polyploids. Proc. Natl. Acad. Sci. U.S.A. 119, e2214070119 (2022). Code modified from original scripts.
