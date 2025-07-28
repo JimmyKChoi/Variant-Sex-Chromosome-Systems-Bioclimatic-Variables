@@ -9,12 +9,12 @@ Other tangentially related stuff includes ancestral state reconstruction, etc.
 
 **asr stuff.Rmd** - Ancestral state reconstruction script for variant Herpestidae species
 
-**sex chromosome project updated.Rmd** - Script actively being worked on, new & updated version of analysis scripts integrating all three mammal clades of interest, using data from Moura _et al._ (2024). Includes single-tree analyses using _phylolm_ (phylo. log regression) and multiPhylo analyses using _sensiPhy_
+**sex chromosome project updated.Rmd** - Master script used for analysis and testing, new & updated version of analysis scripts integrating all three mammal clades of interest, using data from Moura _et al._ (2024). Includes single-tree analyses using _phylolm_ (phylo. log regression) and multiPhylo analyses using _sensiPhy_. Currently being split into three separate scripts, with the goal of being able to run these with no modification.
+
+**initial_phyloglm_analyses.Rmd** - The first of three scripts acting as polished versions of the master script, meant to allow easy reproduction of results. This one focuses on the initial analyses performed with the consensus tree using _phylolm_.
 
 to do: 
-- find good statistical methods for testing meiotic polarity hypothesis
-- rerun analyses while dropping _Sorex kozlovi_ or setting it as XAfusion
-- make more graphs!
+- make more figures, including with plotTree.barplot!
 - write this paper already...
 
 Citations:
