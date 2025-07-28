@@ -15,6 +15,7 @@ Other tangentially related stuff includes ancestral state reconstruction, etc.
 
 to do: 
 - make more figures, including with plotTree.barplot!
+- separate master script into individual sections for analysis and polish these up to allow for easy reproduction of results
 - write this paper already...
 
 Citations:
