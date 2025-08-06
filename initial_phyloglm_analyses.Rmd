@@ -135,7 +135,6 @@ tetrapodtraits.herp.known.karyo$perc.acro <- as.numeric(tetrapodtraits.herp.know
 tetrapodtraits.herp.known.karyo <- tetrapodtraits.herp.known.karyo %>% mutate(perc.acro.binned = cut(perc.acro, breaks = c(0, 0.01, 0.25, 0.4), include.lowest=TRUE))
 tetrapodtraits.herp.known.karyo$perc.acro.binned[is.na(tetrapodtraits.herp.known.karyo$perc.acro.binned)] <- 0
 tetrapodtraits.herp.known.karyo
-write.csv(tetrapodtraits.herp.known.karyo, file = "tetrapodtraits_herp_known_karyo.csv", row.names = TRUE, col.names = TRUE)
 ```
 
 ```{r}
@@ -235,7 +234,6 @@ tetrapodtraits.phyllostom$perc.acro
 ```{r}
 tetrapodtraits.phyllo.known.karyo <- tetrapodtraits.phyllostom[!is.na(tetrapodtraits.phyllostom$perc.acro),]
 tetrapodtraits.phyllo.known.karyo
-write.csv(tetrapodtraits.phyllo.known.karyo, file = "tetrapodtraits_phyllo_known_karyo.csv", row.names = TRUE, col.names = TRUE)
 ```
 
 ```{r}
@@ -329,7 +327,6 @@ tetrapodtraits.sorex$perc.acro
 ```{r}
 tetrapodtraits.sorex.known.karyo <- tetrapodtraits.sorex[!is.na(tetrapodtraits.sorex$perc.acro),]
 tetrapodtraits.sorex.known.karyo
-write.csv(tetrapodtraits.sorex.known.karyo, file = "tetrapodtraits_sorex_known_karyo.csv", row.names = TRUE, col.names = TRUE)
 ```
 
 ```{r}
