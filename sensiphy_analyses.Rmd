@@ -1,0 +1,176 @@
+---
+title: "sensiphy analyses"
+author: "Jimmy Choi"
+output: html_document
+date: "2025-07-24"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+## set directory here
+knitr::opts_knit$set(root.dir = "")
+library(ape) ## v5.8-1
+library(plyr) ## v1.8.9
+library(tibble) ## v3.3.0
+library(dplyr) ## v1.1.4
+library(geiger) ## v2.0.11
+library(effsize) ## v0.8.1
+library(sensiPhy) ## v0.8.5
+```
+
+```{r}
+## reading in sets of 1000 trees from the posterior distribution for each mammal family of interest
+herp.multiphylo <- read.nexus(file = "herpoutput.nex")
+herp.multiphylo
+```
+
+```{r}
+## function to replace tip names over the 1000 trees for each family with those in MDD v.1.11 (Herpestidae in this case)
+phy.replace.herp <- function(tree) {
+  tree$tip.label <- sub("_", " ", tree$tip.label)
+  tree$tip.label <- mapvalues(tree$tip.label, from=c("Herpestes brachyurus","Herpestes edwardsii","Herpestes fuscus","Herpestes semitorquatus","Herpestes smithii","Herpestes urva","Herpestes vitticollis","Herpestes javanicus","Herpestes naso"), to=c("Urva brachyura","Urva edwardsii","Urva fusca","Urva semitorquata","Urva smithii","Urva urva","Urva vitticollis","Urva javanica","Xenogale naso"))
+  return(tree)
+}
+```
+
+```{r}
+herp.multiphylo <- lapply(herp.multiphylo, phy.replace.herp)
+class(herp.multiphylo) <- "multiPhylo"
+## coerce back from "list" class object into "multiPhylo" class
+```
+
+```{r}
+## use summary(x) and sensi_plot(x) to check results
+## p-values for each test are located in x$sensi.estimates$pval.estimate
+herp.sensiphy.rangesize <- tree_phyglm(XYorvariant ~ RangeSize, data = tetrapodtraits.herp, phy = herp.multiphylo, n.tree = 1000, track = FALSE)
+herp.sensiphy.abslat <- tree_phyglm(XYorvariant ~ AbsoluteLatitude, data = tetrapodtraits.herp, phy = herp.multiphylo, n.tree = 1000, track = FALSE)
+herp.sensiphy.annumeantemp <- tree_phyglm(XYorvariant ~ AnnuMeanTemp, data = tetrapodtraits.herp, phy = herp.multiphylo, n.tree = 1000, track = FALSE)
+herp.sensiphy.annuprecip <- tree_phyglm(XYorvariant ~ AnnuPrecip, data = tetrapodtraits.herp, phy = herp.multiphylo, n.tree = 1000, track = FALSE)
+herp.sensiphy.tempseason <- tree_phyglm(XYorvariant ~ TempSeasonality, data = tetrapodtraits.herp, phy = herp.multiphylo, n.tree = 1000, track = FALSE)
+herp.sensiphy.precipseason <- tree_phyglm(XYorvariant ~ PrecipSeasonality, data = tetrapodtraits.herp, phy = herp.multiphylo, n.tree = 1000, track = FALSE)
+herp.sensiphy.elevation <- tree_phyglm(XYorvariant ~ Elevation, data = tetrapodtraits.herp, phy = herp.multiphylo, n.tree = 1000, track = FALSE)
+herp.sensiphy.percacro <- tree_phyglm(XYorvariant ~ perc.acro, data = tetrapodtraits.herp.known.karyo, phy = herp.multiphylo, n.tree = 1000, track = FALSE)
+```
+
+```{r}
+herp.sensiphy.p <- list("RangeSize"=herp.sensiphy.rangesize$sensi.estimates$pval.estimate, 
+                        "AbsoluteLat"=herp.sensiphy.abslat$sensi.estimates$pval.estimate, 
+                        "AnnuMeanTemp"=herp.sensiphy.annumeantemp$sensi.estimates$pval.estimate,
+                        "AnnuPrecip"=herp.sensiphy.annuprecip$sensi.estimates$pval.estimate,
+                        "TempSeasonality"=herp.sensiphy.tempseason$sensi.estimates$pval.estimate,
+                        "PrecipSeasonality"=herp.sensiphy.precipseason$sensi.estimates$pval.estimate,
+                        "Elevation"=herp.sensiphy.elevation$sensi.estimates$pval.estimate,
+                        "% Acrocentric"=herp.sensiphy.percacro$sensi.estimates$pval.estimate)
+```
+
+```{r}
+png(filename = "herp_sensiphy_p.png", width = 4000, height = 2000, units="px", res = 300, bg = NA)
+stripchart(herp.sensiphy.p, main="sensiPhy p-values over 1000 trees, Herpestidae", xlab="Eco-environmental variables studied", ylab="P-values", method = "jitter", jitter = 0.1, vertical = TRUE, cex = 0.2)
+points(herp_adjusted_p, col = "red", pch = 7, cex = 1.5, bg = 2, lwd = 2)
+dev.off()
+```
+
+
+
+
+
+```{r}
+phyllostom.multiphylo <- read.nexus(file = "phyllostomoutput.nex")
+phyllostom.multiphylo
+```
+
+```{r}
+phy.replace.phyllostom <- function(tree) {
+  tree$tip.label <- sub("_", " ", tree$tip.label)
+  tree$tip.label <- mapvalues(tree$tip.label, from=c("Dermanura aztecus", "Dermanura cinereus", "Dermanura glaucus", "Dermanura gnomus", "Dermanura rosenbergii", "Dermanura toltecus", "Lophostoma aequatorialis", "Lophostoma silvicolum", "Mimon crenulatum", "Mimon koepckeae", "Vampyressa bidens", "Vampyressa brocki", "Vampyressa nymphaea", "Diaemus youngi"), to=c("Dermanura azteca", "Dermanura cinerea", "Dermanura glauca", "Dermanura gnoma", "Dermanura rosenbergi", "Dermanura tolteca", "Lophostoma occidentale", "Lophostoma silvicola", "Gardnerycteris crenulata", "Gardnerycteris koepckeae", "Vampyriscus bidens", "Vampyriscus brocki", "Vampyriscus nymphaeus", "Diaemus youngii"))
+  return(tree)
+}
+```
+
+```{r}
+phyllostom.multiphylo <- lapply(phyllostom.multiphylo, phy.replace.phyllostom)
+class(phyllostom.multiphylo) <- "multiPhylo"
+```
+
+```{r}
+## use summary(x) and sensi_plot(x) to check results
+## p-values for each test are located in x$sensi.estimates$pval.estimate
+phyllo.sensiphy.rangesize <- tree_phyglm(XYorvariant ~ RangeSize, data = tetrapodtraits.phyllostom, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE)
+phyllo.sensiphy.abslat <- tree_phyglm(XYorvariant ~ AbsoluteLatitude, data = tetrapodtraits.phyllostom, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE)
+phyllo.sensiphy.annumeantemp <- tree_phyglm(XYorvariant ~ AnnuMeanTemp, data = tetrapodtraits.phyllostom, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE)
+phyllo.sensiphy.annuprecip <- tree_phyglm(XYorvariant ~ AnnuPrecip, data = tetrapodtraits.phyllostom, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE)
+phyllo.sensiphy.tempseason <- tree_phyglm(XYorvariant ~ TempSeasonality, data = tetrapodtraits.phyllostom, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE)
+phyllo.sensiphy.precipseason <- tree_phyglm(XYorvariant ~ PrecipSeasonality, data = tetrapodtraits.phyllostom, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE)
+phyllo.sensiphy.elevation <- tree_phyglm(XYorvariant ~ Elevation, data = tetrapodtraits.phyllostom, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE)
+phyllo.sensiphy.percacro <- tree_phyglm(XYorvariant ~ perc.acro, data = tetrapodtraits.phyllo.known.karyo, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE)
+```
+
+```{r}
+phyllo.sensiphy.p <- list("RangeSize"=phyllo.sensiphy.rangesize$sensi.estimates$pval.estimate, 
+                        "AbsoluteLat"=phyllo.sensiphy.abslat$sensi.estimates$pval.estimate, 
+                        "AnnuMeanTemp"=phyllo.sensiphy.annumeantemp$sensi.estimates$pval.estimate,
+                        "AnnuPrecip"=phyllo.sensiphy.annuprecip$sensi.estimates$pval.estimate,
+                        "TempSeasonality"=phyllo.sensiphy.tempseason$sensi.estimates$pval.estimate,
+                        "PrecipSeasonality"=phyllo.sensiphy.precipseason$sensi.estimates$pval.estimate,
+                        "Elevation"=phyllo.sensiphy.elevation$sensi.estimates$pval.estimate,
+                        "% Acrocentric"=phyllo.sensiphy.percacro$sensi.estimates$pval.estimate)
+```
+
+```{r}
+png(filename = "phyllo_sensiphy_p.png", width = 4000, height = 2000, units="px", res = 300, bg = NA)
+stripchart(phyllo.sensiphy.p, main="sensiPhy p-values over 1000 trees, Phyllostomidae", xlab="Eco-environmental variables studied", ylab="P-values", method = "jitter", jitter = 0.1, vertical = TRUE, cex = 0.2)
+points(phyllo_adjusted_p, col = "red", pch = 7, cex = 1.5, bg = 2, lwd = 2)
+dev.off()
+```
+
+
+
+
+
+```{r}
+sorex.multiphylo <- read.nexus(file = "sorexoutput.nex")
+sorex.multiphylo
+```
+
+```{r}
+phy.replace.sorex <- function(tree) {
+  tree$tip.label <- sub("_", " ", tree$tip.label)
+  return(tree)
+}
+```
+
+```{r}
+sorex.multiphylo <- lapply(sorex.multiphylo, phy.replace.sorex)
+class(sorex.multiphylo) <- "multiPhylo"
+```
+
+```{r}
+## use summary(x) and sensi_plot(x) to check results
+## p-values for each test are located in x$sensi.estimates$pval.estimate
+sorex.sensiphy.rangesize <- tree_phyglm(XYorvariant ~ RangeSize, data = tetrapodtraits.sorex, phy = sorex.multiphylo, n.tree = 1000, track = FALSE)
+sorex.sensiphy.abslat <- tree_phyglm(XYorvariant ~ AbsoluteLatitude, data = tetrapodtraits.sorex, phy = sorex.multiphylo, n.tree = 1000, track = FALSE)
+sorex.sensiphy.annumeantemp <- tree_phyglm(XYorvariant ~ AnnuMeanTemp, data = tetrapodtraits.sorex, phy = sorex.multiphylo, n.tree = 1000, track = FALSE)
+sorex.sensiphy.annuprecip <- tree_phyglm(XYorvariant ~ AnnuPrecip, data = tetrapodtraits.sorex, phy = sorex.multiphylo, n.tree = 1000, track = FALSE)
+sorex.sensiphy.tempseason <- tree_phyglm(XYorvariant ~ TempSeasonality, data = tetrapodtraits.sorex, phy = sorex.multiphylo, n.tree = 1000, track = FALSE)
+sorex.sensiphy.precipseason <- tree_phyglm(XYorvariant ~ PrecipSeasonality, data = tetrapodtraits.sorex, phy = sorex.multiphylo, n.tree = 1000, track = FALSE)
+sorex.sensiphy.elevation <- tree_phyglm(XYorvariant ~ Elevation, data = tetrapodtraits.sorex, phy = sorex.multiphylo, n.tree = 1000, track = FALSE)
+sorex.sensiphy.percacro <- tree_phyglm(XYorvariant ~ perc.acro, data = tetrapodtraits.sorex.known.karyo, phy = sorex.multiphylo, n.tree = 1000, track = FALSE)
+```
+
+```{r}
+sorex.sensiphy.p <- list("RangeSize"=sorex.sensiphy.rangesize$sensi.estimates$pval.estimate, 
+                        "AbsoluteLat"=sorex.sensiphy.abslat$sensi.estimates$pval.estimate, 
+                        "AnnuMeanTemp"=sorex.sensiphy.annumeantemp$sensi.estimates$pval.estimate,
+                        "AnnuPrecip"=sorex.sensiphy.annuprecip$sensi.estimates$pval.estimate,
+                        "TempSeasonality"=sorex.sensiphy.tempseason$sensi.estimates$pval.estimate,
+                        "PrecipSeasonality"=sorex.sensiphy.precipseason$sensi.estimates$pval.estimate,
+                        "Elevation"=sorex.sensiphy.elevation$sensi.estimates$pval.estimate,
+                        "% Acrocentric"=sorex.sensiphy.percacro$sensi.estimates$pval.estimate)
+```
+
+```{r}
+png(filename = "sorex_sensiphy_p.png", width = 4000, height = 2000, units="px", res = 300, bg = NA)
+stripchart(sorex.sensiphy.p, main="sensiPhy p-values over 1000 trees, Soricidae", xlab="Eco-environmental variables studied", ylab="P-values", method = "jitter", jitter = 0.1, vertical = TRUE, cex = 0.2)
+points(sorex_adjusted_p, col = "red", pch = 7, cex = 1.5, bg = 2, lwd = 2)
+dev.off()
+```
