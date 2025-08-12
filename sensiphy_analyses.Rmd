@@ -19,6 +19,16 @@ library(sensiPhy) ## v0.8.5
 ```
 
 ```{r}
+## reading in tetrapodtraits datasets & subsets for species w/ known karyotype
+tetrapodtraits.herp <- read.csv(file = "tetrapodtraits_herp.csv", row.names = 1)
+tetrapodtraits.herp.known.karyo <- read.csv(file = "tetrapodtraits_herp_known_karyo.csv", row.names = 1)
+tetrapodtraits.phyllostom <- read.csv(file = "tetrapodtraits_phyllo.csv", row.names = 1)
+tetrapodtraits.phyllo.known.karyo <- read.csv(file = "tetrapodtraits_phyllo_known_karyo.csv", row.names = 1)
+tetrapodtraits.sorex <- read.csv(file = "tetrapodtraits_sorex.csv", row.names = 1)
+tetrapodtraits.sorex.known.karyo <- read.csv(file = "tetrapodtraits_sorex_known_karyo.csv", row.names = 1)
+```
+
+```{r}
 ## reading in sets of 1000 trees from the posterior distribution for each mammal family of interest
 herp.multiphylo <- read.nexus(file = "herpoutput.nex")
 herp.multiphylo
@@ -64,8 +74,11 @@ herp.sensiphy.p <- list("RangeSize"=herp.sensiphy.rangesize$sensi.estimates$pval
 ```
 
 ```{r}
+## reproduces scatterplots of sensiPhy p-values (vs. single corrected p-value from phyloglm & consensus tree) for Herpestidae
+herp_adjusted_p <- read.csv(file = "herp_adjusted_p_values.csv")
+herp_adjusted_p <- herp_adjusted_p$x
 png(filename = "herp_sensiphy_p.png", width = 4000, height = 2000, units="px", res = 300, bg = NA)
-stripchart(herp.sensiphy.p, main="sensiPhy p-values over 1000 trees, Herpestidae", xlab="Eco-environmental variables studied", ylab="P-values", method = "jitter", jitter = 0.1, vertical = TRUE, cex = 0.2)
+stripchart(herp.sensiphy.p, main="sensiPhy p-values over 1000 trees compared to single consensus tree result, Herpestidae", xlab="Eco-environmental variables studied", ylab="P-values", method = "jitter", jitter = 0.1, vertical = TRUE, cex = 0.2)
 points(herp_adjusted_p, col = "red", pch = 7, cex = 1.5, bg = 2, lwd = 2)
 dev.off()
 ```
@@ -117,8 +130,11 @@ phyllo.sensiphy.p <- list("RangeSize"=phyllo.sensiphy.rangesize$sensi.estimates$
 ```
 
 ```{r}
+## reproduces scatterplots of sensiPhy p-values (vs. single corrected p-value from phyloglm & consensus tree) for Phyllostomidae
+phyllo_adjusted_p <- read.csv(file = "phyllo_adjusted_p_values.csv")
+phyllo_adjusted_p <- phyllo_adjusted_p$x
 png(filename = "phyllo_sensiphy_p.png", width = 4000, height = 2000, units="px", res = 300, bg = NA)
-stripchart(phyllo.sensiphy.p, main="sensiPhy p-values over 1000 trees, Phyllostomidae", xlab="Eco-environmental variables studied", ylab="P-values", method = "jitter", jitter = 0.1, vertical = TRUE, cex = 0.2)
+stripchart(phyllo.sensiphy.p, main="sensiPhy p-values over 1000 trees compared to single consensus tree result, Phyllostomidae", xlab="Eco-environmental variables studied", ylab="P-values", method = "jitter", jitter = 0.1, vertical = TRUE, cex = 0.2)
 points(phyllo_adjusted_p, col = "red", pch = 7, cex = 1.5, bg = 2, lwd = 2)
 dev.off()
 ```
@@ -169,8 +185,11 @@ sorex.sensiphy.p <- list("RangeSize"=sorex.sensiphy.rangesize$sensi.estimates$pv
 ```
 
 ```{r}
+## reproduces scatterplots of sensiPhy p-values (vs. single corrected p-value from phyloglm & consensus tree) for Soricidae
+sorex_adjusted_p <- read.csv(file = "sorex_adjusted_p_values.csv")
+sorex_adjusted_p <- sorex_adjusted_p$x
 png(filename = "sorex_sensiphy_p.png", width = 4000, height = 2000, units="px", res = 300, bg = NA)
-stripchart(sorex.sensiphy.p, main="sensiPhy p-values over 1000 trees, Soricidae", xlab="Eco-environmental variables studied", ylab="P-values", method = "jitter", jitter = 0.1, vertical = TRUE, cex = 0.2)
+stripchart(sorex.sensiphy.p, main="sensiPhy p-values over 1000 trees compared to single consensus tree result, Soricidae", xlab="Eco-environmental variables studied", ylab="P-values", method = "jitter", jitter = 0.1, vertical = TRUE, cex = 0.2)
 points(sorex_adjusted_p, col = "red", pch = 7, cex = 1.5, bg = 2, lwd = 2)
 dev.off()
 ```

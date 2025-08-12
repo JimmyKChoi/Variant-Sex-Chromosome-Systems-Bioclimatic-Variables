@@ -170,6 +170,12 @@ herp_adjusted_p
 ## perform statistical correction by using p.adjust(herp_uncorrected_p, method = "fdr")
 ```
 
+```{r}
+write.csv(tetrapodtraits.herp, file = "tetrapodtraits_herp.csv", row.names = TRUE, col.names = TRUE)
+write.csv(tetrapodtraits.herp.known.karyo, file = "tetrapodtraits_herp_known_karyo.csv", row.names = TRUE, col.names = TRUE)
+write.csv(herp_adjusted_p, file = "herp_adjusted_p_values.csv", row.names = c("RangeSize","AbsoluteLatitude","AnnuMeanTemp","AnnuPrecip","TempSeasonality","PrecipSeasonality","Elevation","% Acro")) 
+```
+
 
 
 
@@ -260,6 +266,12 @@ log_reg_p_values_phyllo <- append(log_reg_p_values_phyllo, log_reg2[1:7,2][[7]][
 log_reg_p_values_phyllo <- append(log_reg_p_values_phyllo, log_reg_perc_acro2[1,]$coefficients[12])
 phyllo_adjusted_p <- p.adjust(log_reg_p_values_phyllo, method = "fdr")
 phyllo_adjusted_p
+```
+
+```{r}
+write.csv(tetrapodtraits.phyllostom, file = "tetrapodtraits_phyllo.csv", row.names = TRUE, col.names = TRUE)
+write.csv(tetrapodtraits.phyllo.known.karyo, file = "tetrapodtraits_phyllo_known_karyo.csv", row.names = TRUE, col.names = TRUE)
+write.csv(phyllo_adjusted_p, file = "phyllo_adjusted_p_values.csv", row.names = c("RangeSize","AbsoluteLatitude","AnnuMeanTemp","AnnuPrecip","TempSeasonality","PrecipSeasonality","Elevation","% Acro")) 
 ```
 
 
@@ -353,4 +365,10 @@ log_reg_p_values_sorex <- append(log_reg_p_values_sorex, log_reg3[1:7,2][[7]][12
 log_reg_p_values_sorex <- append(log_reg_p_values_sorex, log_reg_perc_acro3[1,]$coefficients[12])
 sorex_adjusted_p <- p.adjust(log_reg_p_values_sorex, method = "fdr")
 sorex_adjusted_p
+```
+
+```{r}
+write.csv(tetrapodtraits.sorex, file = "tetrapodtraits_sorex.csv", row.names = TRUE, col.names = TRUE)
+write.csv(tetrapodtraits.sorex.known.karyo, file = "tetrapodtraits_sorex_known_karyo.csv", row.names = TRUE, col.names = TRUE)
+write.csv(sorex_adjusted_p, file = "sorex_adjusted_p_values.csv", row.names = c("RangeSize","AbsoluteLatitude","AnnuMeanTemp","AnnuPrecip","TempSeasonality","PrecipSeasonality","Elevation","% Acro")) 
 ```
