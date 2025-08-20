@@ -11,8 +11,8 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_knit$set(root.dir = "")
 library(ape) ## v5.8-1
 library(plyr) ## v1.8.9
-library(tibble) ## v3.3.0
 library(dplyr) ## v1.1.4
+library(tibble) ## v3.3.0
 library(geiger) ## v2.0.11
 library(effsize) ## v0.8.1
 library(phylolm) ## v2.6.5
@@ -65,6 +65,13 @@ tetrapodtraits.herp$XYorvariant <- as.numeric(tetrapodtraits.herp$XYorvariant)
 ## XY = 0, variant = 1
 tetrapodtraits.herp <- tetrapodtraits.herp[!sapply(tetrapodtraits.herp, function(x) all(x == ""))]
 tetrapodtraits.herp
+```
+
+```{r}
+## Herpestidae species considered XY marked in black, YAfusions marked in red
+color <- recode(tetrapodtraits.herp$sex, "XY" = "black", "YAfusion" = "red")
+herp.mycol <- with(tetrapodtraits.herp, as.character(color[match(herpestidae.tree$tip.label, tetrapodtraits.herp$Scientific.Name)]))
+plot(herpestidae.tree, no.margin = TRUE, cex = 0.5, tip.color = herp.mycol)
 ```
 
 ```{r}
@@ -207,6 +214,13 @@ tetrapodtraits.phyllostom
 ```
 
 ```{r}
+## Phyllostomidae species considered XY marked in black, XAfusions marked in blue, XAYAfusions marked in purple
+color <- recode(tetrapodtraits.phyllostom$sex, "XY" = "black", "XAYAfusion" = "purple", "XAfusion" = "blue")
+phyllo.mycol <- with(tetrapodtraits.phyllostom, as.character(color[match(phyllostom.tree$tip.label, tetrapodtraits.phyllostom$Scientific.Name)]))
+plot(phyllostom.tree, no.margin = TRUE, cex = 0.3, tip.color = phyllo.mycol)
+```
+
+```{r}
 rownames(tetrapodtraits.phyllostom) <- unlist(tetrapodtraits.phyllostom$Scientific.Name)
 var_names <- c("RangeSize","AbsoluteLatitude","AnnuMeanTemp","AnnuPrecip","TempSeasonality","PrecipSeasonality","Elevation")
 tetrapodtraits.phyllostom[,var_names] <- sapply(tetrapodtraits.phyllostom[,var_names], as.numeric)
@@ -303,6 +317,22 @@ tetrapodtraits.sorex$XYorvariant <- mapvalues(tetrapodtraits.sorex$sex, from = c
 tetrapodtraits.sorex$XYorvariant <- as.numeric(tetrapodtraits.sorex$XYorvariant)
 tetrapodtraits.sorex <- tetrapodtraits.sorex[!sapply(tetrapodtraits.sorex, function(x) all(x == ""))]
 tetrapodtraits.sorex
+```
+
+```{r}
+## Soricidae species considered XY marked in black, XAfusions marked in blue
+color <- recode(tetrapodtraits.sorex$sex, "XY" = "black", "XAfusion" = "blue")
+sorex.mycol <- with(tetrapodtraits.sorex, as.character(color[match(sorex.tree$tip.label, tetrapodtraits.sorex$Scientific.Name)]))
+plot(sorex.tree, no.margin = TRUE, cex = 0.2, tip.color = sorex.mycol)
+```
+
+```{r}
+## plotting only clade containing all variant species in Soricidae
+## in the original Upham et al. tree, Sorex kozlovi was placed as sister to Sorex daphaenodon, but was removed earlier in this script due to taxonomic uncertainty and data deficiency
+sorex.variant.node <- getMRCA(sorex.tree, c("Sorex antinorii","Sorex araneus","Sorex arcticus","Sorex asper","Sorex coronatus","Sorex daphaenodon","Sorex granarius","Sorex maritimensis","Sorex satunini","Sorex tundrensis"))
+sorex.variant.tree <- extract.clade(sorex.tree, sorex.variant.node)
+sorex.variant.col <- with(tetrapodtraits.sorex, as.character(color[match(sorex.variant.tree$tip.label, tetrapodtraits.sorex$Scientific.Name)]))
+plot(sorex.variant.tree, no.margin = TRUE, cex = 1, tip.color = sorex.variant.col)
 ```
 
 ```{r}

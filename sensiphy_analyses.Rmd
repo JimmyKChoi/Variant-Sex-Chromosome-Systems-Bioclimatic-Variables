@@ -11,8 +11,8 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_knit$set(root.dir = "")
 library(ape) ## v5.8-1
 library(plyr) ## v1.8.9
-library(tibble) ## v3.3.0
 library(dplyr) ## v1.1.4
+library(tibble) ## v3.3.0
 library(geiger) ## v2.0.11
 library(effsize) ## v0.8.1
 library(sensiPhy) ## v0.8.5
@@ -151,6 +151,7 @@ sorex.multiphylo
 ```{r}
 phy.replace.sorex <- function(tree) {
   tree$tip.label <- sub("_", " ", tree$tip.label)
+  tree <- drop.tip(tree, c("Sorex kozlovi"))
   return(tree)
 }
 ```

@@ -1,0 +1,171 @@
+---
+title: "shapefile experimenting"
+author: "Jimmy Choi"
+date: "2025-01-14"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "C:/Users/jimmy/OneDrive/Documents")
+library(sf)
+library(ggplot2)
+library(tidyverse)
+library(phytools)
+library(plyr)
+library(rnaturalearth)
+```
+
+```{r}
+tetrapodtraits.shapefile <- read_sf("GridCellShapefile/Shapefiles/gridcells_110km.shp")
+tetrapodtraits.shapefile
+```
+
+```{r}
+tetrapod360 <- read.csv("Tetrapod_360.csv")
+tetrapod360$Scientific.Name <- mapvalues(tetrapod360$Scientific.Name, from = c("Herpestes brachyurus", "Herpestes edwardsii", "Herpestes fuscus", "Herpestes javanicus", "Herpestes naso", "Herpestes semitorquatus", "Herpestes smithii", "Herpestes urva", "Herpestes vitticollis"), to = c("Urva brachyura", "Urva edwardsii", "Urva fusca", "Urva javanica", "Xenogale naso", "Urva semitorquata", "Urva smithii", "Urva urva", "Urva vitticollis"))
+herp.cells <- tetrapod360[which(tetrapod360$Scientific.Name %in% tetrapodtraits.herp$Scientific.Name),]
+herp.cells
+```
+
+```{r}
+herp.range <- tetrapodtraits.shapefile %>%
+  filter(Cl_I110 %in% herp.cells$Cell_Id110)
+variant.herp <- variant.mamm$X.2[31:39]
+variant.herp <- mapvalues(variant.herp, from = c("Urva edwardsi"), to = c("Urva edwardsii"))
+tetrapod360.variant.herp <- herp.cells[which(herp.cells$Scientific.Name %in% variant.herp),]
+variant.herp.range <- tetrapodtraits.shapefile %>%
+  filter(Cl_I110 %in% tetrapod360.variant.herp$Cell_Id110)
+```
+
+```{r}
+ggplot(herp.range) +
+  geom_sf(fill = "brown", color = NA) +
+  theme_void()
+## maybe family ranges for better idea of what data means?
+```
+
+```{r}
+ggplot(variant.herp.range) +
+  geom_sf(fill = "#CC79A7", color = NA) +
+  theme_void()
+## maybe family ranges for better idea of what data means?
+```
+
+```{r}
+phyllo.cells <- tetrapod360[which(tetrapod360$Scientific.Name %in% tetrapodtraits.phyllostom$Scientific.Name),]
+phyllo.cells
+```
+
+```{r}
+phyllo.range <- tetrapodtraits.shapefile %>%
+  filter(Cl_I110 %in% phyllo.cells$Cell_Id110)
+```
+
+```{r}
+ggplot(phyllo.range) +
+  geom_sf(fill = "darkgreen", color = NA) +
+  theme_void()
+```
+
+```{r}
+variant.phyllo <- variant.mamm$X.2[40:69]
+tetrapod360.variant.phyllo <- phyllo.cells[which(phyllo.cells$Scientific.Name %in% variant.phyllo),]
+variant.phyllo.range <- tetrapodtraits.shapefile %>%
+  filter(Cl_I110 %in% tetrapod360.variant.phyllo$Cell_Id110)
+```
+
+```{r}
+ggplot(variant.phyllo.range) +
+  geom_sf(fill = "pink", color = "white") +
+  theme_void()
+```
+
+```{r}
+sorex.cells <- tetrapod360[which(tetrapod360$Scientific.Name %in% tetrapodtraits.sorex$Scientific.Name),]
+sorex.cells
+```
+
+```{r}
+sorex.range <- tetrapodtraits.shapefile %>%
+  filter(Cl_I110 %in% sorex.cells$Cell_Id110)
+```
+
+```{r}
+ggplot(sorex.range) +
+  geom_sf(fill = "orange", color = NA) +
+  theme_void()
+## no. of cells in rangesize per species that is shared with other species? chromosome fusions as a means of generating pre-zygotic barriers in a setting permissive of high gene flow (species sharing ranges within a family?)
+```
+
+```{r}
+variant.shrew <- variant.mamm$X.2[77:86]
+tetrapod360.variant.shrew <- sorex.cells[which(sorex.cells$Scientific.Name %in% variant.shrew),]
+variant.shrew.range <- tetrapodtraits.shapefile %>%
+  filter(Cl_I110 %in% tetrapod360.variant.shrew$Cell_Id110)
+```
+
+```{r}
+ggplot(variant.shrew.range) +
+  geom_sf(fill = "steelblue2", color = NA) +
+  theme_void()
+```
+
+```{r}
+ne_sf <- ne_countries(returnclass = "sf")
+
+ggplot(data = ne_sf) +
+  geom_sf(color = NA) +
+  geom_sf(data = herp.range, aes(fill = "#D55E00", colour = "#D55E00")) +
+  geom_sf(data = variant.herp.range, aes(fill = "#CC79A7", colour = "#CC79A7")) +
+  scale_fill_identity(name = '', guide = 'legend', labels = c("XX/XY and Variant", "Only XX/XY")) +
+  scale_colour_identity(name = '', guide = 'none', labels = c("XX/XY and Variant", "Only XX/XY")) +
+  theme_void()
+
+#"#000000" "#E69F00" "#56B4E9" "#009E73" "#F0E442" "#0072B2"
+#"#D55E00" "#CC79A7" "#999999"
+```
+
+```{r}
+herp.tree.known.karyo <- keep.tip(herpestidae.tree, tetrapodtraits.herp.known.karyo$Scientific.Name)
+herp.matrix <- as.matrix(tetrapodtraits.herp.known.karyo, rownames = 4)[,88]
+plotTree.boxplot(herp.tree.known.karyo, herp.matrix)
+```
+
+```{r}
+species.of.int <- c(rbind(as.vector(tetrapodtraits.herp$Scientific.Name), as.vector(tetrapodtraits.phyllostom$Scientific.Name), as.vector(tetrapodtraits.sorex$Scientific.Name)))
+tetrapod360.specofint <- which(tetrapod360$Scientific.Name %in% species.of.int)
+specofint.cells <- tetrapod360[tetrapod360.specofint,]
+mammal.range <- tetrapodtraits.shapefile %>%
+  filter(Cl_I110 %in% specofint.cells$Cell_Id110)
+ggplot(mammal.range) +
+  geom_sf(fill = "azure3", color = NA) +
+  theme_void()
+```
+
+```{r}
+phyllostom.XAYA <- tetrapodtraits.phyllostom$Scientific.Name[tetrapodtraits.phyllostom$sex == "XAYAfusion"]
+phyllostom.XA <- tetrapodtraits.phyllostom$Scientific.Name[tetrapodtraits.phyllostom$sex == "XAfusion"]
+tetrapod360.XAYA.phyllo <- phyllo.cells[which(phyllo.cells$Scientific.Name %in% phyllostom.XAYA),]
+XAYA.phyllo.range <- tetrapodtraits.shapefile %>%
+  filter(Cl_I110 %in% tetrapod360.XAYA.phyllo$Cell_Id110)
+tetrapod360.XA.phyllo <- phyllo.cells[which(phyllo.cells$Scientific.Name %in% phyllostom.XA),]
+XA.phyllo.range <- tetrapodtraits.shapefile %>%
+  filter(Cl_I110 %in% tetrapod360.XA.phyllo$Cell_Id110)
+```
+
+```{r}
+ggplot(XAYA.phyllo.range) +
+  geom_sf(fill = "purple", color = NA) +
+  theme_void()
+```
+
+```{r}
+ggplot(XA.phyllo.range) +
+  geom_sf(fill = "steelblue2", color = NA) +
+  theme_void()
+```
+
+
+
+
