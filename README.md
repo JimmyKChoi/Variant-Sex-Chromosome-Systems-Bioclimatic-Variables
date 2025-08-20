@@ -19,8 +19,7 @@ Other tangentially related stuff includes ancestral state reconstruction, etc.
 **sensiphy_analyses.Rmd** - The second in a series of scripts acting as polished versions of the master script. This one focuses on the _sensiPhy_ analyses performing phylo. log regression over sets of 1000 trees from the posterior distribution for each mammal family of interest.
 
 to do: 
-- make more figures, including with plotTree.barplot!
-- separate master script into individual sections for analysis and polish these up to allow for easy reproduction of results
+- make more figures, including with plotTree.barplot! (supplemental figure needs include sensi_plot() outputs)
 - write this paper already...
 
 Citations:
