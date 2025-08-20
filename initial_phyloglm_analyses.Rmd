@@ -69,7 +69,7 @@ tetrapodtraits.herp
 
 ```{r}
 ## Herpestidae species considered XY marked in black, YAfusions marked in red
-color <- recode(tetrapodtraits.herp$sex, "XY" = "black", "YAfusion" = "red")
+color <- recode(tetrapodtraits.herp$sex, "XY" = "black", "YAfusion" = "#D55E00")
 herp.mycol <- with(tetrapodtraits.herp, as.character(color[match(herpestidae.tree$tip.label, tetrapodtraits.herp$Scientific.Name)]))
 plot(herpestidae.tree, no.margin = TRUE, cex = 0.5, tip.color = herp.mycol)
 ```
@@ -215,7 +215,7 @@ tetrapodtraits.phyllostom
 
 ```{r}
 ## Phyllostomidae species considered XY marked in black, XAfusions marked in blue, XAYAfusions marked in purple
-color <- recode(tetrapodtraits.phyllostom$sex, "XY" = "black", "XAYAfusion" = "purple", "XAfusion" = "blue")
+color <- recode(tetrapodtraits.phyllostom$sex, "XY" = "black", "XAYAfusion" = "#CC79A7", "XAfusion" = "#56B4E9")
 phyllo.mycol <- with(tetrapodtraits.phyllostom, as.character(color[match(phyllostom.tree$tip.label, tetrapodtraits.phyllostom$Scientific.Name)]))
 plot(phyllostom.tree, no.margin = TRUE, cex = 0.3, tip.color = phyllo.mycol)
 ```
@@ -321,7 +321,7 @@ tetrapodtraits.sorex
 
 ```{r}
 ## Soricidae species considered XY marked in black, XAfusions marked in blue
-color <- recode(tetrapodtraits.sorex$sex, "XY" = "black", "XAfusion" = "blue")
+color <- recode(tetrapodtraits.sorex$sex, "XY" = "black", "XAfusion" = "#56B4E9")
 sorex.mycol <- with(tetrapodtraits.sorex, as.character(color[match(sorex.tree$tip.label, tetrapodtraits.sorex$Scientific.Name)]))
 plot(sorex.tree, no.margin = TRUE, cex = 0.2, tip.color = sorex.mycol)
 ```

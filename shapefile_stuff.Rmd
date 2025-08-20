@@ -39,18 +39,23 @@ variant.herp.range <- tetrapodtraits.shapefile %>%
 ```
 
 ```{r}
-ggplot(herp.range) +
-  geom_sf(fill = "brown", color = NA) +
+ne_sf <- ne_countries(returnclass = "sf")
+
+ggplot(data = ne_sf) +
+  geom_sf(color = NA) +
+  geom_sf(data = herp.range, aes(fill = "#000000", colour = "#000000")) +
+  geom_sf(data = variant.herp.range, aes(fill = "#D55E00", colour = "#D55E00")) +
+  scale_fill_identity(name = '', guide = 'legend', labels = c("Only XX/XY", "XX/XY and variant")) +
+  scale_colour_identity(name = '', guide = 'none', labels = c("Only XX/XY", "XX/XY and variant")) +
   theme_void()
-## maybe family ranges for better idea of what data means?
+
+#"#000000" "#E69F00" "#56B4E9" "#009E73" "#F0E442" "#0072B2"
+#"#D55E00" "#CC79A7" "#999999" Okabe colors
 ```
 
-```{r}
-ggplot(variant.herp.range) +
-  geom_sf(fill = "#CC79A7", color = NA) +
-  theme_void()
-## maybe family ranges for better idea of what data means?
-```
+
+
+
 
 ```{r}
 phyllo.cells <- tetrapod360[which(tetrapod360$Scientific.Name %in% tetrapodtraits.phyllostom$Scientific.Name),]
@@ -63,12 +68,6 @@ phyllo.range <- tetrapodtraits.shapefile %>%
 ```
 
 ```{r}
-ggplot(phyllo.range) +
-  geom_sf(fill = "darkgreen", color = NA) +
-  theme_void()
-```
-
-```{r}
 variant.phyllo <- variant.mamm$X.2[40:69]
 tetrapod360.variant.phyllo <- phyllo.cells[which(phyllo.cells$Scientific.Name %in% variant.phyllo),]
 variant.phyllo.range <- tetrapodtraits.shapefile %>%
@@ -76,10 +75,53 @@ variant.phyllo.range <- tetrapodtraits.shapefile %>%
 ```
 
 ```{r}
-ggplot(variant.phyllo.range) +
-  geom_sf(fill = "pink", color = "white") +
+ne_sf <- ne_countries(returnclass = "sf")
+
+ggplot(data = ne_sf) +
+  geom_sf(color = NA) +
+  geom_sf(data = phyllo.range, aes(fill = "#000000", colour = "#000000")) +
+  geom_sf(data = variant.phyllo.range, aes(fill = "#CC79A7", colour = "#CC79A7")) +
+  scale_fill_identity(name = '', guide = 'legend', labels = c("Only XX/XY", "XX/XY and variant")) +
+  scale_colour_identity(name = '', guide = 'none', labels = c("Only XX/XY", "XX/XY and variant")) +
   theme_void()
+
+#"#000000" "#E69F00" "#56B4E9" "#009E73" "#F0E442" "#0072B2"
+#"#D55E00" "#CC79A7" "#999999" Okabe colors
 ```
+
+```{r}
+phyllostom.XAYA <- tetrapodtraits.phyllostom$Scientific.Name[tetrapodtraits.phyllostom$sex == "XAYAfusion"]
+phyllostom.XA <- tetrapodtraits.phyllostom$Scientific.Name[tetrapodtraits.phyllostom$sex == "XAfusion"]
+tetrapod360.XAYA.phyllo <- phyllo.cells[which(phyllo.cells$Scientific.Name %in% phyllostom.XAYA),]
+XAYA.phyllo.range <- tetrapodtraits.shapefile %>%
+  filter(Cl_I110 %in% tetrapod360.XAYA.phyllo$Cell_Id110)
+tetrapod360.XA.phyllo <- phyllo.cells[which(phyllo.cells$Scientific.Name %in% phyllostom.XA),]
+XA.phyllo.range <- tetrapodtraits.shapefile %>%
+  filter(Cl_I110 %in% tetrapod360.XA.phyllo$Cell_Id110)
+phyllo.cells.both.variant <- intersect(XA.phyllo.range$Cl_I110, XAYA.phyllo.range$Cl_I110)
+both.variant.phyllo.range <- phyllo.range[phyllo.range$Cl_I110 %in% phyllo.cells.both.variant, ]
+```
+
+```{r}
+ne_sf <- ne_countries(returnclass = "sf")
+
+ggplot(data = ne_sf) +
+  geom_sf(color = NA) +
+  geom_sf(data = phyllo.range, aes(fill = "#000000", colour = "#000000")) +
+  geom_sf(data = XAYA.phyllo.range, aes(fill = "#CC79A7", colour = "#CC79A7")) +
+  geom_sf(data = XA.phyllo.range, aes(fill = "#56B4E9", colour = "#56B4E9")) +
+  geom_sf(data = both.variant.phyllo.range, aes(fill = "#E69F00", colour = "#E69F00")) +
+  scale_fill_identity(name = '', guide = 'legend', labels = c("Only XX/XY", "XX/XY and XAfusion", "XX/XY and XAYAfusion", "XX/XY and both variant types")) +
+  scale_colour_identity(name = '', guide = 'none', labels = c("Only XX/XY", "XX/XY and XAfusion", "XX/XY and XAYAfusion", "XX/XY and both variant types")) +
+  theme_void()
+
+#"#000000" "#E69F00" "#56B4E9" "#009E73" "#F0E442" "#0072B2"
+#"#D55E00" "#CC79A7" "#999999" Okabe colors
+```
+
+
+
+
 
 ```{r}
 sorex.cells <- tetrapod360[which(tetrapod360$Scientific.Name %in% tetrapodtraits.sorex$Scientific.Name),]
@@ -92,13 +134,6 @@ sorex.range <- tetrapodtraits.shapefile %>%
 ```
 
 ```{r}
-ggplot(sorex.range) +
-  geom_sf(fill = "orange", color = NA) +
-  theme_void()
-## no. of cells in rangesize per species that is shared with other species? chromosome fusions as a means of generating pre-zygotic barriers in a setting permissive of high gene flow (species sharing ranges within a family?)
-```
-
-```{r}
 variant.shrew <- variant.mamm$X.2[77:86]
 tetrapod360.variant.shrew <- sorex.cells[which(sorex.cells$Scientific.Name %in% variant.shrew),]
 variant.shrew.range <- tetrapodtraits.shapefile %>%
@@ -106,66 +141,16 @@ variant.shrew.range <- tetrapodtraits.shapefile %>%
 ```
 
 ```{r}
-ggplot(variant.shrew.range) +
-  geom_sf(fill = "steelblue2", color = NA) +
-  theme_void()
-```
-
-```{r}
 ne_sf <- ne_countries(returnclass = "sf")
 
 ggplot(data = ne_sf) +
   geom_sf(color = NA) +
-  geom_sf(data = herp.range, aes(fill = "#D55E00", colour = "#D55E00")) +
-  geom_sf(data = variant.herp.range, aes(fill = "#CC79A7", colour = "#CC79A7")) +
-  scale_fill_identity(name = '', guide = 'legend', labels = c("XX/XY and Variant", "Only XX/XY")) +
-  scale_colour_identity(name = '', guide = 'none', labels = c("XX/XY and Variant", "Only XX/XY")) +
+  geom_sf(data = sorex.range, aes(fill = "#000000", colour = "#000000")) +
+  geom_sf(data = variant.shrew.range, aes(fill = "#56B4E9", colour = "#56B4E9")) +
+  scale_fill_identity(name = '', guide = 'legend', labels = c("Only XX/XY", "XX/XY and variant")) +
+  scale_colour_identity(name = '', guide = 'none', labels = c("Only XX/XY", "XX/XY and variant")) +
   theme_void()
 
 #"#000000" "#E69F00" "#56B4E9" "#009E73" "#F0E442" "#0072B2"
-#"#D55E00" "#CC79A7" "#999999"
+#"#D55E00" "#CC79A7" "#999999" Okabe colors
 ```
-
-```{r}
-herp.tree.known.karyo <- keep.tip(herpestidae.tree, tetrapodtraits.herp.known.karyo$Scientific.Name)
-herp.matrix <- as.matrix(tetrapodtraits.herp.known.karyo, rownames = 4)[,88]
-plotTree.boxplot(herp.tree.known.karyo, herp.matrix)
-```
-
-```{r}
-species.of.int <- c(rbind(as.vector(tetrapodtraits.herp$Scientific.Name), as.vector(tetrapodtraits.phyllostom$Scientific.Name), as.vector(tetrapodtraits.sorex$Scientific.Name)))
-tetrapod360.specofint <- which(tetrapod360$Scientific.Name %in% species.of.int)
-specofint.cells <- tetrapod360[tetrapod360.specofint,]
-mammal.range <- tetrapodtraits.shapefile %>%
-  filter(Cl_I110 %in% specofint.cells$Cell_Id110)
-ggplot(mammal.range) +
-  geom_sf(fill = "azure3", color = NA) +
-  theme_void()
-```
-
-```{r}
-phyllostom.XAYA <- tetrapodtraits.phyllostom$Scientific.Name[tetrapodtraits.phyllostom$sex == "XAYAfusion"]
-phyllostom.XA <- tetrapodtraits.phyllostom$Scientific.Name[tetrapodtraits.phyllostom$sex == "XAfusion"]
-tetrapod360.XAYA.phyllo <- phyllo.cells[which(phyllo.cells$Scientific.Name %in% phyllostom.XAYA),]
-XAYA.phyllo.range <- tetrapodtraits.shapefile %>%
-  filter(Cl_I110 %in% tetrapod360.XAYA.phyllo$Cell_Id110)
-tetrapod360.XA.phyllo <- phyllo.cells[which(phyllo.cells$Scientific.Name %in% phyllostom.XA),]
-XA.phyllo.range <- tetrapodtraits.shapefile %>%
-  filter(Cl_I110 %in% tetrapod360.XA.phyllo$Cell_Id110)
-```
-
-```{r}
-ggplot(XAYA.phyllo.range) +
-  geom_sf(fill = "purple", color = NA) +
-  theme_void()
-```
-
-```{r}
-ggplot(XA.phyllo.range) +
-  geom_sf(fill = "steelblue2", color = NA) +
-  theme_void()
-```
-
-
-
-
