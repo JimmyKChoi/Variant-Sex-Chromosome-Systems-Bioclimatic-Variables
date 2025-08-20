@@ -10,6 +10,8 @@ Other tangentially related stuff includes ancestral state reconstruction, etc.
 
 **sex chromosome project updated.Rmd** - Master script used for analysis and testing, new & updated version of analysis scripts integrating all three mammal clades of interest, using data from Moura _et al._ (2024). Includes single-tree analyses using _phylolm_ (phylo. log regression) and multiPhylo analyses using _sensiPhy_. Currently being split into three separate scripts, with the goal of being able to run these with no modification.
 
+**shapefile_stuff.Rmd** - A testbench script, mostly meant as an experiment in plotting shapefiles with ggplot to build Figure 2 in our paper. Allows for visualization of distributions for our mammal families of interest.
+
 <ins>Ready-to-run scripts (run these in sequence!)</ins>
 
 **initial_phyloglm_analyses.Rmd** - The first in a series of scripts acting as polished versions of the master script, meant to allow easy reproduction of results. This one focuses on the initial analyses performed with the consensus tree using _phylolm_.
@@ -17,8 +19,7 @@ Other tangentially related stuff includes ancestral state reconstruction, etc.
 **sensiphy_analyses.Rmd** - The second in a series of scripts acting as polished versions of the master script. This one focuses on the _sensiPhy_ analyses performing phylo. log regression over sets of 1000 trees from the posterior distribution for each mammal family of interest.
 
 to do: 
-- make more figures, including with plotTree.barplot!
-- separate master script into individual sections for analysis and polish these up to allow for easy reproduction of results
+- make more figures, including with plotTree.barplot! (supplemental figure needs include sensi_plot() outputs)
 - write this paper already...
 
 Citations:
