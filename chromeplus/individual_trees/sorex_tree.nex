@@ -1,0 +1,853 @@
+#NEXUS
+[R-package APE, Wed Jul 16 12:58:41 2025]
+
+BEGIN TAXA;
+	DIMENSIONS NTAX = 420;
+	TAXLABELS
+		Congosorex verheyeni
+		Congosorex polli
+		Congosorex phillipsorum
+		Myosorex schalleri
+		Myosorex jejei
+		Myosorex rumpii
+		Myosorex tenuis
+		Myosorex zinki
+		Myosorex babaulti
+		Myosorex kabogoensis
+		Myosorex varius
+		Myosorex longicaudatus
+		Myosorex cafer
+		Myosorex eisentrauti
+		Myosorex sclateri
+		Myosorex blarina
+		Myosorex okuensis
+		Myosorex gnoskei
+		Myosorex kihaulei
+		Myosorex geata
+		Myosorex meesteri
+		Myosorex bururiensis
+		Sylvisorex corbeti
+		Suncus hosei
+		Sylvisorex johnstoni
+		Suncus aequatorius
+		Sylvisorex howelli
+		Sylvisorex lunaris
+		Sylvisorex camerunensis
+		Sylvisorex granti
+		Sylvisorex vulcanorum
+		Suncus hututsi
+		Sylvisorex silvanorum
+		Suncus remyi
+		Sylvisorex akaibei
+		Suncus infinitesimus
+		Suncus varilla
+		Suncus megalura
+		Ruwenzorisorex suncoides
+		Sylvisorex konganensis
+		Scutisorex thori
+		Scutisorex somereni
+		Sylvisorex ollula
+		Crocidura pachyura
+		Crocidura russula
+		Crocidura roosevelti
+		Crocidura latona
+		Crocidura zaphiri
+		Crocidura caliginea
+		Crocidura hispida
+		Crocidura voi
+		Crocidura tansaniana
+		Crocidura gmelini
+		Crocidura cyanea
+		Crocidura wimmeri
+		Crocidura baluensis
+		Crocidura poensis
+		Crocidura buettikoferi
+		Crocidura kivuana
+		Crocidura theresae
+		Crocidura tenuis
+		Crocidura batesi
+		Crocidura floweri
+		Crocidura grandiceps
+		Crocidura hildegardeae
+		Crocidura eisentrauti
+		Crocidura vosmaeri
+		Crocidura religiosa
+		Crocidura attila
+		Crocidura telfordi
+		Crocidura dhofarensis
+		Crocidura maxi
+		Crocidura nicobarica
+		Crocidura silacea
+		Crocidura orii
+		Crocidura phaeura
+		Crocidura mariquensis
+		Crocidura allex
+		Crocidura ultima
+		Crocidura fumosa
+		Crocidura dolichura
+		Crocidura arispa
+		Crocidura picea
+		Crocidura macowi
+		Crocidura ludia
+		Crocidura nana
+		Crocidura greenwoodi
+		Crocidura desperata
+		Crocidura stenocephala
+		Crocidura littoralis
+		Crocidura maurisca
+		Crocidura tarella
+		Crocidura lusitania
+		Crocidura foxi
+		Crocidura crossei
+		Crocidura jouvenetae
+		Crocidura cinderella
+		Crocidura lanosa
+		Crocidura fuscomurina
+		Paracrocidura graueri
+		Paracrocidura schoutedeni
+		Paracrocidura maxima
+		Crocidura grandis
+		Crocidura lamottei
+		Crocidura parvipes
+		Crocidura katinka
+		Crocidura vorax
+		Crocidura macarthuri
+		Crocidura harenna
+		Crocidura flavescens
+		Crocidura hirta
+		Crocidura fulvastra
+		Crocidura viaria
+		Crocidura mutesae
+		Crocidura goliath
+		Crocidura olivieri
+		Crocidura elgonius
+		Crocidura crenata
+		Crocidura grassei
+		Crocidura pitmani
+		Crocidura muricauda
+		Crocidura hilliana
+		Crocidura douceti
+		Crocidura nimbasilvanus
+		Crocidura nimbae
+		Crocidura annamitensis
+		Crocidura gracilipes
+		Crocidura selina
+		Crocidura nanilla
+		Crocidura munissii
+		Crocidura mdumai
+		Crocidura serezkyensis
+		Crocidura montis
+		Crocidura macmillani
+		Crocidura luna
+		Crocidura monax
+		Crocidura newmarki
+		Crocidura denti
+		Crocidura glassi
+		Crocidura thalia
+		Crocidura baileyi
+		Crocidura arabica
+		Crocidura niobe
+		Crocidura zimmermanni
+		Crocidura canariensis
+		Crocidura tarfayensis
+		Crocidura sicula
+		Crocidura zimmeri
+		Crocidura leucodon
+		Crocidura obscurior
+		Crocidura sapaensis
+		Crocidura whitakeri
+		Crocidura pasha
+		Diplomesodon pulchellum
+		Crocidura horsfieldii
+		Crocidura fingui
+		Crocidura manengubae
+		Crocidura miya
+		Crocidura pergrisea
+		Crocidura hikmiya
+		Crocidura planiceps
+		Crocidura sokolovi
+		Crocidura trichura
+		Crocidura neglecta
+		Crocidura rapax
+		Crocidura lasiura
+		Crocidura dsinezumi
+		Crocidura fischeri
+		Crocidura raineyi
+		Crocidura phuquocensis
+		Crocidura fuliginosa
+		Crocidura indochinensis
+		Crocidura wuchihensis
+		Crocidura tanakae
+		Crocidura zaitsevi
+		Crocidura attenuata
+		Crocidura monticola
+		Crocidura watasei
+		Crocidura jacksoni
+		Crocidura armenica
+		Crocidura paradoxura
+		Crocidura lwiroensis
+		Crocidura susiana
+		Crocidura bottegoides
+		Crocidura negligens
+		Crocidura lucina
+		Crocidura maquassiensis
+		Crocidura ansellorum
+		Crocidura malayana
+		Crocidura yankariensis
+		Crocidura abscondita
+		Crocidura jenkinsi
+		Crocidura virgata
+		Crocidura nigricans
+		Crocidura nigripes
+		Crocidura ninoyi
+		Crocidura beatus
+		Crocidura panayensis
+		Crocidura negrina
+		Crocidura guy
+		Crocidura mindorus
+		Crocidura grayi
+		Crocidura palawanensis
+		Crocidura foetida
+		Crocidura ramona
+		Crocidura beccarii
+		Crocidura longipes
+		Crocidura smithii
+		Crocidura lepidura
+		Crocidura congobelgica
+		Crocidura orientalis
+		Crocidura erica
+		Crocidura brunnea
+		Crocidura thomensis
+		Crocidura somalica
+		Crocidura zarudnyi
+		Crocidura phanluongi
+		Crocidura bottegi
+		Crocidura aleksandrisi
+		Crocidura caspica
+		Crocidura pullata
+		Crocidura sibirica
+		Crocidura suaveolens
+		Crocidura shantungensis
+		Crocidura hutanis
+		Crocidura batakorum
+		Crocidura andamanensis
+		Crocidura usambarae
+		Crocidura turba
+		Crocidura cranbrooki
+		Crocidura polia
+		Crocidura nigeriae
+		Crocidura levicula
+		Crocidura rhoditis
+		Crocidura xantippe
+		Crocidura musseri
+		Crocidura elongata
+		Crocidura lea
+		Crocidura nigrofusca
+		Suncus zeylanicus
+		Suncus mertensi
+		Suncus dayi
+		Suncus ater
+		Suncus stoliczkanus
+		Suncus montanus
+		Sylvisorex morio
+		Suncus murinus
+		Sylvisorex pluvialis
+		Feroculus feroculus
+		Suncus madagascariensis
+		Suncus etruscus
+		Suncus fellowesgordoni
+		Suncus lixus
+		Sylvisorex oriundus
+		Sylvisorex isabellae
+		Suncus malayanus
+		Solisorex pearsoni
+		Blarinella wardi
+		Blarinella quadraticauda
+		Blarinella griselda
+		Surdisorex schlitteri
+		Surdisorex polulus
+		Surdisorex norae
+		Cryptotis perijensis
+		Cryptotis lacandonensis
+		Cryptotis colombiana
+		Blarina hylophaga
+		Blarina carolinensis
+		Blarina brevicauda
+		Cryptotis gracilis
+		Cryptotis aroensis
+		Cryptotis orophila
+		Cryptotis nigrescens
+		Cryptotis venezuelensis
+		Cryptotis peruviensis
+		Cryptotis niausa
+		Cryptotis brachyonyx
+		Cryptotis magna
+		Cryptotis medellinia
+		Cryptotis phillipsii
+		Cryptotis mexicana
+		Cryptotis nelsoni
+		Cryptotis obscura
+		Cryptotis equatoris
+		Cryptotis montivaga
+		Cryptotis tamensis
+		Cryptotis peregrina
+		Cryptotis goldmani
+		Cryptotis meridensis
+		Cryptotis squamipes
+		Cryptotis tropicalis
+		Cryptotis lacertosus
+		Cryptotis hondurensis
+		Cryptotis mam
+		Cryptotis mera
+		Cryptotis goodwini
+		Cryptotis merriami
+		Cryptotis endersi
+		Cryptotis alticola
+		Cryptotis thomasi
+		Cryptotis griseoventris
+		Cryptotis mayensis
+		Cryptotis oreoryctes
+		Cryptotis parva
+		Sorex alpinus
+		Sorex buchariensis
+		Sorex oreopolus
+		Sorex bedfordiae
+		Sorex ventralis
+		Sorex excelsus
+		Sorex veraecrucis
+		Sorex cylindricauda
+		Sorex gracillimus
+		Sorex yukonicus
+		Sorex ixtlanensis
+		Sorex planiceps
+		Sorex minutissimus
+		Sorex hosonoi
+		Sorex mirabilis
+		Sorex minutus
+		Sorex volnuchini
+		Sorex thibetanus
+		Sorex caecutiens
+		Sorex shinto
+		Sorex isodon
+		Sorex unguiculatus
+		Sorex tundrensis
+		Sorex asper
+		Sorex daphaenodon
+		Sorex coronatus
+		Sorex araneus
+		Sorex granarius
+		Sorex satunini
+		Sorex antinorii
+		Sorex arcticus
+		Sorex maritimensis
+		Sorex samniticus
+		Sorex kozlovi
+		Sorex roboratus
+		Sorex mediopua
+		Sorex sclateri
+		Sorex stizodon
+		Sorex veraepacis
+		Sorex cansulus
+		Sorex arunchi
+		Sorex raddei
+		Sorex saussurei
+		Sorex trowbridgii
+		Sorex arizonae
+		Sorex hoyi
+		Sorex orizabae
+		Sorex dispar
+		Sorex fumeus
+		Sorex nanus
+		Sorex tenellus
+		Sorex sonomae
+		Sorex merriami
+		Sorex bendirii
+		Sorex palustris
+		Sorex monticolus
+		Sorex bairdi
+		Sorex pacificus
+		Sorex neomexicanus
+		Sorex ornatus
+		Sorex macrodon
+		Sorex vagrans
+		Sorex rohweri
+		Sorex preblei
+		Sorex haydeni
+		Sorex camtschatica
+		Sorex jacksoni
+		Sorex portenkoi
+		Sorex ugyunak
+		Sorex pribilofensis
+		Sorex leucogaster
+		Sorex lyelli
+		Sorex cinereus
+		Sorex milleri
+		Sorex longirostris
+		Sorex emarginatus
+		Sorex sinalis
+		Sorex alaskanus
+		Anourosorex assamensis
+		Anourosorex squamipes
+		Anourosorex yamashinai
+		Anourosorex schmidi
+		Episoriculus fumidus
+		Episoriculus macrurus
+		Episoriculus leucops
+		Episoriculus caudatus
+		Soriculus nigrescens
+		Chodsigoa salenskii
+		Chodsigoa parva
+		Chodsigoa parca
+		Chodsigoa caovansunga
+		Chodsigoa sodalis
+		Chodsigoa lamula
+		Chodsigoa smithii
+		Chodsigoa hypsibia
+		Nectogale elegans
+		Chimarrogale phaeura
+		Chimarrogale sumatrana
+		Chimarrogale platycephalus
+		Chimarrogale hantu
+		Chimarrogale styani
+		Chimarrogale himalayica
+		Neomys fodiens
+		Neomys teres
+		Neomys anomalus
+		Nesophontes major
+		Nesophontes zamicrus
+		Nesophontes edithae
+		Nesophontes paramicrus
+		Nesophontes hypomicrus
+		Nesophontes micrus
+		Megasorex gigas
+		Notiosorex evotis
+		Notiosorex cockrumi
+		Notiosorex crawfordi
+		Notiosorex villai
+	;
+END;
+BEGIN TREES;
+	TRANSLATE
+		1	Congosorex verheyeni,
+		2	Congosorex polli,
+		3	Congosorex phillipsorum,
+		4	Myosorex schalleri,
+		5	Myosorex jejei,
+		6	Myosorex rumpii,
+		7	Myosorex tenuis,
+		8	Myosorex zinki,
+		9	Myosorex babaulti,
+		10	Myosorex kabogoensis,
+		11	Myosorex varius,
+		12	Myosorex longicaudatus,
+		13	Myosorex cafer,
+		14	Myosorex eisentrauti,
+		15	Myosorex sclateri,
+		16	Myosorex blarina,
+		17	Myosorex okuensis,
+		18	Myosorex gnoskei,
+		19	Myosorex kihaulei,
+		20	Myosorex geata,
+		21	Myosorex meesteri,
+		22	Myosorex bururiensis,
+		23	Sylvisorex corbeti,
+		24	Suncus hosei,
+		25	Sylvisorex johnstoni,
+		26	Suncus aequatorius,
+		27	Sylvisorex howelli,
+		28	Sylvisorex lunaris,
+		29	Sylvisorex camerunensis,
+		30	Sylvisorex granti,
+		31	Sylvisorex vulcanorum,
+		32	Suncus hututsi,
+		33	Sylvisorex silvanorum,
+		34	Suncus remyi,
+		35	Sylvisorex akaibei,
+		36	Suncus infinitesimus,
+		37	Suncus varilla,
+		38	Suncus megalura,
+		39	Ruwenzorisorex suncoides,
+		40	Sylvisorex konganensis,
+		41	Scutisorex thori,
+		42	Scutisorex somereni,
+		43	Sylvisorex ollula,
+		44	Crocidura pachyura,
+		45	Crocidura russula,
+		46	Crocidura roosevelti,
+		47	Crocidura latona,
+		48	Crocidura zaphiri,
+		49	Crocidura caliginea,
+		50	Crocidura hispida,
+		51	Crocidura voi,
+		52	Crocidura tansaniana,
+		53	Crocidura gmelini,
+		54	Crocidura cyanea,
+		55	Crocidura wimmeri,
+		56	Crocidura baluensis,
+		57	Crocidura poensis,
+		58	Crocidura buettikoferi,
+		59	Crocidura kivuana,
+		60	Crocidura theresae,
+		61	Crocidura tenuis,
+		62	Crocidura batesi,
+		63	Crocidura floweri,
+		64	Crocidura grandiceps,
+		65	Crocidura hildegardeae,
+		66	Crocidura eisentrauti,
+		67	Crocidura vosmaeri,
+		68	Crocidura religiosa,
+		69	Crocidura attila,
+		70	Crocidura telfordi,
+		71	Crocidura dhofarensis,
+		72	Crocidura maxi,
+		73	Crocidura nicobarica,
+		74	Crocidura silacea,
+		75	Crocidura orii,
+		76	Crocidura phaeura,
+		77	Crocidura mariquensis,
+		78	Crocidura allex,
+		79	Crocidura ultima,
+		80	Crocidura fumosa,
+		81	Crocidura dolichura,
+		82	Crocidura arispa,
+		83	Crocidura picea,
+		84	Crocidura macowi,
+		85	Crocidura ludia,
+		86	Crocidura nana,
+		87	Crocidura greenwoodi,
+		88	Crocidura desperata,
+		89	Crocidura stenocephala,
+		90	Crocidura littoralis,
+		91	Crocidura maurisca,
+		92	Crocidura tarella,
+		93	Crocidura lusitania,
+		94	Crocidura foxi,
+		95	Crocidura crossei,
+		96	Crocidura jouvenetae,
+		97	Crocidura cinderella,
+		98	Crocidura lanosa,
+		99	Crocidura fuscomurina,
+		100	Paracrocidura graueri,
+		101	Paracrocidura schoutedeni,
+		102	Paracrocidura maxima,
+		103	Crocidura grandis,
+		104	Crocidura lamottei,
+		105	Crocidura parvipes,
+		106	Crocidura katinka,
+		107	Crocidura vorax,
+		108	Crocidura macarthuri,
+		109	Crocidura harenna,
+		110	Crocidura flavescens,
+		111	Crocidura hirta,
+		112	Crocidura fulvastra,
+		113	Crocidura viaria,
+		114	Crocidura mutesae,
+		115	Crocidura goliath,
+		116	Crocidura olivieri,
+		117	Crocidura elgonius,
+		118	Crocidura crenata,
+		119	Crocidura grassei,
+		120	Crocidura pitmani,
+		121	Crocidura muricauda,
+		122	Crocidura hilliana,
+		123	Crocidura douceti,
+		124	Crocidura nimbasilvanus,
+		125	Crocidura nimbae,
+		126	Crocidura annamitensis,
+		127	Crocidura gracilipes,
+		128	Crocidura selina,
+		129	Crocidura nanilla,
+		130	Crocidura munissii,
+		131	Crocidura mdumai,
+		132	Crocidura serezkyensis,
+		133	Crocidura montis,
+		134	Crocidura macmillani,
+		135	Crocidura luna,
+		136	Crocidura monax,
+		137	Crocidura newmarki,
+		138	Crocidura denti,
+		139	Crocidura glassi,
+		140	Crocidura thalia,
+		141	Crocidura baileyi,
+		142	Crocidura arabica,
+		143	Crocidura niobe,
+		144	Crocidura zimmermanni,
+		145	Crocidura canariensis,
+		146	Crocidura tarfayensis,
+		147	Crocidura sicula,
+		148	Crocidura zimmeri,
+		149	Crocidura leucodon,
+		150	Crocidura obscurior,
+		151	Crocidura sapaensis,
+		152	Crocidura whitakeri,
+		153	Crocidura pasha,
+		154	Diplomesodon pulchellum,
+		155	Crocidura horsfieldii,
+		156	Crocidura fingui,
+		157	Crocidura manengubae,
+		158	Crocidura miya,
+		159	Crocidura pergrisea,
+		160	Crocidura hikmiya,
+		161	Crocidura planiceps,
+		162	Crocidura sokolovi,
+		163	Crocidura trichura,
+		164	Crocidura neglecta,
+		165	Crocidura rapax,
+		166	Crocidura lasiura,
+		167	Crocidura dsinezumi,
+		168	Crocidura fischeri,
+		169	Crocidura raineyi,
+		170	Crocidura phuquocensis,
+		171	Crocidura fuliginosa,
+		172	Crocidura indochinensis,
+		173	Crocidura wuchihensis,
+		174	Crocidura tanakae,
+		175	Crocidura zaitsevi,
+		176	Crocidura attenuata,
+		177	Crocidura monticola,
+		178	Crocidura watasei,
+		179	Crocidura jacksoni,
+		180	Crocidura armenica,
+		181	Crocidura paradoxura,
+		182	Crocidura lwiroensis,
+		183	Crocidura susiana,
+		184	Crocidura bottegoides,
+		185	Crocidura negligens,
+		186	Crocidura lucina,
+		187	Crocidura maquassiensis,
+		188	Crocidura ansellorum,
+		189	Crocidura malayana,
+		190	Crocidura yankariensis,
+		191	Crocidura abscondita,
+		192	Crocidura jenkinsi,
+		193	Crocidura virgata,
+		194	Crocidura nigricans,
+		195	Crocidura nigripes,
+		196	Crocidura ninoyi,
+		197	Crocidura beatus,
+		198	Crocidura panayensis,
+		199	Crocidura negrina,
+		200	Crocidura guy,
+		201	Crocidura mindorus,
+		202	Crocidura grayi,
+		203	Crocidura palawanensis,
+		204	Crocidura foetida,
+		205	Crocidura ramona,
+		206	Crocidura beccarii,
+		207	Crocidura longipes,
+		208	Crocidura smithii,
+		209	Crocidura lepidura,
+		210	Crocidura congobelgica,
+		211	Crocidura orientalis,
+		212	Crocidura erica,
+		213	Crocidura brunnea,
+		214	Crocidura thomensis,
+		215	Crocidura somalica,
+		216	Crocidura zarudnyi,
+		217	Crocidura phanluongi,
+		218	Crocidura bottegi,
+		219	Crocidura aleksandrisi,
+		220	Crocidura caspica,
+		221	Crocidura pullata,
+		222	Crocidura sibirica,
+		223	Crocidura suaveolens,
+		224	Crocidura shantungensis,
+		225	Crocidura hutanis,
+		226	Crocidura batakorum,
+		227	Crocidura andamanensis,
+		228	Crocidura usambarae,
+		229	Crocidura turba,
+		230	Crocidura cranbrooki,
+		231	Crocidura polia,
+		232	Crocidura nigeriae,
+		233	Crocidura levicula,
+		234	Crocidura rhoditis,
+		235	Crocidura xantippe,
+		236	Crocidura musseri,
+		237	Crocidura elongata,
+		238	Crocidura lea,
+		239	Crocidura nigrofusca,
+		240	Suncus zeylanicus,
+		241	Suncus mertensi,
+		242	Suncus dayi,
+		243	Suncus ater,
+		244	Suncus stoliczkanus,
+		245	Suncus montanus,
+		246	Sylvisorex morio,
+		247	Suncus murinus,
+		248	Sylvisorex pluvialis,
+		249	Feroculus feroculus,
+		250	Suncus madagascariensis,
+		251	Suncus etruscus,
+		252	Suncus fellowesgordoni,
+		253	Suncus lixus,
+		254	Sylvisorex oriundus,
+		255	Sylvisorex isabellae,
+		256	Suncus malayanus,
+		257	Solisorex pearsoni,
+		258	Blarinella wardi,
+		259	Blarinella quadraticauda,
+		260	Blarinella griselda,
+		261	Surdisorex schlitteri,
+		262	Surdisorex polulus,
+		263	Surdisorex norae,
+		264	Cryptotis perijensis,
+		265	Cryptotis lacandonensis,
+		266	Cryptotis colombiana,
+		267	Blarina hylophaga,
+		268	Blarina carolinensis,
+		269	Blarina brevicauda,
+		270	Cryptotis gracilis,
+		271	Cryptotis aroensis,
+		272	Cryptotis orophila,
+		273	Cryptotis nigrescens,
+		274	Cryptotis venezuelensis,
+		275	Cryptotis peruviensis,
+		276	Cryptotis niausa,
+		277	Cryptotis brachyonyx,
+		278	Cryptotis magna,
+		279	Cryptotis medellinia,
+		280	Cryptotis phillipsii,
+		281	Cryptotis mexicana,
+		282	Cryptotis nelsoni,
+		283	Cryptotis obscura,
+		284	Cryptotis equatoris,
+		285	Cryptotis montivaga,
+		286	Cryptotis tamensis,
+		287	Cryptotis peregrina,
+		288	Cryptotis goldmani,
+		289	Cryptotis meridensis,
+		290	Cryptotis squamipes,
+		291	Cryptotis tropicalis,
+		292	Cryptotis lacertosus,
+		293	Cryptotis hondurensis,
+		294	Cryptotis mam,
+		295	Cryptotis mera,
+		296	Cryptotis goodwini,
+		297	Cryptotis merriami,
+		298	Cryptotis endersi,
+		299	Cryptotis alticola,
+		300	Cryptotis thomasi,
+		301	Cryptotis griseoventris,
+		302	Cryptotis mayensis,
+		303	Cryptotis oreoryctes,
+		304	Cryptotis parva,
+		305	Sorex alpinus,
+		306	Sorex buchariensis,
+		307	Sorex oreopolus,
+		308	Sorex bedfordiae,
+		309	Sorex ventralis,
+		310	Sorex excelsus,
+		311	Sorex veraecrucis,
+		312	Sorex cylindricauda,
+		313	Sorex gracillimus,
+		314	Sorex yukonicus,
+		315	Sorex ixtlanensis,
+		316	Sorex planiceps,
+		317	Sorex minutissimus,
+		318	Sorex hosonoi,
+		319	Sorex mirabilis,
+		320	Sorex minutus,
+		321	Sorex volnuchini,
+		322	Sorex thibetanus,
+		323	Sorex caecutiens,
+		324	Sorex shinto,
+		325	Sorex isodon,
+		326	Sorex unguiculatus,
+		327	Sorex tundrensis,
+		328	Sorex asper,
+		329	Sorex daphaenodon,
+		330	Sorex coronatus,
+		331	Sorex araneus,
+		332	Sorex granarius,
+		333	Sorex satunini,
+		334	Sorex antinorii,
+		335	Sorex arcticus,
+		336	Sorex maritimensis,
+		337	Sorex samniticus,
+		338	Sorex kozlovi,
+		339	Sorex roboratus,
+		340	Sorex mediopua,
+		341	Sorex sclateri,
+		342	Sorex stizodon,
+		343	Sorex veraepacis,
+		344	Sorex cansulus,
+		345	Sorex arunchi,
+		346	Sorex raddei,
+		347	Sorex saussurei,
+		348	Sorex trowbridgii,
+		349	Sorex arizonae,
+		350	Sorex hoyi,
+		351	Sorex orizabae,
+		352	Sorex dispar,
+		353	Sorex fumeus,
+		354	Sorex nanus,
+		355	Sorex tenellus,
+		356	Sorex sonomae,
+		357	Sorex merriami,
+		358	Sorex bendirii,
+		359	Sorex palustris,
+		360	Sorex monticolus,
+		361	Sorex bairdi,
+		362	Sorex pacificus,
+		363	Sorex neomexicanus,
+		364	Sorex ornatus,
+		365	Sorex macrodon,
+		366	Sorex vagrans,
+		367	Sorex rohweri,
+		368	Sorex preblei,
+		369	Sorex haydeni,
+		370	Sorex camtschatica,
+		371	Sorex jacksoni,
+		372	Sorex portenkoi,
+		373	Sorex ugyunak,
+		374	Sorex pribilofensis,
+		375	Sorex leucogaster,
+		376	Sorex lyelli,
+		377	Sorex cinereus,
+		378	Sorex milleri,
+		379	Sorex longirostris,
+		380	Sorex emarginatus,
+		381	Sorex sinalis,
+		382	Sorex alaskanus,
+		383	Anourosorex assamensis,
+		384	Anourosorex squamipes,
+		385	Anourosorex yamashinai,
+		386	Anourosorex schmidi,
+		387	Episoriculus fumidus,
+		388	Episoriculus macrurus,
+		389	Episoriculus leucops,
+		390	Episoriculus caudatus,
+		391	Soriculus nigrescens,
+		392	Chodsigoa salenskii,
+		393	Chodsigoa parva,
+		394	Chodsigoa parca,
+		395	Chodsigoa caovansunga,
+		396	Chodsigoa sodalis,
+		397	Chodsigoa lamula,
+		398	Chodsigoa smithii,
+		399	Chodsigoa hypsibia,
+		400	Nectogale elegans,
+		401	Chimarrogale phaeura,
+		402	Chimarrogale sumatrana,
+		403	Chimarrogale platycephalus,
+		404	Chimarrogale hantu,
+		405	Chimarrogale styani,
+		406	Chimarrogale himalayica,
+		407	Neomys fodiens,
+		408	Neomys teres,
+		409	Neomys anomalus,
+		410	Nesophontes major,
+		411	Nesophontes zamicrus,
+		412	Nesophontes edithae,
+		413	Nesophontes paramicrus,
+		414	Nesophontes hypomicrus,
+		415	Nesophontes micrus,
+		416	Megasorex gigas,
+		417	Notiosorex evotis,
+		418	Notiosorex cockrumi,
+		419	Notiosorex crawfordi,
+		420	Notiosorex villai
+	;
+	TREE * UNTITLED = [&R] ((((((((18:7.767605811,(21:7.242741627,(((22:0.5497035415,10:0.5497035415):2.247467448,8:2.797171334):0.593495495,7:3.390666485):3.852072729):0.5248672868):0.8255079934,((9:0.2999018701,12:0.2999018701):3.656616221,6:3.956519402):4.636595092):0.9103324698,(((16:1.780370632,17:1.780370632):0.2825930718,(11:1.457012464,13:1.457012464):0.6059513779):1.475479927,15:3.538443079):5.965004229):0.9654372957,(19:0.9815946015,20:0.9815946015):9.487290003):4.541802806,((4:2.09264522,5:2.09264522):1.216790634,14:3.309435854):11.70125121):15.79498014,(3:7.790297068,(2:3.221538869,1:3.221538869):4.568755785):23.01537186):7.433605405,(((((24:8.622491413,((27:0.2849575346,243:0.2849575346):4.593519287,25:4.878475408):3.744016005):6.896604278,(28:13.05495829,(31:0.5908374355,30:0.5908374355):12.46412016):2.464136023):2.724454838,((((36:0.5959015061,29:0.5959015061):5.726068501,37:6.321968283):5.984102675,((26:0.834799651,34:0.834799651):4.348484056,(23:0.1912922259,32:0.1912922259):4.991990308):7.122785872):4.287899331,((40:11.03377105,(43:7.773436371,(41:5.214765283,42:5.214765283):2.558671778):3.260334677):2.448824855,((38:2.129334303,248:2.129334303):8.687951604,39:10.81728522):2.665310686):3.111370938):1.649581966):2.533455209,((249:13.69476829,((256:2.801449607,(241:2.706609049,252:2.706609049):0.09484066127):0.5319973962,(33:1.963161619,(250:0.5005151306,251:0.5005151306):1.462646488):1.370285384):10.36132232):3.358504274,(((((245:2.117940747,(247:1.875237395,254:1.875237395):0.2427035249):1.168445258,(244:2.510774641,35:2.510774641):0.7756113643):0.2028108403,(240:1.064427861,253:1.064427861):2.424768882):7.788104143,((242:0.9104807335,255:0.9104807335):1.224167275,246:2.134648009):9.142652532):5.430813218,(((((128:1.295851097,149:1.295851097):10.01541944,((144:8.141361602,(((130:1.497592265,131:1.497592265):1.432798573,(133:2.471933319,((136:0.7832314338,137:0.7832314338):0.5184871164,(134:0.6953406552,135:0.6953406552):0.6063778949):1.170214769):0.4584578636):2.196618138,(((235:2.005657816,(117:1.709222284,141:1.709222284):0.2964356695):2.029014191,((83:0.2356124813,127:0.2356124813):0.7297892312,143:0.9654017814):3.069270226):0.2859365239,((139:0.6860800295,140:0.6860800295):1.970784447,184:2.656864477):1.663743916):0.8064005828):3.014353316):2.322919239,((((145:0.1339508923,218:0.1339508923):1.672273567,157:1.806224391):3.764676393,146:5.57089837):1.913514625,(151:7.177829668,((208:6.049769745,((53:1.889212465,147:1.889212465):0.8787336619,61:2.767946127):3.281823618):0.7751476089,(108:1.641177132,66:1.641177132):5.183740221):0.352913694):0.3065832919):2.979867156):0.8469879695):0.992188567,((161:5.223061159,217:5.223061159):0.7833169441,150:6.006376724):6.297080653):2.280698537,((((207:11.68483875,((((((215:1.361585747,((76:0.9303904926,156:0.9303904926):0.2046907907,181:1.135081421):0.2265043259):0.1209721554,225:1.482557627):5.909481161,((((((210:4.377967863,204:4.377967863):0.3439733871,((107:3.14112231,203:3.14112231):0.0589732353,(197:2.528008756,((228:1.540130183,202:1.540130183):0.5471209931,(201:1.403296491,(198:0.8719700744,199:0.8719700744):0.5313264163):0.6839546853):0.4407575799):0.6720870303):1.521845809):0.09489541543,196:4.816835597):0.4894649954,((195:0.1922894896,73:0.1922894896):1.02138826,183:1.213677439):4.092625567):0.7215299033,((211:2.256035027,213:2.256035027):1.161279634,(206:1.881635495,209:1.881635495):1.535679166):2.610516869):0.3388768708,((87:0.2485529799,191:0.2485529799):4.680567376,((185:0.8161749598,(189:0.2533879657,94:0.2533879657):0.5627869596):0.7030862318,88:1.519261192):3.40986044):1.437586804):1.025331387):2.362482226,((178:0.9520156293,231:0.9520156293):8.297338564,((109:0.7513409256,177:0.7513409256):7.405455972,((((63:1.332469496,174:1.332469496):2.314101336,(48:1.275993402,153:1.275993402):2.37057743):0.4213101969,(175:1.871548385,(180:0.3158418488,176:0.3158418488):1.555706502):2.196332644):2.79589799,(((((173:1.555536515,(159:1.278768004,((179:0.1439223912,239:0.1439223912):0.5418038396,(172:0.2936644812,229:0.2936644812):0.3920618875):0.5930417388):0.2767685113):0.7249841049,168:2.280520276):2.239793245,(171:3.747839832,170:3.747839832):0.7724723094):0.8227209788,(165:2.064572332,(166:0.7008274501,167:0.7008274501):1.363745227):3.278461823):0.1733278603,164:5.516361429):1.347416555):1.293016845):1.092559709):0.5051664763):0.9562490779,((120:1.897185954,75:1.897185954):4.265952841,(98:3.923391063,(230:0.6569141272,(162:0.1959882231,142:0.1959882231):0.4609259386):3.266475902):2.239749111):4.547633366):0.3655692158,(((((205:0.1632126489,182:0.1632126489):2.706456993,(194:1.092859685,154:1.092859685):1.776809543):3.468359128,200:6.338025597):1.826827197,155:8.164852794):2.317050061,((84:1.474134174,158:1.474134174):3.882418535,160:5.356553744):5.125351869):0.5944364529):0.608496688):0.09285182312,((224:4.287706243,((220:2.195585808,(222:0.5637592942,223:0.5637592942):1.631826859):0.7368048671,(219:0.2050914133,190:0.2050914133):2.727299434):1.355315568):1.801868538,(92:2.434672903,216:2.434672903):3.654902568):5.688112969):0.3506883579,106:12.12837852):2.024711093,(((68:0.5794738775,(233:0.197577542,148:0.197577542):0.381896163):6.288781329,((236:5.160121454,((238:1.534812685,169:1.534812685):1.665370681,237:3.20018371):1.95993602):0.2012365201,234:5.361356801):1.506899439):4.689552852,(71:0.4232559007,226:0.4232559007):11.1345525):2.595281212):0.4310680236):0.4626861402,((44:5.23298449,45:5.23298449):7.299643893,((((((((111:1.109240421,103:1.109240421):0.6293529218,86:1.738593687):0.9172722498,((192:1.447876656,(138:0.9023141568,110:0.9023141568):0.5455624992):0.6934273627,193:2.141304019):0.5145619186):0.8375780456,((112:0.7709234699,113:0.7709234699):1.097518616,(116:1.537809682,(114:0.7205148135,115:0.7205148135):0.8172948686):0.3306325072):1.625001897):1.881040371,(119:2.641353325,118:2.641353325):2.733131029):1.482131455,((((72:0.3309340689,56:0.3309340689):2.401580424,67:2.732514527):0.1778536989,(((132:0.608384973,188:0.608384973):0.4586606057,82:1.067045579):1.741773429,122:2.808819007):0.1015493912):1.304956563,(104:3.983072413,(105:0.5281773623,80:0.5281773623):3.454894706):0.2322524788):2.641290916):3.311932547,(((125:3.292439995,124:3.292439995):3.590773304,((123:2.165387576,52:2.165387576):3.202164239,121:5.367552849):1.51566114):2.125468066,(79:3.370637425,129:3.370637425):5.63804463):1.159867335):1.69848109,(((102:4.144662711,(101:0.4049642858,100:0.4049642858):3.739699115):4.962558221,59:9.107220932):2.684771516,((99:6.742396138,(93:4.687046159,((97:3.037900365,187:3.037900365):0.285045424,((214:0.06718611867,96:0.06718611867):0.5453825139,95:0.6125684256):2.710377018):1.364101749):2.055349979):4.716302399,((((232:1.270263179,186:1.270263179):5.468710134,(49:3.240163905,47:3.240163905):3.498808374):2.547975407,46:9.286947686):0.2611642984,((((85:1.119523722,227:1.119523722):4.123454092,((126:2.377214131,(91:2.086266429,50:2.086266429):0.2909478747):2.185539729,(89:1.110206894,90:1.110206894):3.452546621):0.680224644):2.063696541,((((55:4.351932051,(64:3.128517128,((58:0.113866906,57:0.113866906):2.550863103,((78:0.6838146967,62:0.6838146967):1.331059266,60:2.014873963):0.6498557361):0.4637874298):1.223413888):0.3656364518,(163:1.103747419,65:1.103747419):3.613819704):1.066150824,152:5.783718982):0.6483782701,((70:3.007910736,69:3.007910736):2.064858171,((74:2.428744075,77:2.428744075):1.93448016,81:4.363224235):0.7095443269):1.359328):0.874578138):0.4678715802,(((51:1.098284416,212:1.098284416):1.00185847,221:2.100142886):0.5457562765,54:2.645899162):5.128648153):1.773564979):1.910589346):0.3332930838):0.07503527301):0.6655999721):2.514213327):1.661271704):0.3451594975):3.723731449):4.085064113,257:24.86206985):13.37720448):9.770435926,((((((407:9.011811455,(408:2.01583285,409:2.01583285):6.995975502):11.5321236,(387:18.39137919,((388:15.77622304,(389:5.523798754,390:5.523798754):10.25242429):2.148029333,((391:13.67655943,((393:3.988406462,399:3.988406462):3.028147021,(((397:0.3143414537,396:0.3143414537):1.609075952,392:1.923417267):3.558748324,(395:2.890710274,(398:0.9202975209,394:0.9202975209):1.970413098):2.591453938):1.534387547):6.660009739):2.292201394,(400:11.72397695,((401:3.672597679,404:3.672597679):3.969208024,(403:6.496026532,(406:5.281556399,(402:4.897660054,405:4.897660054):0.3838956555):1.214472202):1.145776758):4.082171245):4.244785598):1.955491898):0.4671268133):2.152551724):7.346605589,(((261:0.2911360318,(263:0.2168933494,262:0.2168933494):0.07424271682):11.23868885,416:11.52982378):4.620537778,(((417:1.986210778,419:1.986210778):0.6239943924,420:2.61020517):4.412099568,418:7.022304394):9.128057168):11.74017908):3.776440953,(386:4.802988448,((383:0.7591127069,384:0.7591127069):0.821129729,385:1.580242436):3.222747391):26.8639897):0.6541105622,((((413:0.7200951925,411:0.7200951925):9.225252706,414:9.945349278):5.644564789,(412:2.997391592,410:2.997391592):12.59252351):8.925335734,415:24.5152498):7.805837182):7.037182493,(((((284:6.505391287,(273:4.066848354,((265:2.067828274,270:2.067828274):0.809055884,(300:0.1444039727,289:0.1444039727):2.732480047):1.189965231):2.438541209):2.783113513,((267:3.493767405,(268:2.656991708,269:2.656991708):0.8367750075):2.61318079,272:6.10694785):3.181556605):4.897984165,(266:10.6696593,((302:8.065571218,((((288:1.316145307,287:1.316145307):2.401974874,291:3.718121561):3.561223984,(264:5.727513211,299:5.727513211):1.551834058):0.2608002246,(((301:1.148828234,(290:0.7841086038,296:0.7841086038):0.3647196298):1.114636533,294:2.263464767):4.38194685,(297:5.77617132,(((278:0.09610362746,293:0.09610362746):1.889599674,(274:0.5535666754,280:0.5535666754):1.432136902):3.724003841,((282:0.8722348804,283:0.8722348804):0.5762565531,(281:0.5815585354,298:0.5815585354):0.8669332429):4.261215295):0.06646314302):0.869239607):0.894735808):0.5254234484):1.482407639,((276:0.1342668666,286:0.1342668666):5.903450617,((((304:0.103513921,303:0.103513921):1.04940598,(275:0.356888543,292:0.356888543):0.7960314266):1.723764205,((271:1.852031697,279:1.852031697):0.02205358461,277:1.87408542):1.002598754):2.33696982,(295:4.375843898,285:4.375843898):0.8378114749):0.8240625938):3.510259166):1.121683546):3.516827597):7.587844578,(258:5.72696498,(259:1.882625414,260:1.882625414):3.844338876):16.04736649):12.15615212,((((((((381:0.9736983476,308:0.9736983476):1.083604921,310:2.057303613):0.991025903,343:3.048329516):0.2514265392,312:3.299755952):6.137952224,(((((324:2.15084669,323:2.15084669):2.986463861,(325:2.627304813,326:2.627304813):2.510006083):1.032318405,((((311:1.718919771,(321:1.405526654,320:1.405526654):0.3133932205):2.539984678,(319:1.406733797,340:1.406733797):2.852170307):0.1930933552,322:4.451996322):0.7611304737,((382:0.6262204181,313:0.6262204181):3.709673972,(318:2.426406679,(314:0.405208059,317:0.405208059):2.021198275):1.909487711):0.877233784):0.9565007816):2.012927914,(337:5.389382107,((((329:1.001113013,338:1.001113013):0.6745682077,(330:1.299669751,(((332:0.5638013598,331:0.5638013598):0.06228917235,333:0.6260907735):0.5426013609,334:1.168692134):0.1309778584):0.3760111247):0.8554117667,(327:0.9419685159,328:0.9419685159):1.589124127):0.5490811784,(336:1.276877468,335:1.276877468):1.803296353):2.309207251):2.793175453):0.5066201511,(346:6.459832926,339:6.459832926):2.229343061):0.7485301198):0.02781831548,(344:0.9046387952,316:0.9046387952):8.560886082):3.635162795,(305:4.461095581,(357:0.8046810676,345:0.8046810676):3.65641279):8.63959347):8.369922312,((350:9.356179982,((((354:0.3681379723,(355:0.2087559427,307:0.2087559427):0.1593818917):5.889379349,(353:3.106659597,352:3.106659597):3.150856345):1.672202538,((364:4.190814128,366:4.190814128):0.9722508792,((363:3.069646057,(((360:0.1625534957,361:0.1625534957):0.1817830343,362:0.34433653):1.751352994,((359:1.146832534,358:1.146832534):0.5012943776,356:1.648126912):0.4475625433):0.9739566024):0.5127303435,365:3.582377435):1.580688262):2.766654163):0.9060248893,((367:1.665659623,342:1.665659623):2.235782192,((368:1.753673495,(((((370:0.2902956864,(372:0.2183760908,371:0.2183760908):0.07191959553):0.1954376817,(374:0.3027250887,373:0.3027250887):0.1830082794):0.03383543271,375:0.5195687525):0.2533558304,376:0.7729246863):0.5076535152,369:1.280578202):0.4730952931):1.139958955,(377:2.24952866,((378:0.04550833106,309:0.04550833106):1.840625039,((315:0.05816454249,379:0.05816454249):0.535399878,380:0.5935644549):1.292568605):0.3633955996):0.6441037904):1.007809365):4.9343019):0.5204362681):2.453893408,((347:0.05381475854,341:0.05381475854):11.10081387,(351:9.271642035,((306:2.715582457,349:2.715582457):6.198478332,348:8.914060789):0.3575812452):1.882985385):0.6554459708):9.660537973):12.45987223):5.427789326):8.651437334);
+END;

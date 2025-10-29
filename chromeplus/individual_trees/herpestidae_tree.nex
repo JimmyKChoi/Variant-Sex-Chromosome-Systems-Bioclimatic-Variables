@@ -1,0 +1,81 @@
+#NEXUS
+[R-package APE, Wed Jul 16 12:55:14 2025]
+
+BEGIN TAXA;
+	DIMENSIONS NTAX = 34;
+	TAXLABELS
+		Crossarchus obscurus
+		Crossarchus platycephalus
+		Crossarchus ansorgei
+		Crossarchus alexandri
+		Helogale parvula
+		Helogale hirtula
+		Liberiictis kuhni
+		Mungos mungo
+		Mungos gambianus
+		Dologale dybowskii
+		Suricata suricatta
+		Ichneumia albicauda
+		Rhynchogale melleri
+		Herpestes ochraceus
+		Cynictis penicillata
+		Paracynictis selousi
+		Bdeogale crassicauda
+		Bdeogale jacksoni
+		Bdeogale nigripes
+		Bdeogale omnivora
+		Urva smithii
+		Herpestes ichneumon
+		Herpestes sanguineus
+		Herpestes flavescens
+		Herpestes pulverulentus
+		Xenogale naso
+		Atilax paludinosus
+		Urva semitorquata
+		Urva urva
+		Urva brachyura
+		Urva javanica
+		Urva edwardsii
+		Urva fusca
+		Urva vitticollis
+	;
+END;
+BEGIN TREES;
+	TRANSLATE
+		1	Crossarchus obscurus,
+		2	Crossarchus platycephalus,
+		3	Crossarchus ansorgei,
+		4	Crossarchus alexandri,
+		5	Helogale parvula,
+		6	Helogale hirtula,
+		7	Liberiictis kuhni,
+		8	Mungos mungo,
+		9	Mungos gambianus,
+		10	Dologale dybowskii,
+		11	Suricata suricatta,
+		12	Ichneumia albicauda,
+		13	Rhynchogale melleri,
+		14	Herpestes ochraceus,
+		15	Cynictis penicillata,
+		16	Paracynictis selousi,
+		17	Bdeogale crassicauda,
+		18	Bdeogale jacksoni,
+		19	Bdeogale nigripes,
+		20	Bdeogale omnivora,
+		21	Urva smithii,
+		22	Herpestes ichneumon,
+		23	Herpestes sanguineus,
+		24	Herpestes flavescens,
+		25	Herpestes pulverulentus,
+		26	Xenogale naso,
+		27	Atilax paludinosus,
+		28	Urva semitorquata,
+		29	Urva urva,
+		30	Urva brachyura,
+		31	Urva javanica,
+		32	Urva edwardsii,
+		33	Urva fusca,
+		34	Urva vitticollis
+	;
+	TREE * UNTITLED = [&R] ((((((13:2.807148867,21:2.807148867):0.3455798196,((((19:0.4778249764,20:0.4778249764):0.03831746118,17:0.5161426637):1.498479239,18:2.01462162):0.6790683191,(16:1.024568697,15:1.024568697):1.669121525):0.4590384647):0.8244615744,12:3.977190261):0.4819090375,(22:3.093638152,((23:2.393970287,24:2.393970287):0.5806485521,25:2.974619122):0.1190193123):1.365460864):0.661479942,(((30:2.715030473,(29:1.890756055,28:1.890756055):0.8242744189):0.9466382171,(((31:1.575835813,32:1.575835813):1.066861318,33:2.642696848):0.8463214509,34:3.489019713):0.1726501369):0.7532825461,(27:3.79690466,(14:1.441479926,26:1.441479926):2.355424451):0.6180465765):0.7056280041):1.879689566,(11:5.702023345,(((9:4.822810868,8:4.822810868):0.3715981106,(10:1.3198116,7:1.3198116):3.874596813):0.07460321078,((((3:0.8231726893,4:0.8231726893):0.4088098276,2:1.231982517):1.002587537,1:2.234570054):1.807942569,(6:2.94409468,5:2.94409468):1.098416811):1.226500161):0.433011127):1.298244614);
+END;

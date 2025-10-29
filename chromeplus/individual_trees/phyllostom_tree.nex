@@ -1,0 +1,423 @@
+#NEXUS
+[R-package APE, Wed Jul 16 12:57:06 2025]
+
+BEGIN TAXA;
+	DIMENSIONS NTAX = 205;
+	TAXLABELS
+		Diaemus youngii
+		Desmodus rotundus
+		Desmodus draculae
+		Scleronycteris ega
+		Neonycteris pusilla
+		Dryadonycteris capixaba
+		Diphylla ecaudata
+		Micronycteris sanborni
+		Micronycteris yatesi
+		Micronycteris schmidtorum
+		Micronycteris minuta
+		Micronycteris matses
+		Micronycteris megalotis
+		Micronycteris microtis
+		Micronycteris buriri
+		Micronycteris giovanniae
+		Micronycteris brosseti
+		Micronycteris hirsuta
+		Lampronycteris brachyotis
+		Lonchorhina orinocensis
+		Lonchorhina aurita
+		Glossophaga soricina
+		Glossophaga morenoi
+		Glossophaga longirostris
+		Glossophaga leachii
+		Glossophaga commissarisi
+		Gardnerycteris koepckeae
+		Leptonycteris nivalis
+		Leptonycteris yerbabuenae
+		Leptonycteris curasoae
+		Monophyllus redmani
+		Monophyllus plethodon
+		Brachyphylla nana
+		Brachyphylla cavernarum
+		Erophylla sezekorni
+		Erophylla bombifrons
+		Phyllonycteris poeyi
+		Phyllonycteris aphylla
+		Anoura luismanueli
+		Anoura cultrata
+		Anoura fistulata
+		Anoura latidens
+		Anoura geoffroyi
+		Anoura caudifer
+		Anoura canishina
+		Hylonycteris underwoodi
+		Choeronycteris mexicana
+		Choeroniscus godmani
+		Choeroniscus periosus
+		Choeroniscus minor
+		Musonycteris harrisoni
+		Lichonycteris obscura
+		Lonchophylla thomasi
+		Lonchophylla bokermanni
+		Lonchophylla handleyi
+		Lonchophylla orienticollina
+		Lonchophylla robusta
+		Lonchophylla fornicata
+		Lonchophylla orcesi
+		Lonchophylla inexpectata
+		Lonchophylla chocoana
+		Lonchophylla dekeyseri
+		Lionycteris spurrelli
+		Lonchophylla peracchii
+		Lonchophylla hesperia
+		Lonchophylla mordax
+		Lonchophylla concava
+		Hsunycteris thomasi
+		Hsunycteris pattoni
+		Hsunycteris cadenai
+		Xeronycteris vieirai
+		Platalina genovensium
+		Ectophylla alba
+		Ariteus flavescens
+		Ardops nichollsi
+		Phyllops falcatus
+		Stenoderma rufum
+		Pygoderma bilabiatum
+		Ametrida centurio
+		Sphaeronycteris toxophyllum
+		Centurio senex
+		Artibeus concolor
+		Artibeus inopinatus
+		Artibeus hirsutus
+		Artibeus fraterculus
+		Artibeus jamaicensis
+		Artibeus fimbriatus
+		Artibeus lituratus
+		Artibeus obscurus
+		Artibeus planirostris
+		Artibeus amplus
+		Dermanura tolteca
+		Dermanura phaeotis
+		Dermanura rosenbergi
+		Dermanura watsoni
+		Dermanura incomitatus
+		Dermanura azteca
+		Dermanura glauca
+		Dermanura cinerea
+		Dermanura gnoma
+		Dermanura bogotensis
+		Dermanura rava
+		Dermanura anderseni
+		Enchisthenes hartii
+		Vampyressa thyone
+		Vampyressa pusilla
+		Vampyressa melissa
+		Vampyressa sinchi
+		Mesophylla macconnelli
+		Vampyressa elisabethae
+		Vampyrodes caraccioli
+		Platyrrhinus helleri
+		Platyrrhinus matapalensis
+		Platyrrhinus recifinus
+		Platyrrhinus guianensis
+		Platyrrhinus fusciventris
+		Platyrrhinus angustirostris
+		Platyrrhinus nitelinea
+		Platyrrhinus nigellus
+		Platyrrhinus brachycephalus
+		Platyrrhinus chocoensis
+		Platyrrhinus umbratus
+		Platyrrhinus masu
+		Platyrrhinus ismaeli
+		Platyrrhinus vittatus
+		Platyrrhinus albericoi
+		Platyrrhinus dorsalis
+		Platyrrhinus infuscus
+		Platyrrhinus aurarius
+		Platyrrhinus lineatus
+		Vampyriscus bidens
+		Vampyriscus brocki
+		Vampyriscus nymphaeus
+		Chiroderma doriae
+		Chiroderma trinitatum
+		Chiroderma improvisum
+		Chiroderma villosum
+		Chiroderma salvini
+		Chiroderma vizottoi
+		Uroderma magnirostrum
+		Uroderma bilobatum
+		Uroderma bakeri
+		Sturnira nana
+		Sturnira aratathomasi
+		Sturnira tildae
+		Sturnira bogotensis
+		Sturnira magna
+		Sturnira perla
+		Sturnira koopmanhilli
+		Sturnira mordax
+		Sturnira oporaphilum
+		Sturnira ludovici
+		Sturnira burtonlimi
+		Sturnira hondurensis
+		Sturnira lilium
+		Sturnira parvidens
+		Sturnira sorianoi
+		Sturnira bakeri
+		Sturnira paulsoni
+		Sturnira angeli
+		Sturnira luisi
+		Sturnira erythromos
+		Sturnira mistratensis
+		Sturnira bidens
+		Rhinophylla pumilio
+		Rhinophylla fischerae
+		Rhinophylla alethina
+		Carollia subrufa
+		Carollia manu
+		Carollia sowelli
+		Carollia perspicillata
+		Carollia brevicauda
+		Carollia castanea
+		Carollia benkeithi
+		Glyphonycteris daviesi
+		Glyphonycteris sylvestris
+		Glyphonycteris behnii
+		Trinycteris nicefori
+		Trachops cirrhosus
+		Mimon cozumelae
+		Lonchorhina inusitata
+		Macrophyllum macrophyllum
+		Mimon bennettii
+		Phyllostomus hastatus
+		Phyllostomus latifolius
+		Phyllostomus elongatus
+		Tonatia saurophila
+		Tonatia bidens
+		Phyllostomus discolor
+		Phylloderma stenops
+		Lonchorhina marinkellei
+		Gardnerycteris crenulata
+		Lophostoma carrikeri
+		Lophostoma brasiliense
+		Lophostoma occidentale
+		Lophostoma schulzi
+		Lophostoma silvicola
+		Lophostoma kalkoae
+		Lophostoma evotis
+		Lophostoma yasuni
+		Vampyrum spectrum
+		Lonchorhina fernandezi
+		Chrotopterus auritus
+		Macrotus waterhousii
+		Macrotus californicus
+	;
+END;
+BEGIN TREES;
+	TRANSLATE
+		1	Diaemus youngii,
+		2	Desmodus rotundus,
+		3	Desmodus draculae,
+		4	Scleronycteris ega,
+		5	Neonycteris pusilla,
+		6	Dryadonycteris capixaba,
+		7	Diphylla ecaudata,
+		8	Micronycteris sanborni,
+		9	Micronycteris yatesi,
+		10	Micronycteris schmidtorum,
+		11	Micronycteris minuta,
+		12	Micronycteris matses,
+		13	Micronycteris megalotis,
+		14	Micronycteris microtis,
+		15	Micronycteris buriri,
+		16	Micronycteris giovanniae,
+		17	Micronycteris brosseti,
+		18	Micronycteris hirsuta,
+		19	Lampronycteris brachyotis,
+		20	Lonchorhina orinocensis,
+		21	Lonchorhina aurita,
+		22	Glossophaga soricina,
+		23	Glossophaga morenoi,
+		24	Glossophaga longirostris,
+		25	Glossophaga leachii,
+		26	Glossophaga commissarisi,
+		27	Gardnerycteris koepckeae,
+		28	Leptonycteris nivalis,
+		29	Leptonycteris yerbabuenae,
+		30	Leptonycteris curasoae,
+		31	Monophyllus redmani,
+		32	Monophyllus plethodon,
+		33	Brachyphylla nana,
+		34	Brachyphylla cavernarum,
+		35	Erophylla sezekorni,
+		36	Erophylla bombifrons,
+		37	Phyllonycteris poeyi,
+		38	Phyllonycteris aphylla,
+		39	Anoura luismanueli,
+		40	Anoura cultrata,
+		41	Anoura fistulata,
+		42	Anoura latidens,
+		43	Anoura geoffroyi,
+		44	Anoura caudifer,
+		45	Anoura canishina,
+		46	Hylonycteris underwoodi,
+		47	Choeronycteris mexicana,
+		48	Choeroniscus godmani,
+		49	Choeroniscus periosus,
+		50	Choeroniscus minor,
+		51	Musonycteris harrisoni,
+		52	Lichonycteris obscura,
+		53	Lonchophylla thomasi,
+		54	Lonchophylla bokermanni,
+		55	Lonchophylla handleyi,
+		56	Lonchophylla orienticollina,
+		57	Lonchophylla robusta,
+		58	Lonchophylla fornicata,
+		59	Lonchophylla orcesi,
+		60	Lonchophylla inexpectata,
+		61	Lonchophylla chocoana,
+		62	Lonchophylla dekeyseri,
+		63	Lionycteris spurrelli,
+		64	Lonchophylla peracchii,
+		65	Lonchophylla hesperia,
+		66	Lonchophylla mordax,
+		67	Lonchophylla concava,
+		68	Hsunycteris thomasi,
+		69	Hsunycteris pattoni,
+		70	Hsunycteris cadenai,
+		71	Xeronycteris vieirai,
+		72	Platalina genovensium,
+		73	Ectophylla alba,
+		74	Ariteus flavescens,
+		75	Ardops nichollsi,
+		76	Phyllops falcatus,
+		77	Stenoderma rufum,
+		78	Pygoderma bilabiatum,
+		79	Ametrida centurio,
+		80	Sphaeronycteris toxophyllum,
+		81	Centurio senex,
+		82	Artibeus concolor,
+		83	Artibeus inopinatus,
+		84	Artibeus hirsutus,
+		85	Artibeus fraterculus,
+		86	Artibeus jamaicensis,
+		87	Artibeus fimbriatus,
+		88	Artibeus lituratus,
+		89	Artibeus obscurus,
+		90	Artibeus planirostris,
+		91	Artibeus amplus,
+		92	Dermanura tolteca,
+		93	Dermanura phaeotis,
+		94	Dermanura rosenbergi,
+		95	Dermanura watsoni,
+		96	Dermanura incomitatus,
+		97	Dermanura azteca,
+		98	Dermanura glauca,
+		99	Dermanura cinerea,
+		100	Dermanura gnoma,
+		101	Dermanura bogotensis,
+		102	Dermanura rava,
+		103	Dermanura anderseni,
+		104	Enchisthenes hartii,
+		105	Vampyressa thyone,
+		106	Vampyressa pusilla,
+		107	Vampyressa melissa,
+		108	Vampyressa sinchi,
+		109	Mesophylla macconnelli,
+		110	Vampyressa elisabethae,
+		111	Vampyrodes caraccioli,
+		112	Platyrrhinus helleri,
+		113	Platyrrhinus matapalensis,
+		114	Platyrrhinus recifinus,
+		115	Platyrrhinus guianensis,
+		116	Platyrrhinus fusciventris,
+		117	Platyrrhinus angustirostris,
+		118	Platyrrhinus nitelinea,
+		119	Platyrrhinus nigellus,
+		120	Platyrrhinus brachycephalus,
+		121	Platyrrhinus chocoensis,
+		122	Platyrrhinus umbratus,
+		123	Platyrrhinus masu,
+		124	Platyrrhinus ismaeli,
+		125	Platyrrhinus vittatus,
+		126	Platyrrhinus albericoi,
+		127	Platyrrhinus dorsalis,
+		128	Platyrrhinus infuscus,
+		129	Platyrrhinus aurarius,
+		130	Platyrrhinus lineatus,
+		131	Vampyriscus bidens,
+		132	Vampyriscus brocki,
+		133	Vampyriscus nymphaeus,
+		134	Chiroderma doriae,
+		135	Chiroderma trinitatum,
+		136	Chiroderma improvisum,
+		137	Chiroderma villosum,
+		138	Chiroderma salvini,
+		139	Chiroderma vizottoi,
+		140	Uroderma magnirostrum,
+		141	Uroderma bilobatum,
+		142	Uroderma bakeri,
+		143	Sturnira nana,
+		144	Sturnira aratathomasi,
+		145	Sturnira tildae,
+		146	Sturnira bogotensis,
+		147	Sturnira magna,
+		148	Sturnira perla,
+		149	Sturnira koopmanhilli,
+		150	Sturnira mordax,
+		151	Sturnira oporaphilum,
+		152	Sturnira ludovici,
+		153	Sturnira burtonlimi,
+		154	Sturnira hondurensis,
+		155	Sturnira lilium,
+		156	Sturnira parvidens,
+		157	Sturnira sorianoi,
+		158	Sturnira bakeri,
+		159	Sturnira paulsoni,
+		160	Sturnira angeli,
+		161	Sturnira luisi,
+		162	Sturnira erythromos,
+		163	Sturnira mistratensis,
+		164	Sturnira bidens,
+		165	Rhinophylla pumilio,
+		166	Rhinophylla fischerae,
+		167	Rhinophylla alethina,
+		168	Carollia subrufa,
+		169	Carollia manu,
+		170	Carollia sowelli,
+		171	Carollia perspicillata,
+		172	Carollia brevicauda,
+		173	Carollia castanea,
+		174	Carollia benkeithi,
+		175	Glyphonycteris daviesi,
+		176	Glyphonycteris sylvestris,
+		177	Glyphonycteris behnii,
+		178	Trinycteris nicefori,
+		179	Trachops cirrhosus,
+		180	Mimon cozumelae,
+		181	Lonchorhina inusitata,
+		182	Macrophyllum macrophyllum,
+		183	Mimon bennettii,
+		184	Phyllostomus hastatus,
+		185	Phyllostomus latifolius,
+		186	Phyllostomus elongatus,
+		187	Tonatia saurophila,
+		188	Tonatia bidens,
+		189	Phyllostomus discolor,
+		190	Phylloderma stenops,
+		191	Lonchorhina marinkellei,
+		192	Gardnerycteris crenulata,
+		193	Lophostoma carrikeri,
+		194	Lophostoma brasiliense,
+		195	Lophostoma occidentale,
+		196	Lophostoma schulzi,
+		197	Lophostoma silvicola,
+		198	Lophostoma kalkoae,
+		199	Lophostoma evotis,
+		200	Lophostoma yasuni,
+		201	Vampyrum spectrum,
+		202	Lonchorhina fernandezi,
+		203	Chrotopterus auritus,
+		204	Macrotus waterhousii,
+		205	Macrotus californicus
+	;
+	TREE * UNTITLED = [&R] ((((((((201:12.05929869,203:12.05929869):7.89051327,(((((197:1.676664217,198:1.676664217):0.2163944746,(195:0.8600182374,199:0.8600182374):1.033040515):5.673587694,((196:2.57249212,200:2.57249212):4.185778847,(193:5.183799613,194:5.183799613):1.574471963):0.8083736505):9.28707163,((((185:5.266675336,186:5.266675336):0.4164989797,184:5.68317584):7.518057262,((188:6.977328537,187:6.977328537):1.948136475,189:8.925465927):4.275767175):0.8001772342,(190:12.21830642,192:12.21830642):1.783100863):2.852309265):2.49535709,(183:18.77942408,(((182:1.428824222,191:1.428824222):5.548301577,((181:2.067461479,180:2.067461479):0.1842394016,27:2.251701124):4.725425285):9.073483113,179:16.05061044):2.72881578):0.5696495588):0.6007377105):1.928015393,(((((((171:1.214634808,172:1.214634808):1.907341888,170:3.121976391):0.4028350339,(168:1.909326588,169:1.909326588):1.615485141):3.60368543,(173:2.657796737,174:2.657796737):4.470697679):9.955973586,(((177:4.838278824,175:4.838278824):5.856899622,176:10.69517845):2.715447558,178:13.41062661):3.673841998):1.683965841,(((167:10.7835906,166:10.7835906):0.8791594684,165:11.66274885):6.46562034,(((((141:0.07283237633,142:0.07283237633):4.343182965,140:4.416013238):6.473577434,((((((105:0.7473713994,110:0.7473713994):2.988111856,106:3.73548356):1.939426048,107:5.674910828):1.354453749,109:7.029363662):2.134576668,((((122:3.180788764,((127:2.355273217,(128:1.457755118,129:1.457755118):0.8975180994):0.084355498,(((123:0.3263350471,124:0.3263350471):0.9868540064,119:1.313189054):0.7032555646,(126:0.4357054527,125:0.4357054527):1.580738861):0.4231844627):0.7411593787):0.675250558,130:3.856038103):1.396814145,(((112:0.902735331,113:0.902735331):0.4762070597,(((115:0.1613177279,121:0.1613177279):0.6376650276,(114:0.2736372885,118:0.2736372885):0.5253453146):0.336861276,(116:0.3368609712,117:0.3368609712):0.7989830604):0.2430983287):2.900433219,120:4.27937683):0.9734775526):1.14087072,111:6.393722968):2.770216143):0.3026829671,(((132:3.048636986,133:3.048636986):4.059227521,(108:0.6211255529,131:0.6211255529):6.48673865):0.6437846729,(((137:0.7740910762,136:0.7740910762):1.62227428,((139:0.3933456661,134:0.3933456661):0.4713562813,135:0.8647016426):1.531663714):1.48394737,138:3.880311812):3.871336454):1.714973202):1.422968289):2.273502951,(104:11.38793339,((73:8.552308718,((74:2.062324733,75:2.062324733):3.216559102,((76:1.271773448,77:1.271773448):2.762352339,((79:2.229111819,78:2.229111819):1.398209533,(81:3.225318002,80:3.225318002):0.4020027402):0.4068044347):1.244758352):3.273423359):1.21397568,((((84:3.723441215,83:3.723441215):1.2632182,((86:2.287635786,((88:1.518225371,(89:1.408447355,(91:0.9765049067,90:0.9765049067):0.4319424486):0.1097780161):0.3234369577,87:1.841662024):0.4459737621):1.54630812,85:3.833944211):1.152717034):0.5537512246,82:5.540411554):0.7705274567,(((103:3.028544257,102:3.028544257):0.9724147776,(98:3.494901898,((100:1.322451903,101:1.322451903):1.218381959,99:2.540833862):0.9540680365):0.5060571365):0.1851038285,(((92:1.48206785,93:1.48206785):2.004201669,((95:0.829209651,96:0.829209651):1.936604176,94:2.765813827):0.7204556915):0.6326227911,97:4.118893529):0.06717043161):2.12487694):3.455345082):1.621649602):1.775160232):2.351911726,(164:9.620678119,(143:7.254134792,(144:4.952498179,(((154:2.385815043,(((152:1.460148648,163:1.460148648):0.3596158203,151:1.819764468):0.383843189,153:2.203607352):0.1822077818):1.181331779,(145:2.982797981,(((147:1.7564196,148:1.7564196):0.09183909892,146:1.84825879):0.7445269671,(150:2.52181153,(157:1.576241731,149:1.576241731):0.9455697994):0.0709741663):0.3900122231):0.5843488413):0.9972305444,(162:3.715886549,((159:1.593873858,(161:0.6899751447,160:0.6899751447):0.903898713):1.45318238,((156:0.6596464228,158:0.6596464228):1.031578666,155:1.691225088):1.355830844):0.6688297016):0.8484914268):0.3881217274):2.301635698):2.366542413):5.894328449):2.613363838):0.6400646554):2.352330922,(((((65:1.41148477,(67:0.05956402926,66:0.05956402926):1.351920588):2.238895996,58:3.650379242):5.690312835,(((62:0.6062366415,61:0.6062366415):4.467481306,((56:0.8002522321,(54:0.6337261138,57:0.6337261138):0.1665262707):2.557215719,55:3.357466732):1.716249691):3.270975257,(((63:3.904926974,64:3.904926974):0.1783803892,60:4.083306114):2.188676064,(53:5.882411101,59:5.882411101):0.3895729062):2.072709502):0.9960016155):2.750499013,((69:4.124103749,70:4.124103749):0.006787108267,68:4.130890144):7.960303994):1.426534348,((202:2.181208286,71:2.181208286):9.277510923,72:11.45871799):2.059009582):7.603036584):0.7570632005):0.3635157108,((((((30:0.272747466,29:0.272747466):5.161656942,28:5.434405384):4.980238254,(((23:3.701130866,(24:2.520094505,25:2.520094505):1.181037275):0.8180203309,26:4.519153636):2.307879425,22:6.827030927):3.587612711):3.099416049,(32:5.830403414,31:5.830403414):7.683653223):3.384959863,((34:1.841729705,33:1.841729705):10.29041237,((36:0.2880963339,35:0.2880963339):6.605595069,(38:2.314252112,37:2.314252112):4.579438529):5.238450518):4.766875341):1.19407258,((((51:4.843607943,(47:4.830608308,(48:1.410755827,(50:0.09592895363,49:0.09592895363):1.314826812):3.419852176):0.01300008631):0.5681435035,52:5.41175358):3.482082136,46:8.893835717):8.206760491,((((42:2.907878132,43:2.907878132):3.57151865,(44:0.5045952873,41:0.5045952873):5.9748018):1.691386974,40:8.170782842):5.87197237,(39:1.525670284,45:1.525670284):12.51708767):3.057840996):0.9924928725):4.148252461):0.2735546079,(21:13.18379457,20:13.18379457):9.331103931):1.117902767,(19:19.43228685,(((9:4.276163505,(11:2.940568983,(10:0.02053003348,8:0.02053003348):2.920039071):1.335592998):5.811568577,(18:6.243361335,((((15:1.683436283,(13:1.003734325,14:1.003734325):0.6797019574):0.6826155952,12:2.366051878):0.07536809784,16:2.441419884):2.847068864,17:5.288488748):0.9548719773):3.844367699):3.372755937,4:13.46048497):5.971801884):4.20051319):1.363801962,(((7:9.289452661,5:9.289452661):5.116396017,6:14.40584563):5.198521761,(1:11.37615628,(3:0.7317367773,2:0.7317367773):10.64441768):8.228214157):5.392235836):2.028345504,(205:12.16715542,204:12.16715542):14.85779331);
+END;
