@@ -35,7 +35,8 @@ Other tangentially related stuff includes ancestral state reconstruction, etc.
 to do: 
 - submit this paper already...
 
-Citations:
+<ins>Citations</ins>
+
 Blackmon, H. "Meiotic drive shapes rates of karyotype evolution in mammals." Evolution 73, 511-523 (2019). Chromosome morphology data ("chroms.csv") collected from here.
 
 David, K. T. "Global gradients in the distribution of animal polyploids." Proc. Natl. Acad. Sci. U.S.A. 119, e2214070119 (2022). Code modified from original scripts.
