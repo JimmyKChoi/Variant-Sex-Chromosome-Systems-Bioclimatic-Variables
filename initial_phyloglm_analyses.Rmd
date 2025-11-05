@@ -22,6 +22,7 @@ library(phylolm) ## v2.6.5
 ## karyotype data from Blackmon et al. (2019)
 karyotype.data <- read.csv(file = "chroms.csv")
 karyotype.data$Species <- gsub('_', ' ', karyotype.data$Species)
+karyotype.data$Species <- mapvalues(karyotype.data$Species, from=c("Artiebeus watsoni", "Vampyressa bidens", "Vampyressa brocki", "Vampyressa nymphaea"), to=c("Dermanura watsoni", "Vampyriscus bidens", "Vampyriscus brocki", "Vampyriscus nymphaeus"))
 karyotype.data
 ```
 
@@ -141,7 +142,22 @@ tetrapodtraits.herp.known.karyo <- tetrapodtraits.herp[!is.na(tetrapodtraits.her
 tetrapodtraits.herp.known.karyo$perc.acro <- as.numeric(tetrapodtraits.herp.known.karyo$perc.acro)
 tetrapodtraits.herp.known.karyo <- tetrapodtraits.herp.known.karyo %>% mutate(perc.acro.binned = cut(perc.acro, breaks = c(0, 0.01, 0.25, 0.4), include.lowest=TRUE))
 tetrapodtraits.herp.known.karyo$perc.acro.binned[is.na(tetrapodtraits.herp.known.karyo$perc.acro.binned)] <- 0
+```
+
+```{r}
+tetrapodtraits.herp.known.karyo <- add_column(tetrapodtraits.herp.known.karyo, haploid = "")
+tetrapodtraits.herp.known.karyo$haploid <- karyotype.data[match(tetrapodtraits.herp.known.karyo$Scientific.Name, karyotype.data$Species),2]
+tetrapodtraits.herp.known.karyo$haploid[which(tetrapodtraits.herp.known.karyo$Scientific.Name %in% c("Bdeogale nigripes", "Ichneumia albicauda", "Suricata suricatta"))] <- c(18, 18, 18)
+tetrapodtraits.herp.known.karyo <- tetrapodtraits.herp.known.karyo[!sapply(tetrapodtraits.herp.known.karyo, function(x) all(x == ""))]
 tetrapodtraits.herp.known.karyo
+```
+
+```{r}
+herp.auto.hap <- tetrapodtraits.herp.known.karyo$haploid - 1
+tetrapodtraits.herp.known.karyo <- add_column(tetrapodtraits.herp.known.karyo, auto.hap = "")
+tetrapodtraits.herp.known.karyo$auto.hap <- herp.auto.hap
+tetrapodtraits.herp.known.karyo <- tetrapodtraits.herp.known.karyo[!sapply(tetrapodtraits.herp.known.karyo, function(x) all(x == ""))]
+tetrapodtraits.herp.known.karyo$auto.hap
 ```
 
 ```{r}
@@ -247,13 +263,25 @@ tetrapodtraits.phyllostom <- tetrapodtraits.phyllostom[!sapply(tetrapodtraits.ph
 
 ```{r}
 ## data from sources collected by Hughes et al.
-tetrapodtraits.phyllostom$perc.acro[which(tetrapodtraits.phyllostom$Scientific.Name %in% c("Carollia perspicillata", "Ariteus flavescens", "Artibeus fimbriatus", "Artibeus jamaicensis", "Artibeus lituratus", "Artibeus obscurus", "Artibeus planirostris", "Dermanura cinerea", "Dermanura phaeotis", "Dermanura tolteca", "Mesophylla macconnelli", "Phyllops falcatus", "Uroderma magnirostrum"))] <- c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0.16666667)
+tetrapodtraits.phyllostom$perc.acro[which(tetrapodtraits.phyllostom$Scientific.Name %in% c("Carollia perspicillata", "Ariteus flavescens", "Artibeus fimbriatus", "Artibeus jamaicensis", "Artibeus lituratus", "Artibeus obscurus", "Artibeus planirostris", "Dermanura cinerea", "Dermanura phaeotis", "Dermanura tolteca", "Mesophylla macconnelli", "Phyllops falcatus", "Uroderma magnirostrum", "Dermanura azteca"))] <- c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0.16666667, 0)
 tetrapodtraits.phyllostom$perc.acro
 ```
 
 ```{r}
 tetrapodtraits.phyllo.known.karyo <- tetrapodtraits.phyllostom[!is.na(tetrapodtraits.phyllostom$perc.acro),]
-tetrapodtraits.phyllo.known.karyo
+tetrapodtraits.phyllo.known.karyo <- add_column(tetrapodtraits.phyllo.known.karyo, haploid = "")
+tetrapodtraits.phyllo.known.karyo$haploid <- karyotype.data[match(tetrapodtraits.phyllo.known.karyo$Scientific.Name, karyotype.data$Species),2]
+tetrapodtraits.phyllo.known.karyo$haploid[which(tetrapodtraits.phyllo.known.karyo$Scientific.Name %in% c("Ariteus flavescens", "Artibeus fimbriatus", "Artibeus jamaicensis", "Artibeus lituratus", "Artibeus obscurus", "Artibeus planirostris", "Carollia perspicillata", "Dermanura cinerea", "Dermanura phaeotis", "Dermanura tolteca", "Mesophylla macconnelli", "Phyllops falcatus", "Uroderma magnirostrum", "Dermanura azteca"))] <- c(15, 15, 15, 15, 15, 15, 10, 15, 15, 15, 11, 15, 18, 15)
+tetrapodtraits.phyllo.known.karyo <- tetrapodtraits.phyllo.known.karyo[!sapply(tetrapodtraits.phyllo.known.karyo, function(x) all(x == ""))]
+tetrapodtraits.phyllo.known.karyo$haploid
+```
+
+```{r}
+phyllo.auto.hap <- tetrapodtraits.phyllo.known.karyo$haploid - 1
+tetrapodtraits.phyllo.known.karyo <- add_column(tetrapodtraits.phyllo.known.karyo, auto.hap = "")
+tetrapodtraits.phyllo.known.karyo$auto.hap <- phyllo.auto.hap
+tetrapodtraits.phyllo.known.karyo <- tetrapodtraits.phyllo.known.karyo[!sapply(tetrapodtraits.phyllo.known.karyo, function(x) all(x == ""))]
+tetrapodtraits.phyllo.known.karyo$auto.hap
 ```
 
 ```{r}
@@ -368,6 +396,13 @@ tetrapodtraits.sorex$perc.acro
 
 ```{r}
 tetrapodtraits.sorex.known.karyo <- tetrapodtraits.sorex[!is.na(tetrapodtraits.sorex$perc.acro),]
+tetrapodtraits.sorex.known.karyo <- add_column(tetrapodtraits.sorex.known.karyo, haploid = "")
+tetrapodtraits.sorex.known.karyo$haploid <- karyotype.data[match(tetrapodtraits.sorex.known.karyo$Scientific.Name, karyotype.data$Species),2]
+tetrapodtraits.sorex.known.karyo$haploid[which(tetrapodtraits.sorex.known.karyo$Scientific.Name %in% c("Sorex antinorii", "Sorex maritimensis", "Sorex satunini"))] <- c(12, 14, 12)
+sorex.auto.hap <- tetrapodtraits.sorex.known.karyo$haploid - 1
+tetrapodtraits.sorex.known.karyo <- add_column(tetrapodtraits.sorex.known.karyo, auto.hap = "")
+tetrapodtraits.sorex.known.karyo$auto.hap <- sorex.auto.hap
+tetrapodtraits.sorex.known.karyo <- tetrapodtraits.sorex.known.karyo[!sapply(tetrapodtraits.sorex.known.karyo, function(x) all(x == ""))]
 tetrapodtraits.sorex.known.karyo
 ```
 
