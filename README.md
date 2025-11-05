@@ -10,7 +10,7 @@ Other tangentially related stuff includes ancestral state reconstruction, etc.
 
 **multiphylo** - Nexus files for each of our three mammal families included in this study, sets of 1000 credible trees for use in **sensiphy_analyses.Rmd**.
 
-**output** - Output files from code, essentially subsets of TetrapodTraits 1.0.0 containing only our species of interest for each of our three mammal families. Some extra variables from other datasets (e.g. "chroms.csv") have been added.
+**output** - Output files from code, essentially subsets of TetrapodTraits 1.0.0 containing only our species of interest for each of our three mammal families. Some extra variables from other datasets (e.g. % acrocentric and haploid number from "chroms.csv") have been added.
 
 <ins>Ready-to-run scripts (run these in sequence!)</ins>
 
