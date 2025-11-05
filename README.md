@@ -14,6 +14,10 @@ Other tangentially related stuff includes ancestral state reconstruction, etc.
 
 **sexreferencedfupdated.csv** - A dataset containing every mammal species considered for this study, their associated sex chromosome systems, whether these sex chromosomes are known or imputed, citation if known, and miscellaneous comments. Also **Supplemental Table 1** for our paper. Table caption: "Comprehensive list of mammal species included in our analysis, sampled from three mammalian families. Of 34 total species from Herpestidae included in our analysis (excluding Urva auropunctata), 9 species were coded as possessing a Y-autosome fusion. Of 413 total species from Soricidae (excluding Sorex kozlovi), 10 species were coded as possessing an X-autosome fusion. Of 205 total species from Phyllostomidae, 15 species were coded as possessing an X-autosome fusion and 14 species were coded as possessing both an X- and Y-autosome fusion, summing to 29 variant species total."
 
+**multiphylo** - Nexus files for each of our three mammal families included in this study, sets of 1000 credible trees for use in **sensiphy_analyses.Rmd**.
+
+**output** - Output files from code, essentially subsets of TetrapodTraits 1.0.0 containing only our species of interest for each of our three mammal families. Some extra variables from other datasets (e.g. "chroms.csv") have been added.
+
 <ins>Ready-to-run scripts (run these in sequence!)</ins>
 
 **initial_phyloglm_analyses.Rmd** - The first in a series of scripts acting as polished versions of the master script, meant to allow easy reproduction of results. This one focuses on the initial analyses performed with the consensus tree using _phylolm_.
@@ -26,8 +30,16 @@ to do:
 - submit this paper already...
 
 Citations:
-K. T. David, Global gradients in the distribution of animal polyploids. Proc. Natl. Acad. Sci. U.S.A. 119, e2214070119 (2022). Code modified from original scripts.
+Blackmon, H. "Meiotic drive shapes rates of karyotype evolution in mammals." Evolution 73, 511-523 (2019). Chromosome morphology data ("chroms.csv") collected from here.
 
-Moura, M. R. et al. A phylogeny-informed characterisation of global tetrapod traits addresses data gaps and biases. PLOS Biology 22, e3002658 (2024). Ecological & species data collected from here.
+David, K. T. "Global gradients in the distribution of animal polyploids." Proc. Natl. Acad. Sci. U.S.A. 119, e2214070119 (2022). Code modified from original scripts.
+
+Hughes, J. J. et al. "The role of conflict in the formation and maintenance of variant sex chromosome systems in mammals." J. Hered. 115, 601-624 (2024). Sex chromosome coding data collected from here.
+
+Moura, M. R. et al. "A phylogeny-informed characterisation of global tetrapod traits addresses data gaps and biases." PLOS Biology 22, e3002658 (2024). Ecological & species data collected from here.
+
+Upham, N. S. et al. "Inferring the mammal tree: Species-level sets of phylogenies for questions in ecology, evolution, and conservation." PLOS Biology 17, e3000494 (2019). Mammal tree collected from here.
+
+
 
 
