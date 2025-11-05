@@ -19,11 +19,22 @@ library(phylolm) ## v2.6.5
 ```
 
 ```{r}
-## karyotype data from Blackmon et al. (2019)
+## karyotype data from Blackmon et al. (2019) 
+## paper DOI: 10.1111/evo.13682
+## data DOI: 10.5061/dryad.rg5s170
+```
+
+```{r}
 karyotype.data <- read.csv(file = "chroms.csv")
 karyotype.data$Species <- gsub('_', ' ', karyotype.data$Species)
 karyotype.data$Species <- mapvalues(karyotype.data$Species, from=c("Artiebeus watsoni", "Vampyressa bidens", "Vampyressa brocki", "Vampyressa nymphaea"), to=c("Dermanura watsoni", "Vampyriscus bidens", "Vampyriscus brocki", "Vampyriscus nymphaeus"))
 karyotype.data
+```
+
+```{r}
+## TetrapodTraits is from Moura et al. (2024)
+## paper DOI: 10.1371/journal.pbio.3002658
+## database DOI: 10.5281/zenodo.10530617
 ```
 
 ```{r}
@@ -34,7 +45,13 @@ tetrapodtraits.herp
 ```
 
 ```{r}
-mammal.phylo <- read.nexus(file = "bettermammalphylogeny.tre")
+## node-dated 5911-species maximum clade credibility mammal phylogeny from Upham et al. (2019)
+## paper DOI: 10.1371/journal.pbio.3000494
+## data: https://vertlife.org/data/mammals/ 
+```
+
+```{r}
+mammal.phylo <- read.nexus(file = "MamPhy_fullPosterior_BDvr_Completed_5911sp_topoCons_NDexp_MCC_v2_target.tre")
 short.tip.labels <- gsub('^([^_]+_[^_]+).*', '\\1',mammal.phylo$tip.label)
 short.tip.labels <- gsub('_',' ',short.tip.labels)
 mammal.phylo$tip.label <- short.tip.labels
@@ -46,6 +63,12 @@ herpestidae.tree <- extract.clade(mammal.phylo,herp.node)
 herpestidae.tree$tip.label
 herpestidae.tree$tip.label <- mapvalues(herpestidae.tree$tip.label, from=c("Herpestes brachyurus","Herpestes edwardsii","Herpestes fuscus","Herpestes semitorquatus","Herpestes smithii","Herpestes urva","Herpestes vitticollis","Herpestes javanicus","Herpestes naso"), to=c("Urva brachyura","Urva edwardsii","Urva fusca","Urva semitorquata","Urva smithii","Urva urva","Urva vitticollis","Urva javanica","Xenogale naso"))
 tetrapodtraits.herp$Scientific.Name <- mapvalues(tetrapodtraits.herp$Scientific.Name, from=c("Herpestes brachyurus","Herpestes edwardsii","Herpestes fuscus","Herpestes semitorquatus","Herpestes smithii","Herpestes urva","Herpestes vitticollis","Herpestes javanicus","Herpestes naso"), to=c("Urva brachyura","Urva edwardsii","Urva fusca","Urva semitorquata","Urva smithii","Urva urva","Urva vitticollis","Urva javanica","Xenogale naso"))
+```
+
+```{r}
+## sex chromosome coding data from Hughes et al. (2024)
+## paper DOI: 10.1093/jhered/esae031
+## data DOI: https://github.com/jjh359/2023_conflict_review
 ```
 
 ```{r}
@@ -104,7 +127,7 @@ tetrapodtraits.herp
 ```
 
 ```{r}
-## filling in some data gaps for Herpestidae with data collected in Hughes et al. (2024)
+## filling in some data gaps for Herpestidae with data collected in Hughes et al. (2024), in the "rate_estimation" folder in https://github.com/jjh359/2023_conflict_review
 herp.no.acro.data <- tetrapodtraits.herp$Scientific.Name[which(is.na(tetrapodtraits.herp$perc.acro))]
 hughes.karyotype.data <- read.csv(file = "family_level_known_karyotypes.csv")
 hughes.karyotype.data$mdd_species <- gsub('_', ' ', hughes.karyotype.data$mdd_species)
