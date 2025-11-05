@@ -20,7 +20,7 @@ Other tangentially related stuff includes ancestral state reconstruction, etc.
 
 **sensiphy_analyses.Rmd** - The second in a series of scripts acting as polished versions of the master script. This one focuses on the _sensiPhy_ analyses performing phylo. log regression over sets of 1000 trees from the posterior distribution for each mammal family of interest.
 
-**chromeplus_simulation_herp.R** & **chromeplus_1000trees_x.R** - The third/fourth in a series of scripts acting as polished versions of the master script. These are the _chromePlus_ simulations, with the 1000trees one doing the simulation (you guessed it) over the set of 1000 trees we use for _sensiPhy_.
+**chromeplus_simulation_herp.R** & **chromeplus_1000trees_x.R** - The third/fourth in a series of scripts acting as polished versions of the master script. These are the _chromePlus_ simulations, with the 1000trees one performing the simulation (you guessed it) over the set of 1000 trees we use for _sensiPhy_.
 
 to do: 
 - submit this paper already...
