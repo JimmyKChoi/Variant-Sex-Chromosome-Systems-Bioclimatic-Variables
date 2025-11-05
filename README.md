@@ -2,6 +2,8 @@ This is a project for determining potential relationships between various biocli
 
 Other tangentially related stuff includes ancestral state reconstruction, etc.
 
+<ins>Archived scripts</ins>
+
 **updated herpestidae stuff.Rmd** - Original script for this project, analyses of species in family Herpestidae with variant sex chromosome systems, plus data visualizations
 
 **batproject.Rmd** - Analyses of species in family Phyllostomidae with variant sex chromosome system
@@ -12,7 +14,11 @@ Other tangentially related stuff includes ancestral state reconstruction, etc.
 
 **shapefile_stuff.Rmd** - A testbench script, mostly meant as an experiment in plotting shapefiles with ggplot to build Figure 2 in our paper. Allows for visualization of distributions for our mammal families of interest.
 
+<ins>Input and output data</ins>
+
 **sexreferencedfupdated.csv** - A dataset containing every mammal species considered for this study, their associated sex chromosome systems, whether these sex chromosomes are known or imputed, citation if known, and miscellaneous comments. Also **Supplemental Table 1** for our paper. Table caption: "Comprehensive list of mammal species included in our analysis, sampled from three mammalian families. Of 34 total species from Herpestidae included in our analysis (excluding Urva auropunctata), 9 species were coded as possessing a Y-autosome fusion. Of 413 total species from Soricidae (excluding Sorex kozlovi), 10 species were coded as possessing an X-autosome fusion. Of 205 total species from Phyllostomidae, 15 species were coded as possessing an X-autosome fusion and 14 species were coded as possessing both an X- and Y-autosome fusion, summing to 29 variant species total."
+
+**sexreferencedf.csv** - Simplified version of above dataset that gets used in our analyses.
 
 **multiphylo** - Nexus files for each of our three mammal families included in this study, sets of 1000 credible trees for use in **sensiphy_analyses.Rmd**.
 
