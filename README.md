@@ -2,7 +2,7 @@ This is a project for determining potential relationships between various biocli
 
 Other tangentially related stuff includes ancestral state reconstruction, etc.
 
-**updated herpestidae stuff.Rmd** - Original (and most complete) script for this project, analyses of species in family Herpestidae with variant sex chromosome systems, plus data visualizations
+**updated herpestidae stuff.Rmd** - Original script for this project, analyses of species in family Herpestidae with variant sex chromosome systems, plus data visualizations
 
 **batproject.Rmd** - Analyses of species in family Phyllostomidae with variant sex chromosome system
 
@@ -12,15 +12,18 @@ Other tangentially related stuff includes ancestral state reconstruction, etc.
 
 **shapefile_stuff.Rmd** - A testbench script, mostly meant as an experiment in plotting shapefiles with ggplot to build Figure 2 in our paper. Allows for visualization of distributions for our mammal families of interest.
 
+**sexreferencedfupdated.csv** - A dataset containing every mammal species considered for this study, their associated sex chromosome systems, whether these sex chromosomes are known or imputed, citation if known, and miscellaneous comments. Also **Supplemental Table 1** for our paper. Table caption: "Comprehensive list of mammal species included in our analysis, sampled from three mammalian families. Of 34 total species from Herpestidae included in our analysis (excluding Urva auropunctata), 9 species were coded as possessing a Y-autosome fusion. Of 413 total species from Soricidae (excluding Sorex kozlovi), 10 species were coded as possessing an X-autosome fusion. Of 205 total species from Phyllostomidae, 15 species were coded as possessing an X-autosome fusion and 14 species were coded as possessing both an X- and Y-autosome fusion, summing to 29 variant species total."
+
 <ins>Ready-to-run scripts (run these in sequence!)</ins>
 
 **initial_phyloglm_analyses.Rmd** - The first in a series of scripts acting as polished versions of the master script, meant to allow easy reproduction of results. This one focuses on the initial analyses performed with the consensus tree using _phylolm_.
 
 **sensiphy_analyses.Rmd** - The second in a series of scripts acting as polished versions of the master script. This one focuses on the _sensiPhy_ analyses performing phylo. log regression over sets of 1000 trees from the posterior distribution for each mammal family of interest.
 
+**chromeplus_simulation_herp.R** & **chromeplus_1000trees_x.R** - The third/fourth in a series of scripts acting as polished versions of the master script. These are the _chromePlus_ simulations, with the 1000trees one doing the simulation (you guessed it) over the set of 1000 trees we use for _sensiPhy_.
+
 to do: 
-- make more figures, including with plotTree.barplot! (supplemental figure needs include sensi_plot() outputs)
-- write this paper already...
+- submit this paper already...
 
 Citations:
 K. T. David, Global gradients in the distribution of animal polyploids. Proc. Natl. Acad. Sci. U.S.A. 119, e2214070119 (2022). Code modified from original scripts.
