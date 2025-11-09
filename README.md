@@ -1,4 +1,4 @@
-This is a project for determining potential relationships between various bioclimatic variables and mammal sex chromosome systems that differ from the "classic" XX/XY system, through phylogenetic comparative methods using various R packages.
+This is a project for determining potential relationships between various bioclimatic variables and mammal sex chromosome systems that differ from the "classic" XX/XY system, through phylogenetic comparative methods using various R packages. Read the preprint [here.](https://doi.org/10.1101/2025.11.05.686331) 
 
 Other tangentially related stuff includes ancestral state reconstruction, etc.
 
