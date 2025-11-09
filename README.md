@@ -10,15 +10,15 @@ Other tangentially related stuff includes ancestral state reconstruction, etc.
 
 **multiphylo** - Nexus files for each of our three mammal families included in this study, sets of 1000 credible trees for use in **sensiphy_analyses.Rmd**.
 
-**output** - Output files from code, essentially subsets of TetrapodTraits 1.0.0 containing only our species of interest for each of our three mammal families. Some extra variables from other datasets (e.g. % acrocentric and haploid number from "chroms.csv") have been added.
+**output** - Output files from code, essentially subsets of TetrapodTraits v1.0.0 containing only our species of interest for each of our three mammal families. Some extra variables from other datasets (e.g. % acrocentric and haploid number from "chroms.csv") have been added.
 
 <ins>Ready-to-run scripts (run these in sequence!)</ins>
 
 **initial_phyloglm_analyses.Rmd** - The first in a series of scripts acting as polished versions of the master script, meant to allow easy reproduction of results. This one focuses on the initial analyses performed with the consensus tree using _phylolm_.
 
-**sensiphy_analyses.Rmd** - The second in a series of scripts acting as polished versions of the master script. This one focuses on the _sensiPhy_ analyses performing phylo. log regression over sets of 1000 trees from the posterior distribution for each mammal family of interest.
+**sensiphy_analyses.Rmd** - The second in a series of scripts acting as polished versions of the master script. This one focuses on the _sensiPhy_ analyses performing phylogenetic log regression over sets of 1000 trees from the posterior distribution for each mammal family of interest.
 
-**chromeplus_simulation_herp.R** & **chromeplus_1000trees_x.R** - The third/fourth in a series of scripts acting as polished versions of the master script. These are the _chromePlus_ simulations, with the 1000trees one performing the simulation (you guessed it) over the set of 1000 trees we use for _sensiPhy_.
+**chromeplus_simulation_x.R** & **chromeplus_1000trees_x.R** - The third/fourth in a series of scripts acting as polished versions of the master script. These are the _chromePlus_ simulations, with the 1000trees one performing the simulation (you guessed it) over the set of 1000 trees we use for _sensiPhy_. The 1000trees option is probably the more robust option for most use cases.
 
 <ins>Archived scripts</ins>
 
@@ -28,7 +28,7 @@ Other tangentially related stuff includes ancestral state reconstruction, etc.
 
 **asr stuff.Rmd** - Ancestral state reconstruction script for variant Herpestidae species
 
-**sex chromosome project updated.Rmd** - Master script used for analysis and testing, new & updated version of analysis scripts integrating all three mammal clades of interest, using data from Moura _et al._ (2024). Includes single-tree analyses using _phylolm_ (phylo. log regression) and multiPhylo analyses using _sensiPhy_. Currently being split into three separate scripts, with the goal of being able to run these with no modification.
+**sex chromosome project updated.Rmd** - Master script used for analysis and testing, new & updated version of analysis scripts integrating all three mammal clades of interest, using data from Moura _et al._ (2024). Includes single-tree analyses using _phylolm_ (phylo. log regression) and multiPhylo analyses using _sensiPhy_. Now split into four separate scripts.
 
 **shapefile_stuff.Rmd** - A testbench script, mostly meant as an experiment in plotting shapefiles with ggplot to build Figure 2 in our paper. Allows for visualization of distributions for our mammal families of interest.
 
