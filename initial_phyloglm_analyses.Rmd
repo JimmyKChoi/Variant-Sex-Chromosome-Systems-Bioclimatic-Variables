@@ -219,7 +219,8 @@ herp_adjusted_p
 ```{r}
 write.csv(tetrapodtraits.herp, file = "tetrapodtraits_herp.csv", row.names = TRUE, col.names = TRUE)
 write.csv(tetrapodtraits.herp.known.karyo, file = "tetrapodtraits_herp_known_karyo.csv", row.names = TRUE, col.names = TRUE)
-write.csv(herp_adjusted_p, file = "herp_adjusted_p_values.csv", row.names = c("RangeSize","AbsoluteLatitude","AnnuMeanTemp","AnnuPrecip","TempSeasonality","PrecipSeasonality","Elevation","% Acro")) 
+write.csv(herp_adjusted_p, file = "herp_adjusted_p_values.csv", row.names = c("RangeSize","AbsoluteLatitude","AnnuMeanTemp","AnnuPrecip","TempSeasonality","PrecipSeasonality","Elevation","% Acro"))
+write.tree(herpestidae.tree, file = "herpestidae_tree.txt")
 ```
 
 
@@ -286,7 +287,7 @@ tetrapodtraits.phyllostom <- tetrapodtraits.phyllostom[!sapply(tetrapodtraits.ph
 
 ```{r}
 ## data from sources collected by Hughes et al.
-tetrapodtraits.phyllostom$perc.acro[which(tetrapodtraits.phyllostom$Scientific.Name %in% c("Carollia perspicillata", "Ariteus flavescens", "Artibeus fimbriatus", "Artibeus jamaicensis", "Artibeus lituratus", "Artibeus obscurus", "Artibeus planirostris", "Dermanura cinerea", "Dermanura phaeotis", "Dermanura tolteca", "Mesophylla macconnelli", "Phyllops falcatus", "Uroderma magnirostrum", "Dermanura azteca"))] <- c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0.16666667, 0)
+tetrapodtraits.phyllostom$perc.acro[which(tetrapodtraits.phyllostom$Scientific.Name %in% c("Anoura caudifer", "Anoura cultrata", "Anoura geoffroyi", "Ariteus flavescens", "Artibeus fimbriatus", "Artibeus jamaicensis", "Artibeus lituratus", "Artibeus obscurus", "Artibeus planirostris", "Carollia perspicillata", "Choeroniscus minor", "Chrotopterus auritus", "Dermanura azteca", "Dermanura cinerea", "Dermanura phaeotis", "Dermanura tolteca", "Glyphonycteris daviesi", "Lampronycteris brachyotis", "Lionycteris spurrelli", "Lonchophylla robusta", "Lonchorhina aurita", "Lophostoma brasiliense", "Lophostoma schulzi", "Lophostoma silvicola", "Mesophylla macconnelli", "Micronycteris hirsuta", "Micronycteris schmidtorum", "Mimon bennettii",  "Gardnerycteris crenulata", "Phylloderma stenops", "Phyllops falcatus", "Phyllostomus latifolius", "Platyrrhinus vittatus", "Trachops cirrhosus", "Trinycteris nicefori", "Uroderma magnirostrum", "Vampyressa thyone", "Vampyrodes caraccioli", "Vampyrum spectrum"))] <- c(0, 0.066666667, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.071428571, 0.071428571, 0, 0, 0.64285714, 0.11764706, 1, 0.86666667, 0.15789474, 0, 0, 0.0625, 0, 0.0625, 0, 0, 0, 0.16666667, 1, 0, 0)
 tetrapodtraits.phyllostom$perc.acro
 ```
 
@@ -294,7 +295,7 @@ tetrapodtraits.phyllostom$perc.acro
 tetrapodtraits.phyllo.known.karyo <- tetrapodtraits.phyllostom[!is.na(tetrapodtraits.phyllostom$perc.acro),]
 tetrapodtraits.phyllo.known.karyo <- add_column(tetrapodtraits.phyllo.known.karyo, haploid = "")
 tetrapodtraits.phyllo.known.karyo$haploid <- karyotype.data[match(tetrapodtraits.phyllo.known.karyo$Scientific.Name, karyotype.data$Species),2]
-tetrapodtraits.phyllo.known.karyo$haploid[which(tetrapodtraits.phyllo.known.karyo$Scientific.Name %in% c("Ariteus flavescens", "Artibeus fimbriatus", "Artibeus jamaicensis", "Artibeus lituratus", "Artibeus obscurus", "Artibeus planirostris", "Carollia perspicillata", "Dermanura cinerea", "Dermanura phaeotis", "Dermanura tolteca", "Mesophylla macconnelli", "Phyllops falcatus", "Uroderma magnirostrum", "Dermanura azteca"))] <- c(15, 15, 15, 15, 15, 15, 10, 15, 15, 15, 11, 15, 18, 15)
+tetrapodtraits.phyllo.known.karyo$haploid[which(tetrapodtraits.phyllo.known.karyo$Scientific.Name %in% c("Anoura caudifer", "Anoura cultrata", "Anoura geoffroyi", "Ariteus flavescens", "Artibeus fimbriatus", "Artibeus jamaicensis", "Artibeus lituratus", "Artibeus obscurus", "Artibeus planirostris", "Carollia perspicillata", "Choeroniscus minor", "Chrotopterus auritus", "Dermanura azteca", "Dermanura cinerea", "Dermanura phaeotis", "Dermanura tolteca", "Glyphonycteris daviesi", "Lampronycteris brachyotis", "Lionycteris spurrelli", "Lonchophylla robusta", "Lonchorhina aurita", "Lophostoma brasiliense", "Lophostoma schulzi", "Lophostoma silvicola", "Mesophylla macconnelli", "Micronycteris hirsuta", "Micronycteris schmidtorum", "Mimon bennettii",  "Gardnerycteris crenulata", "Phylloderma stenops", "Phyllops falcatus", "Phyllostomus latifolius", "Platyrrhinus vittatus", "Trachops cirrhosus", "Trinycteris nicefori", "Uroderma magnirostrum", "Vampyressa thyone", "Vampyrodes caraccioli", "Vampyrum spectrum"))] <- c(15, 15, 15, 15, 15, 15, 15, 15, 15, 10, 10, 14, 15, 15, 15, 15, 14, 16, 14, 14, 16, 15, 14, 17, 11, 15, 19, 15, 16, 16, 15, 16, 15, 15, 14, 18, 12, 15, 15)
 tetrapodtraits.phyllo.known.karyo <- tetrapodtraits.phyllo.known.karyo[!sapply(tetrapodtraits.phyllo.known.karyo, function(x) all(x == ""))]
 tetrapodtraits.phyllo.known.karyo$haploid
 ```
@@ -336,7 +337,8 @@ phyllo_adjusted_p
 ```{r}
 write.csv(tetrapodtraits.phyllostom, file = "tetrapodtraits_phyllo.csv", row.names = TRUE, col.names = TRUE)
 write.csv(tetrapodtraits.phyllo.known.karyo, file = "tetrapodtraits_phyllo_known_karyo.csv", row.names = TRUE, col.names = TRUE)
-write.csv(phyllo_adjusted_p, file = "phyllo_adjusted_p_values.csv", row.names = c("RangeSize","AbsoluteLatitude","AnnuMeanTemp","AnnuPrecip","TempSeasonality","PrecipSeasonality","Elevation","% Acro")) 
+write.csv(phyllo_adjusted_p, file = "phyllo_adjusted_p_values.csv", row.names = c("RangeSize","AbsoluteLatitude","AnnuMeanTemp","AnnuPrecip","TempSeasonality","PrecipSeasonality","Elevation","% Acro"))
+write.tree(phyllostom.tree, file = "phyllostom_tree.txt")
 ```
 
 
@@ -458,5 +460,6 @@ sorex_adjusted_p
 ```{r}
 write.csv(tetrapodtraits.sorex, file = "tetrapodtraits_sorex.csv", row.names = TRUE, col.names = TRUE)
 write.csv(tetrapodtraits.sorex.known.karyo, file = "tetrapodtraits_sorex_known_karyo.csv", row.names = TRUE, col.names = TRUE)
-write.csv(sorex_adjusted_p, file = "sorex_adjusted_p_values.csv", row.names = c("RangeSize","AbsoluteLatitude","AnnuMeanTemp","AnnuPrecip","TempSeasonality","PrecipSeasonality","Elevation","% Acro")) 
+write.csv(sorex_adjusted_p, file = "sorex_adjusted_p_values.csv", row.names = c("RangeSize","AbsoluteLatitude","AnnuMeanTemp","AnnuPrecip","TempSeasonality","PrecipSeasonality","Elevation","% Acro"))
+write.tree(sorex.tree, file = "sorex_tree.txt")
 ```
