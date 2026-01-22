@@ -7,13 +7,18 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_knit$set(root.dir = "C:/Users/jimmy/OneDrive/Documents")
+knitr::opts_knit$set(root.dir = "")
 library(sf)
 library(ggplot2)
 library(tidyverse)
-library(phytools)
 library(plyr)
 library(rnaturalearth)
+```
+
+```{r}
+## shapefiles are from TetrapodTraits, Moura et al. (2024)
+## paper DOI: 10.1371/journal.pbio.3002658
+## database DOI: 10.5281/zenodo.10530617
 ```
 
 ```{r}
@@ -42,11 +47,11 @@ variant.herp.range <- tetrapodtraits.shapefile %>%
 ne_sf <- ne_countries(returnclass = "sf")
 
 ggplot(data = ne_sf) +
-  geom_sf(color = NA) +
-  geom_sf(data = herp.range, aes(fill = "#000000", colour = "#000000")) +
-  geom_sf(data = variant.herp.range, aes(fill = "#D55E00", colour = "#D55E00")) +
-  scale_fill_identity(name = '', guide = 'legend', labels = c("Only XX/XY", "XX/XY and variant")) +
-  scale_colour_identity(name = '', guide = 'none', labels = c("Only XX/XY", "XX/XY and variant")) +
+  geom_sf(color = "black", aes(fill = "white")) +
+  geom_sf(data = herp.range, aes(fill = "grey", colour = NA)) +
+  geom_sf(data = variant.herp.range, aes(fill = "#D55E00", colour = NA), alpha = 1) +
+  scale_fill_identity(name = '', guide = 'legend', labels = c("Variant species present", "Only XX/XY present", "Not present")) +
+  scale_colour_identity(name = '', guide = 'none', labels = c("Variant species present", "Only XX/XY present", "Not present")) +
   theme_void()
 
 #"#000000" "#E69F00" "#56B4E9" "#009E73" "#F0E442" "#0072B2"
@@ -58,6 +63,7 @@ ggplot(data = ne_sf) +
 
 
 ```{r}
+tetrapod360$Scientific.Name <- mapvalues(tetrapod360$Scientific.Name, from=c("Dermanura aztecus", "Dermanura cinereus", "Dermanura glaucus", "Dermanura gnomus", "Dermanura rosenbergii", "Dermanura toltecus", "Lophostoma aequatorialis", "Lophostoma silvicolum", "Mimon crenulatum", "Mimon koepckeae", "Vampyressa bidens", "Vampyressa brocki", "Vampyressa nymphaea", "Diaemus youngi"), to=c("Dermanura azteca", "Dermanura cinerea", "Dermanura glauca", "Dermanura gnoma", "Dermanura rosenbergi", "Dermanura tolteca", "Lophostoma occidentale", "Lophostoma silvicola", "Gardnerycteris crenulata", "Gardnerycteris koepckeae", "Vampyriscus bidens", "Vampyriscus brocki", "Vampyriscus nymphaeus", "Diaemus youngii"))
 phyllo.cells <- tetrapod360[which(tetrapod360$Scientific.Name %in% tetrapodtraits.phyllostom$Scientific.Name),]
 phyllo.cells
 ```
@@ -78,11 +84,11 @@ variant.phyllo.range <- tetrapodtraits.shapefile %>%
 ne_sf <- ne_countries(returnclass = "sf")
 
 ggplot(data = ne_sf) +
-  geom_sf(color = NA) +
-  geom_sf(data = phyllo.range, aes(fill = "#000000", colour = "#000000")) +
+  geom_sf(color = "black", aes(fill = "white")) +
+  geom_sf(data = phyllo.range, aes(fill = "grey", colour = NA)) +
   geom_sf(data = variant.phyllo.range, aes(fill = "#CC79A7", colour = "#CC79A7")) +
-  scale_fill_identity(name = '', guide = 'legend', labels = c("Only XX/XY", "XX/XY and variant")) +
-  scale_colour_identity(name = '', guide = 'none', labels = c("Only XX/XY", "XX/XY and variant")) +
+  scale_fill_identity(name = '', guide = 'legend', labels = c("Variant species present", "Only XX/XY present", "Not present")) +
+  scale_colour_identity(name = '', guide = 'none', labels = c("Variant species present", "Only XX/XY present", "Not present")) +
   theme_void()
 
 #"#000000" "#E69F00" "#56B4E9" "#009E73" "#F0E442" "#0072B2"
@@ -106,17 +112,18 @@ both.variant.phyllo.range <- phyllo.range[phyllo.range$Cl_I110 %in% phyllo.cells
 ne_sf <- ne_countries(returnclass = "sf")
 
 ggplot(data = ne_sf) +
-  geom_sf(color = NA) +
-  geom_sf(data = phyllo.range, aes(fill = "#000000", colour = "#000000")) +
-  geom_sf(data = XAYA.phyllo.range, aes(fill = "#CC79A7", colour = "#CC79A7")) +
-  geom_sf(data = XA.phyllo.range, aes(fill = "#56B4E9", colour = "#56B4E9")) +
-  geom_sf(data = both.variant.phyllo.range, aes(fill = "#E69F00", colour = "#E69F00")) +
-  scale_fill_identity(name = '', guide = 'legend', labels = c("Only XX/XY", "XX/XY and XAfusion", "XX/XY and XAYAfusion", "XX/XY and both variant types")) +
-  scale_colour_identity(name = '', guide = 'none', labels = c("Only XX/XY", "XX/XY and XAfusion", "XX/XY and XAYAfusion", "XX/XY and both variant types")) +
+  geom_sf(color = "black", aes(fill = "white")) +
+  geom_sf(data = phyllo.range, aes(fill = "grey", colour = NA)) +
+  geom_sf(data = XAYA.phyllo.range, aes(fill = "#CC79A7", colour = NA), alpha = 1) +
+  geom_sf(data = XA.phyllo.range, aes(fill = "#56B4E9", colour = NA), alpha = 1) +
+  geom_sf(data = both.variant.phyllo.range, aes(fill = "#E69F00", colour = NA), alpha = 1) +
+  scale_fill_identity(name = '', guide = 'legend', labels = c("XAfusion species present", "XAYAfusion species present", "Both variant types present", "Only XX/XY present", "Not present")) +
+  scale_colour_identity(name = '', guide = 'none', labels = c("XAfusion species present", "XAYAfusion species present", "Both variant types present", "Only XX/XY present", "Not present")) +
   theme_void()
 
 #"#000000" "#E69F00" "#56B4E9" "#009E73" "#F0E442" "#0072B2"
 #"#D55E00" "#CC79A7" "#999999" Okabe colors
+# plot background world map with only outline, use gray as XX/XY
 ```
 
 
@@ -144,13 +151,14 @@ variant.shrew.range <- tetrapodtraits.shapefile %>%
 ne_sf <- ne_countries(returnclass = "sf")
 
 ggplot(data = ne_sf) +
-  geom_sf(color = NA) +
-  geom_sf(data = sorex.range, aes(fill = "#000000", colour = "#000000")) +
-  geom_sf(data = variant.shrew.range, aes(fill = "#56B4E9", colour = "#56B4E9")) +
-  scale_fill_identity(name = '', guide = 'legend', labels = c("Only XX/XY", "XX/XY and variant")) +
-  scale_colour_identity(name = '', guide = 'none', labels = c("Only XX/XY", "XX/XY and variant")) +
+  geom_sf(color = "black", aes(fill = "white")) +
+  geom_sf(data = sorex.range, aes(fill = "grey", colour = NA)) +
+  geom_sf(data = variant.shrew.range, aes(fill = "#56B4E9", colour = NA), alpha = 0.7) +
+  scale_fill_identity(name = '', guide = 'legend', labels = c("Variant species present", "Only XX/XY present", "Not present")) +
+  scale_colour_identity(name = '', guide = 'none', labels = c("Variant species present", "Only XX/XY present", "Not present"))  +
   theme_void()
 
 #"#000000" "#E69F00" "#56B4E9" "#009E73" "#F0E442" "#0072B2"
 #"#D55E00" "#CC79A7" "#999999" Okabe colors
+#add.alpha for transparency?
 ```
