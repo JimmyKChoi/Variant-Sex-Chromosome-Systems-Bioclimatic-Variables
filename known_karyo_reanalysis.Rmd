@@ -1,0 +1,202 @@
+---
+title: "known_karyo_reanalysis"
+author: "Jimmy Choi"
+output: html_document
+date: "2025-11-24"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+## set directory here
+knitr::opts_knit$set(root.dir = "")
+library(ape) ## v5.8-1
+library(plyr) ## v1.8.9
+library(dplyr) ## v1.1.4
+library(tibble) ## v3.3.0
+library(geiger) ## v2.0.11
+library(effsize) ## v0.8.1
+library(phylolm) ## v2.6.5
+library(sensiPhy) ## v0.8.5
+```
+
+```{r}
+## reading in tetrapodtraits subsets for species w/ known karyotype only
+tetrapodtraits.herp.known.karyo <- read.csv(file = "tetrapodtraits_herp_known_karyo.csv", row.names = 1)
+herpestidae.tree <- read.tree(file = "herpestidae_tree.txt")
+herpestidae.tree$tip.label <- gsub('_', ' ', herpestidae.tree$tip.label)
+herp.tree.known.karyo <- keep.tip(herpestidae.tree, tetrapodtraits.herp.known.karyo$Scientific.Name)
+
+tetrapodtraits.phyllo.known.karyo <- read.csv(file = "tetrapodtraits_phyllo_known_karyo.csv", row.names = 1)
+phyllostom.tree <- read.tree(file = "phyllostom_tree.txt")
+phyllostom.tree$tip.label <- gsub('_', ' ', phyllostom.tree$tip.label)
+phyllo.tree.known.karyo <- keep.tip(phyllostom.tree, tetrapodtraits.phyllo.known.karyo$Scientific.Name)
+
+tetrapodtraits.sorex.known.karyo <- read.csv(file = "tetrapodtraits_sorex_known_karyo.csv", row.names = 1)
+sorex.tree <- read.tree(file = "sorex_tree.txt")
+sorex.tree$tip.label <- gsub('_', ' ', sorex.tree$tip.label)
+sorex.tree.known.karyo <- keep.tip(sorex.tree, tetrapodtraits.sorex.known.karyo$Scientific.Name)
+```
+
+
+```{r}
+rownames(tetrapodtraits.herp.known.karyo) <- unlist(tetrapodtraits.herp.known.karyo$Scientific.Name)
+var_names <- c("RangeSize","AbsoluteLatitude","AnnuMeanTemp","AnnuPrecip","TempSeasonality","PrecipSeasonality","Elevation") 
+tetrapodtraits.herp.known.karyo[,var_names] <- sapply(tetrapodtraits.herp.known.karyo[,var_names], as.numeric)
+tetrapodtraits.herp.known.karyo$XYorvariant <- as.numeric(tetrapodtraits.herp.known.karyo$XYorvariant)
+log_reg <- c()
+
+for (var in var_names) {
+
+y <- tetrapodtraits.herp.known.karyo[[var]]
+names(y) <- unlist(tetrapodtraits.herp.known.karyo$Scientific.Name)
+group <- tetrapodtraits.herp.known.karyo$XYorvariant
+test <- phyloglm(group ~ y, phy = keep.tip(herp.tree.known.karyo, tetrapodtraits.herp.known.karyo[!(is.na(tetrapodtraits.herp.known.karyo[[var]])),]$Scientific.Name), data = tetrapodtraits.herp.known.karyo, method = c("logistic_MPLE"), boot = 1000)
+log_reg <- rbind(log_reg, summary(test))
+print(test$alphaWarn)
+## while phylolm provides a lot of warnings, this makes sure these warnings don't actually affect the results (returns 0 = all good)
+}
+log_reg[1:7,2]
+## coefficients are stored in second column of log_reg
+```
+
+
+```{r}
+log_reg_p_values_herp <- c()
+log_reg_p_values_herp <- append(log_reg_p_values_herp, log_reg[1:7,2][[1]][12])
+log_reg_p_values_herp <- append(log_reg_p_values_herp, log_reg[1:7,2][[2]][12])
+log_reg_p_values_herp <- append(log_reg_p_values_herp, log_reg[1:7,2][[3]][12])
+log_reg_p_values_herp <- append(log_reg_p_values_herp, log_reg[1:7,2][[4]][12])
+log_reg_p_values_herp <- append(log_reg_p_values_herp, log_reg[1:7,2][[5]][12])
+log_reg_p_values_herp <- append(log_reg_p_values_herp, log_reg[1:7,2][[6]][12])
+log_reg_p_values_herp <- append(log_reg_p_values_herp, log_reg[1:7,2][[7]][12])
+herp_adjusted_p <- p.adjust(log_reg_p_values_herp, method = "fdr")
+herp_adjusted_p
+```
+
+```{r}
+rownames(tetrapodtraits.phyllo.known.karyo) <- unlist(tetrapodtraits.phyllo.known.karyo$Scientific.Name)
+var_names <- c("RangeSize","AbsoluteLatitude","AnnuMeanTemp","AnnuPrecip","TempSeasonality","PrecipSeasonality","Elevation")
+tetrapodtraits.phyllo.known.karyo[,var_names] <- sapply(tetrapodtraits.phyllo.known.karyo[,var_names], as.numeric)
+log_reg2 <- c()
+
+for (var in var_names) {
+
+y <- tetrapodtraits.phyllo.known.karyo[[var]]
+names(y) <- unlist(tetrapodtraits.phyllo.known.karyo$Scientific.Name)
+group <- factor(tetrapodtraits.phyllo.known.karyo$XYorvariant)
+names(group) <- unlist(tetrapodtraits.phyllo.known.karyo$Scientific.Name) 
+test <- phyloglm(group ~ y, phy = keep.tip(phyllo.tree.known.karyo, tetrapodtraits.phyllo.known.karyo[!(is.na(tetrapodtraits.phyllo.known.karyo[[var]])),]$Scientific.Name), data = tetrapodtraits.phyllo.known.karyo, method = c("logistic_MPLE"), boot = 1000)
+log_reg2 <- rbind(log_reg2, summary(test))
+print(test$alphaWarn)
+}
+log_reg2[1:7,2]
+```
+
+```{r}
+log_reg_p_values_phyllo <- c()
+log_reg_p_values_phyllo <- append(log_reg_p_values_phyllo, log_reg2[1:7,2][[1]][12])
+log_reg_p_values_phyllo <- append(log_reg_p_values_phyllo, log_reg2[1:7,2][[2]][12])
+log_reg_p_values_phyllo <- append(log_reg_p_values_phyllo, log_reg2[1:7,2][[3]][12])
+log_reg_p_values_phyllo <- append(log_reg_p_values_phyllo, log_reg2[1:7,2][[4]][12])
+log_reg_p_values_phyllo <- append(log_reg_p_values_phyllo, log_reg2[1:7,2][[5]][12])
+log_reg_p_values_phyllo <- append(log_reg_p_values_phyllo, log_reg2[1:7,2][[6]][12])
+log_reg_p_values_phyllo <- append(log_reg_p_values_phyllo, log_reg2[1:7,2][[7]][12])
+phyllo_adjusted_p <- p.adjust(log_reg_p_values_phyllo, method = "fdr")
+phyllo_adjusted_p
+```
+
+```{r}
+rownames(tetrapodtraits.sorex.known.karyo) <- unlist(tetrapodtraits.sorex.known.karyo$Scientific.Name)
+var_names <- c("RangeSize","AbsoluteLatitude","AnnuMeanTemp","AnnuPrecip","TempSeasonality","PrecipSeasonality","Elevation")
+log_reg3 <- c()
+
+for (var in var_names) {
+
+y <- tetrapodtraits.sorex.known.karyo[[var]]
+names(y) <- unlist(tetrapodtraits.sorex.known.karyo$Scientific.Name)
+group <- factor(tetrapodtraits.sorex.known.karyo$XYorvariant)
+names(group) <- unlist(tetrapodtraits.sorex.known.karyo$Scientific.Name) 
+test <- phyloglm(group ~ y, phy = keep.tip(sorex.tree.known.karyo, tetrapodtraits.sorex.known.karyo[!(is.na(tetrapodtraits.sorex.known.karyo[[var]])),]$Scientific.Name), data = tetrapodtraits.sorex.known.karyo, method = c("logistic_MPLE"), boot = 1000)
+log_reg3 <- rbind(log_reg3, summary(test))
+print(test$alphaWarn)
+    
+}
+log_reg3[1:7,2]
+```
+
+```{r}
+log_reg_p_values_sorex <- c()
+log_reg_p_values_sorex <- append(log_reg_p_values_sorex, log_reg3[1:7,2][[1]][12])
+log_reg_p_values_sorex <- append(log_reg_p_values_sorex, log_reg3[1:7,2][[2]][12])
+log_reg_p_values_sorex <- append(log_reg_p_values_sorex, log_reg3[1:7,2][[3]][12])
+log_reg_p_values_sorex <- append(log_reg_p_values_sorex, log_reg3[1:7,2][[4]][12])
+log_reg_p_values_sorex <- append(log_reg_p_values_sorex, log_reg3[1:7,2][[5]][12])
+log_reg_p_values_sorex <- append(log_reg_p_values_sorex, log_reg3[1:7,2][[6]][12])
+log_reg_p_values_sorex <- append(log_reg_p_values_sorex, log_reg3[1:7,2][[7]][12])
+sorex_adjusted_p <- p.adjust(log_reg_p_values_sorex, method = "fdr")
+sorex_adjusted_p
+```
+
+
+
+
+
+```{r}
+## reading in 1000 trees for each family for sensiPhy analysis & taxonomic corrections
+herp.multiphylo <- read.nexus(file = "herpoutput.nex")
+phy.replace.herp <- function(tree) {
+  tree$tip.label <- sub("_", " ", tree$tip.label)
+  tree$tip.label <- mapvalues(tree$tip.label, from=c("Herpestes brachyurus","Herpestes edwardsii","Herpestes fuscus","Herpestes semitorquatus","Herpestes smithii","Herpestes urva","Herpestes vitticollis","Herpestes javanicus","Herpestes naso"), to=c("Urva brachyura","Urva edwardsii","Urva fusca","Urva semitorquata","Urva smithii","Urva urva","Urva vitticollis","Urva javanica","Xenogale naso"))
+  return(tree)
+}
+herp.multiphylo <- lapply(herp.multiphylo, phy.replace.herp)
+class(herp.multiphylo) <- "multiPhylo"
+
+phyllostom.multiphylo <- read.nexus(file = "phyllostomoutput.nex")
+phy.replace.phyllostom <- function(tree) {
+  tree$tip.label <- sub("_", " ", tree$tip.label)
+  tree$tip.label <- mapvalues(tree$tip.label, from=c("Dermanura aztecus", "Dermanura cinereus", "Dermanura glaucus", "Dermanura gnomus", "Dermanura rosenbergii", "Dermanura toltecus", "Lophostoma aequatorialis", "Lophostoma silvicolum", "Mimon crenulatum", "Mimon koepckeae", "Vampyressa bidens", "Vampyressa brocki", "Vampyressa nymphaea", "Diaemus youngi"), to=c("Dermanura azteca", "Dermanura cinerea", "Dermanura glauca", "Dermanura gnoma", "Dermanura rosenbergi", "Dermanura tolteca", "Lophostoma occidentale", "Lophostoma silvicola", "Gardnerycteris crenulata", "Gardnerycteris koepckeae", "Vampyriscus bidens", "Vampyriscus brocki", "Vampyriscus nymphaeus", "Diaemus youngii"))
+  return(tree)
+}
+phyllostom.multiphylo <- lapply(phyllostom.multiphylo, phy.replace.phyllostom)
+class(phyllostom.multiphylo) <- "multiPhylo"
+
+sorex.multiphylo <- read.nexus(file = "sorexoutput.nex")
+phy.replace.sorex <- function(tree) {
+  tree$tip.label <- sub("_", " ", tree$tip.label)
+  tree <- drop.tip(tree, c("Sorex kozlovi"))
+  return(tree)
+}
+sorex.multiphylo <- lapply(sorex.multiphylo, phy.replace.sorex)
+class(sorex.multiphylo) <- "multiPhylo"
+```
+
+```{r}
+herp.sensiphy.rangesize <- tree_phyglm(XYorvariant ~ RangeSize, data = tetrapodtraits.herp.known.karyo, phy = herp.multiphylo, n.tree = 1000, track = FALSE)
+herp.sensiphy.abslat <- tree_phyglm(XYorvariant ~ AbsoluteLatitude, data = tetrapodtraits.herp.known.karyo, phy = herp.multiphylo, n.tree = 1000, track = FALSE)
+herp.sensiphy.annumeantemp <- tree_phyglm(XYorvariant ~ AnnuMeanTemp, data = tetrapodtraits.herp.known.karyo, phy = herp.multiphylo, n.tree = 1000, track = FALSE)
+herp.sensiphy.annuprecip <- tree_phyglm(XYorvariant ~ AnnuPrecip, data = tetrapodtraits.herp.known.karyo, phy = herp.multiphylo, n.tree = 1000, track = FALSE)
+herp.sensiphy.tempseason <- tree_phyglm(XYorvariant ~ TempSeasonality, data = tetrapodtraits.herp.known.karyo, phy = herp.multiphylo, n.tree = 1000, track = FALSE)
+herp.sensiphy.precipseason <- tree_phyglm(XYorvariant ~ PrecipSeasonality, data = tetrapodtraits.herp.known.karyo, phy = herp.multiphylo, n.tree = 1000, track = FALSE)
+herp.sensiphy.elevation <- tree_phyglm(XYorvariant ~ Elevation, data = tetrapodtraits.herp.known.karyo, phy = herp.multiphylo, n.tree = 1000, track = FALSE)
+```
+
+```{r}
+phyllo.sensiphy.rangesize <- tree_phyglm(XYorvariant ~ RangeSize, data = tetrapodtraits.phyllo.known.karyo, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE)
+phyllo.sensiphy.abslat <- tree_phyglm(XYorvariant ~ AbsoluteLatitude, data = tetrapodtraits.phyllo.known.karyo, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE)
+phyllo.sensiphy.annumeantemp <- tree_phyglm(XYorvariant ~ AnnuMeanTemp, data = tetrapodtraits.phyllo.known.karyo, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE)
+phyllo.sensiphy.annuprecip <- tree_phyglm(XYorvariant ~ AnnuPrecip, data = tetrapodtraits.phyllo.known.karyo, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE)
+phyllo.sensiphy.tempseason <- tree_phyglm(XYorvariant ~ TempSeasonality, data = tetrapodtraits.phyllo.known.karyo, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE)
+phyllo.sensiphy.precipseason <- tree_phyglm(XYorvariant ~ PrecipSeasonality, data = tetrapodtraits.phyllo.known.karyo, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE)
+phyllo.sensiphy.elevation <- tree_phyglm(XYorvariant ~ Elevation, data = tetrapodtraits.phyllo.known.karyo, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE)
+```
+
+```{r}
+sorex.sensiphy.rangesize <- tree_phyglm(XYorvariant ~ RangeSize, data = tetrapodtraits.sorex.known.karyo, phy = sorex.multiphylo, n.tree = 1000, track = FALSE)
+sorex.sensiphy.abslat <- tree_phyglm(XYorvariant ~ AbsoluteLatitude, data = tetrapodtraits.sorex.known.karyo, phy = sorex.multiphylo, n.tree = 1000, track = FALSE)
+sorex.sensiphy.annumeantemp <- tree_phyglm(XYorvariant ~ AnnuMeanTemp, data = tetrapodtraits.sorex.known.karyo, phy = sorex.multiphylo, n.tree = 1000, track = FALSE)
+sorex.sensiphy.annuprecip <- tree_phyglm(XYorvariant ~ AnnuPrecip, data = tetrapodtraits.sorex.known.karyo, phy = sorex.multiphylo, n.tree = 1000, track = FALSE)
+sorex.sensiphy.tempseason <- tree_phyglm(XYorvariant ~ TempSeasonality, data = tetrapodtraits.sorex.known.karyo, phy = sorex.multiphylo, n.tree = 1000, track = FALSE)
+sorex.sensiphy.precipseason <- tree_phyglm(XYorvariant ~ PrecipSeasonality, data = tetrapodtraits.sorex.known.karyo, phy = sorex.multiphylo, n.tree = 1000, track = FALSE)
+sorex.sensiphy.elevation <- tree_phyglm(XYorvariant ~ Elevation, data = tetrapodtraits.sorex.known.karyo, phy = sorex.multiphylo, n.tree = 1000, track = FALSE)
+```
