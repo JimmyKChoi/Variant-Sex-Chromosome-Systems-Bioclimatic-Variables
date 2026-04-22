@@ -92,8 +92,10 @@ tetrapodtraits.herp
 ```
 
 ```{r}
-## Herpestidae species considered XY marked in black, YAfusions marked in red
-color <- recode(tetrapodtraits.herp$sex, "XY" = "black", "YAfusion" = "#D55E00")
+## Herpestidae species considered XY (known) marked in black, XY (imputed) marked in grey, YAfusions marked in red
+tetrapodtraits.herp.sex <- tetrapodtraits.herp[,1:4]
+tetrapodtraits.herp.sex$sex[which(tetrapodtraits.herp.sex$sex.imputed == 1)] <- c("XYimputed")
+color <- recode(tetrapodtraits.herp.sex$sex, "XY" = "black", "YAfusion" = "#D55E00", "XYimputed" = "grey")
 herp.mycol <- with(tetrapodtraits.herp, as.character(color[match(herpestidae.tree$tip.label, tetrapodtraits.herp$Scientific.Name)]))
 plot(herpestidae.tree, no.margin = TRUE, cex = 0.5, tip.color = herp.mycol)
 ```
