@@ -1,0 +1,97 @@
+bat karyotypes from the book Jon found, "Mammalian Biology in South America" edited by Michael A. Mares and Hugh H. Genoways, vol. 6
+Baker et al., "Chromosomal studies of bats"
+
+Chrotopterus auritus - 0 acro, 13 auto.hap
+Lonchorhina aurita - 0 acro, 15 auto.hap
+Lampronycteris brachyotis - 0 acro, 15 auto.hap
+Glyphonycteris daviesi - 0 acro, 13 auto.hap
+Micronycteris hirsuta - 2 meta 13 acro, 14 auto.hap
+Trinycteris nicefori - 0 acro, 13 auto.hap
+Micronycteris schmidtorum - 16 meta 3 acro, 18 auto.hap
+Mimon bennettii - 0 acro, 14 auto.hap
+Gardnerycteris crenulata - 0 acro, 15 auto.hap
+Phylloderma stenops - 15 meta 1 acro, 15 auto.hap
+Phyllostomus latifolius - 15 meta 1 acro, 15 auto.hap
+Lophostoma brasiliense - 0 acro, 14 auto.hap (also apparently Tonatia minuta is synonymous to this species)
+Lophostoma schulzi - 5 meta 9 acro, 13 auto.hap
+Lophostoma silvicola - 15 meta 2 acro, 16 auto.hap
+Trachops cirrhosus - 0 acro, 14 auto.hap
+Vampyrum spectrum - 0 acro, 14 auto.hap
+Anoura caudifer - 0 acro, 14 auto.hap
+Anoura cultrata - 14 meta 1 acro, 14 auto.hap
+Anoura geoffroyi - 0 acro, 14 auto.hap
+Choeroniscus minor (intermedius) - 0 acro, 9 auto.hap
+Lionycteris spurrelli - 13 meta 1 acro, 13 auto.hap
+Lonchophylla robusta - 13 meta 1 acro, 13 auto.hap
+
+Karyotypes based on FN in other taxa:
+Crossarchus alexandri - no data
+Helogale hirtula - no data
+Rhynchogale melleri - no data
+Sorex arcticus - 5 meta 9 acro, 13 auto.hap (autosomal complement? are all FNs just autosomal?) skip
+Platyrrhinus lineatus - 
+Platyrrhinus vittatus - 0 acro, 14 auto.hap (Baker 1973)
+Vampyressa thyone - 100% acro, 11 auto.hap (Gomes et al. 2016)
+Vampyrodes caraccioli - 0 acro, 14 auto.hap (Baker 1973)
+
+
+Permutation p-values (uncorrected)
+
+Herpestidae
+Rangesize: 1 - (359/1001) = 0.641
+Abslat: 0 tests under p≤0.05
+Annumeantemp: 0 tests under p≤0.05
+Annuprecip: 0 tests under p≤0.05
+Tempseason: 1 - (836/1001) = 0.165
+Precipseason: 0 tests under p≤0.05
+Elevation: 0 tests under p≤0.05
+%acro: 0 tests under p≤0.05
+
+Soricidae
+Rangesize: 0 tests under p≤0.05
+Abslat: 1 - (23/1001) = 0.977
+Annumeantemp: 1 - (114/1001) = 0.886
+Annuprecip: 0 tests under p≤0.05
+Tempseason: 0 tests under p≤0.05
+Precipseason: 0 tests under p≤0.05
+Elevation: 0 tests under p≤0.05
+%acro: 0 tests under p≤0.05
+
+Phyllostomidae
+Rangesize: 1 - (1001/1001) = ?
+Abslat: 1 - (8/1001) = 0.992
+Annumeantemp: 1 - (727/1001) = 0.274
+Annuprecip: 0 tests under p≤0.05
+Tempseason: 0 tests under p≤0.05
+Precipseason: 1 - (47/1001) = 0.953
+Elevation: 1 - (28/1001) = 0.972
+%acro: 0 tests under p≤0.05
+
+known.karyo sensiphy results:
+
+Herpestidae
+Rangesize: 0 tests under p≤0.05
+Abslat: 0 tests under p≤0.05
+Annumeantemp: 0 tests under p≤0.05
+Annuprecip: 0 tests under p≤0.05
+Tempseason: 0 tests under p≤0.05
+Precipseason: 0 tests under p≤0.05
+Elevation: 0 tests under p≤0.05
+
+Soricidae
+Rangesize: 0 tests under p≤0.05
+Abslat: 0 tests under p≤0.05
+Annumeantemp: 0 tests under p≤0.05
+Annuprecip: 0 tests under p≤0.05
+Tempseason: 0 tests under p≤0.05
+Precipseason: 1 - (2/1001) = 0.998
+Elevation: 0 tests under p≤0.05
+
+Phyllostomidae
+Rangesize: 0 tests under p≤0.05
+Abslat: 0 tests under p≤0.05
+Annumeantemp: 0 tests under p≤0.05
+Annuprecip: 0 tests under p≤0.05
+Tempseason: 0 tests under p≤0.05
+Precipseason: 0 tests under p≤0.05
+Elevation: 0 tests under p≤0.05
