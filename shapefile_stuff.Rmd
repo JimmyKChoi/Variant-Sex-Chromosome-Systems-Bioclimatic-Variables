@@ -27,7 +27,7 @@ tetrapodtraits.shapefile
 ```
 
 ```{r}
-tetrapod360 <- read.csv("Tetrapod_360.csv")
+tetrapod360 <- read.csv("Tetrapod_360_v.2.0.0.csv")
 tetrapod360$Scientific.Name <- mapvalues(tetrapod360$Scientific.Name, from = c("Herpestes brachyurus", "Herpestes edwardsii", "Herpestes fuscus", "Herpestes javanicus", "Herpestes naso", "Herpestes semitorquatus", "Herpestes smithii", "Herpestes urva", "Herpestes vitticollis"), to = c("Urva brachyura", "Urva edwardsii", "Urva fusca", "Urva javanica", "Xenogale naso", "Urva semitorquata", "Urva smithii", "Urva urva", "Urva vitticollis"))
 herp.cells <- tetrapod360[which(tetrapod360$Scientific.Name %in% tetrapodtraits.herp$Scientific.Name),]
 herp.cells
@@ -36,7 +36,7 @@ herp.cells
 ```{r}
 herp.range <- tetrapodtraits.shapefile %>%
   filter(Cl_I110 %in% herp.cells$Cell_Id110)
-variant.herp <- variant.mamm$X.2[31:39]
+variant.herp <- tetrapodtraits.herp$Scientific.Name[tetrapodtraits.herp$XYorvariant ==  1]
 variant.herp <- mapvalues(variant.herp, from = c("Urva edwardsi"), to = c("Urva edwardsii"))
 tetrapod360.variant.herp <- herp.cells[which(herp.cells$Scientific.Name %in% variant.herp),]
 variant.herp.range <- tetrapodtraits.shapefile %>%
@@ -45,6 +45,7 @@ variant.herp.range <- tetrapodtraits.shapefile %>%
 
 ```{r}
 ne_sf <- ne_countries(returnclass = "sf")
+png(filename = "herp_distribution.png", width = 4000, height = 1500, units="px", res = 300, bg = "white")
 
 ggplot(data = ne_sf) +
   geom_sf(color = "black", aes(fill = "white")) +
@@ -53,7 +54,7 @@ ggplot(data = ne_sf) +
   scale_fill_identity(name = '', guide = 'legend', labels = c("Variant species present", "Only XX/XY present", "Not present")) +
   scale_colour_identity(name = '', guide = 'none', labels = c("Variant species present", "Only XX/XY present", "Not present")) +
   theme_void()
-
+dev.off()
 #"#000000" "#E69F00" "#56B4E9" "#009E73" "#F0E442" "#0072B2"
 #"#D55E00" "#CC79A7" "#999999" Okabe colors
 ```
@@ -74,7 +75,7 @@ phyllo.range <- tetrapodtraits.shapefile %>%
 ```
 
 ```{r}
-variant.phyllo <- variant.mamm$X.2[40:69]
+variant.phyllo <- tetrapodtraits.phyllostom$Scientific.Name[tetrapodtraits.phyllostom$XYorvariant == 1]
 tetrapod360.variant.phyllo <- phyllo.cells[which(phyllo.cells$Scientific.Name %in% variant.phyllo),]
 variant.phyllo.range <- tetrapodtraits.shapefile %>%
   filter(Cl_I110 %in% tetrapod360.variant.phyllo$Cell_Id110)
@@ -110,6 +111,7 @@ both.variant.phyllo.range <- phyllo.range[phyllo.range$Cl_I110 %in% phyllo.cells
 
 ```{r}
 ne_sf <- ne_countries(returnclass = "sf")
+png(filename = "phyllo_distribution.png", width = 4000, height = 1500, units="px", res = 300, bg = "white")
 
 ggplot(data = ne_sf) +
   geom_sf(color = "black", aes(fill = "white")) +
@@ -120,6 +122,7 @@ ggplot(data = ne_sf) +
   scale_fill_identity(name = '', guide = 'legend', labels = c("XAfusion species present", "XAYAfusion species present", "Both variant types present", "Only XX/XY present", "Not present")) +
   scale_colour_identity(name = '', guide = 'none', labels = c("XAfusion species present", "XAYAfusion species present", "Both variant types present", "Only XX/XY present", "Not present")) +
   theme_void()
+dev.off()
 
 #"#000000" "#E69F00" "#56B4E9" "#009E73" "#F0E442" "#0072B2"
 #"#D55E00" "#CC79A7" "#999999" Okabe colors
@@ -141,7 +144,7 @@ sorex.range <- tetrapodtraits.shapefile %>%
 ```
 
 ```{r}
-variant.shrew <- variant.mamm$X.2[77:86]
+variant.shrew <- tetrapodtraits.sorex$Scientific.Name[tetrapodtraits.sorex$XYorvariant == 1]
 tetrapod360.variant.shrew <- sorex.cells[which(sorex.cells$Scientific.Name %in% variant.shrew),]
 variant.shrew.range <- tetrapodtraits.shapefile %>%
   filter(Cl_I110 %in% tetrapod360.variant.shrew$Cell_Id110)
@@ -149,6 +152,7 @@ variant.shrew.range <- tetrapodtraits.shapefile %>%
 
 ```{r}
 ne_sf <- ne_countries(returnclass = "sf")
+png(filename = "sorex_distribution.png", width = 4000, height = 1500, units="px", res = 300, bg = "white")
 
 ggplot(data = ne_sf) +
   geom_sf(color = "black", aes(fill = "white")) +
@@ -157,6 +161,7 @@ ggplot(data = ne_sf) +
   scale_fill_identity(name = '', guide = 'legend', labels = c("Variant species present", "Only XX/XY present", "Not present")) +
   scale_colour_identity(name = '', guide = 'none', labels = c("Variant species present", "Only XX/XY present", "Not present"))  +
   theme_void()
+dev.off()
 
 #"#000000" "#E69F00" "#56B4E9" "#009E73" "#F0E442" "#0072B2"
 #"#D55E00" "#CC79A7" "#999999" Okabe colors
