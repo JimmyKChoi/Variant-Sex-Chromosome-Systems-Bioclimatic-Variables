@@ -39,7 +39,7 @@ karyotype.data
 
 ```{r}
 ## Herpestidae analyses
-tetrapodtraits <- read.csv(file = "TetrapodTraits_1.0.0.csv", stringsAsFactors = FALSE)
+tetrapodtraits <- read.csv(file = "TetrapodTraits_v2.0.1.csv", stringsAsFactors = FALSE)
 tetrapodtraits.herp <- tetrapodtraits[which(tetrapodtraits$Family == "Herpestidae"),]
 tetrapodtraits.herp
 ```
@@ -102,7 +102,7 @@ plot(herpestidae.tree, no.margin = TRUE, cex = 0.5, tip.color = herp.mycol)
 
 ```{r}
 rownames(tetrapodtraits.herp) <- unlist(tetrapodtraits.herp$Scientific.Name)
-var_names <- c("RangeSize","AbsoluteLatitude","AnnuMeanTemp","AnnuPrecip","TempSeasonality","PrecipSeasonality","Elevation") 
+var_names <- c("RangeSize","AbsoluteLatitude","AnnuMeanTemp","AnnuPrecip","TempSeasonality","PrecipSeasonality","Elevation")
 tetrapodtraits.herp[,var_names] <- sapply(tetrapodtraits.herp[,var_names], as.numeric)
 tetrapodtraits.herp$XYorvariant <- as.numeric(tetrapodtraits.herp$XYorvariant)
 log_reg <- c()
@@ -256,8 +256,11 @@ tetrapodtraits.phyllostom
 ```
 
 ```{r}
-## Phyllostomidae species considered XY marked in black, XAfusions marked in blue, XAYAfusions marked in purple
-color <- recode(tetrapodtraits.phyllostom$sex, "XY" = "black", "XAYAfusion" = "#CC79A7", "XAfusion" = "#56B4E9")
+## Phyllostomidae species considered XY marked in black, XY (imputed) marked in grey, XAfusions marked in blue, XAYAfusions marked in purple
+tetrapodtraits.phyllo.XYknown <- tetrapodtraits.phyllo.known.karyo[tetrapodtraits.phyllo.known.karyo$sex == "XY",]
+tetrapodtraits.phyllostom$sex[which(tetrapodtraits.phyllostom$Scientific.Name %in% tetrapodtraits.phyllo.XYknown$Scientific.Name)] <- c("XYknown")
+tetrapodtraits.phyllostom$sex[which(tetrapodtraits.phyllostom$sex == "XY")] <- c("XYimputed")
+color <- recode(tetrapodtraits.phyllostom$sex, "XYknown" = "black", "XAYAfusion" = "#CC79A7", "XAfusion" = "#56B4E9", "XYimputed" = "grey")
 phyllo.mycol <- with(tetrapodtraits.phyllostom, as.character(color[match(phyllostom.tree$tip.label, tetrapodtraits.phyllostom$Scientific.Name)]))
 plot(phyllostom.tree, no.margin = TRUE, cex = 0.3, tip.color = phyllo.mycol)
 ```

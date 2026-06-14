@@ -55,10 +55,10 @@ class(herp.multiphylo) <- "multiPhylo"
 herp.sensiphy.rangesize <- tree_phyglm(XYorvariant ~ RangeSize, data = tetrapodtraits.herp, phy = herp.multiphylo, n.tree = 1000, track = FALSE)
 herp.sensiphy.abslat <- tree_phyglm(XYorvariant ~ AbsoluteLatitude, data = tetrapodtraits.herp, phy = herp.multiphylo, n.tree = 1000, track = FALSE)
 herp.sensiphy.annumeantemp <- tree_phyglm(XYorvariant ~ AnnuMeanTemp, data = tetrapodtraits.herp, phy = herp.multiphylo, n.tree = 1000, track = FALSE)
-herp.sensiphy.annuprecip <- tree_phyglm(XYorvariant ~ AnnuPrecip, data = tetrapodtraits.herp, phy = herp.multiphylo, n.tree = 1000, track = FALSE)
+herp.sensiphy.annuprecip <- tree_phyglm(XYorvariant ~ AnnuPrecip, data = tetrapodtraits.herp, phy = herp.multiphylo, n.tree = 1000, track = FALSE, btol = 35)
 herp.sensiphy.tempseason <- tree_phyglm(XYorvariant ~ TempSeasonality, data = tetrapodtraits.herp, phy = herp.multiphylo, n.tree = 1000, track = FALSE)
-herp.sensiphy.precipseason <- tree_phyglm(XYorvariant ~ PrecipSeasonality, data = tetrapodtraits.herp, phy = herp.multiphylo, n.tree = 1000, track = FALSE)
-herp.sensiphy.elevation <- tree_phyglm(XYorvariant ~ Elevation, data = tetrapodtraits.herp, phy = herp.multiphylo, n.tree = 1000, track = FALSE)
+herp.sensiphy.precipseason <- tree_phyglm(XYorvariant ~ PrecipSeasonality, data = tetrapodtraits.herp, phy = herp.multiphylo, n.tree = 1000, track = FALSE, btol = 35)
+herp.sensiphy.elevation <- tree_phyglm(XYorvariant ~ Elevation, data = tetrapodtraits.herp, phy = herp.multiphylo, n.tree = 1000, track = FALSE, btol = 35)
 herp.sensiphy.percacro <- tree_phyglm(XYorvariant ~ perc.acro, data = tetrapodtraits.herp.known.karyo, phy = herp.multiphylo, n.tree = 1000, track = FALSE)
 ```
 
@@ -74,12 +74,14 @@ herp.sensiphy.p <- list("RangeSize"=herp.sensiphy.rangesize$sensi.estimates$pval
 ```
 
 ```{r}
-## reproduces scatterplots of sensiPhy p-values (vs. single corrected p-value from phyloglm & consensus tree) for Herpestidae
-herp_adjusted_p <- read.csv(file = "herp_adjusted_p_values.csv")
-herp_adjusted_p <- herp_adjusted_p$x
-png(filename = "herp_sensiphy_p.png", width = 4000, height = 2000, units="px", res = 300, bg = NA)
-stripchart(herp.sensiphy.p, main="sensiPhy p-values over 1000 trees compared to single consensus tree result, Herpestidae", xlab="Eco-environmental variables studied", ylab="P-values", method = "jitter", jitter = 0.1, vertical = TRUE, cex = 0.2)
-points(herp_adjusted_p, col = "red", pch = 7, cex = 1.5, bg = 2, lwd = 2)
+## reproduces box-and-whisker plots of sensiPhy p-values (vs. single corrected permutation p-value over 8 tests) for Herpestidae
+herp.perm.p <- c(0.641, 0.999, 0.999, 0.999, 0.165, 0.999, 0.999, 0.999)
+herp.perm.p.FDR <- p.adjust(herp.perm.p, method = "fdr")
+png(filename = "herp_sensiphy_p.png", width = 4500, height = 2000, units="px", res = 300, bg = "white")
+boxplot(herp.sensiphy.p, main="sensiPhy p-values over 1000 trees compared to single corrected permutation p-values, Herpestidae", xlab="Variables studied", ylab="P-values", horizontal = FALSE, outpch = 19, outcex = 0.5)
+stripchart(herp.sensiphy.p, method = "jitter", jitter = 0.1, vertical = TRUE, cex = 0.2, add = TRUE, col = alpha("#636363", 0.4))
+points(herp.perm.p.FDR, col = "red", pch = 7, cex = 1.5, bg = 2, lwd = 2)
+abline(h = 0.05, col = "grey", lty = "dashed")
 dev.off()
 ```
 
@@ -110,9 +112,9 @@ class(phyllostom.multiphylo) <- "multiPhylo"
 ## p-values for each test are located in x$sensi.estimates$pval.estimate
 phyllo.sensiphy.rangesize <- tree_phyglm(XYorvariant ~ RangeSize, data = tetrapodtraits.phyllostom, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE)
 phyllo.sensiphy.abslat <- tree_phyglm(XYorvariant ~ AbsoluteLatitude, data = tetrapodtraits.phyllostom, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE)
-phyllo.sensiphy.annumeantemp <- tree_phyglm(XYorvariant ~ AnnuMeanTemp, data = tetrapodtraits.phyllostom, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE)
+phyllo.sensiphy.annumeantemp <- tree_phyglm(XYorvariant ~ AnnuMeanTemp, data = tetrapodtraits.phyllostom, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE, btol = 35)
 phyllo.sensiphy.annuprecip <- tree_phyglm(XYorvariant ~ AnnuPrecip, data = tetrapodtraits.phyllostom, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE)
-phyllo.sensiphy.tempseason <- tree_phyglm(XYorvariant ~ TempSeasonality, data = tetrapodtraits.phyllostom, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE)
+phyllo.sensiphy.tempseason <- tree_phyglm(XYorvariant ~ TempSeasonality, data = tetrapodtraits.phyllostom, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE, btol = 35)
 phyllo.sensiphy.precipseason <- tree_phyglm(XYorvariant ~ PrecipSeasonality, data = tetrapodtraits.phyllostom, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE)
 phyllo.sensiphy.elevation <- tree_phyglm(XYorvariant ~ Elevation, data = tetrapodtraits.phyllostom, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE)
 phyllo.sensiphy.percacro <- tree_phyglm(XYorvariant ~ perc.acro, data = tetrapodtraits.phyllo.known.karyo, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE)
@@ -130,12 +132,14 @@ phyllo.sensiphy.p <- list("RangeSize"=phyllo.sensiphy.rangesize$sensi.estimates$
 ```
 
 ```{r}
-## reproduces scatterplots of sensiPhy p-values (vs. single corrected p-value from phyloglm & consensus tree) for Phyllostomidae
-phyllo_adjusted_p <- read.csv(file = "phyllo_adjusted_p_values.csv")
-phyllo_adjusted_p <- phyllo_adjusted_p$x
-png(filename = "phyllo_sensiphy_p.png", width = 4000, height = 2000, units="px", res = 300, bg = NA)
-stripchart(phyllo.sensiphy.p, main="sensiPhy p-values over 1000 trees compared to single consensus tree result, Phyllostomidae", xlab="Eco-environmental variables studied", ylab="P-values", method = "jitter", jitter = 0.1, vertical = TRUE, cex = 0.2)
-points(phyllo_adjusted_p, col = "red", pch = 7, cex = 1.5, bg = 2, lwd = 2)
+## reproduces box-and-whisker plots of sensiPhy p-values (vs. single corrected permutation p-value over 8 tests) for Phyllostomidae
+phyllo.perm.p <- c(0.001, 0.992, 0.274, 0.999, 0.999, 0.953, 0.972, 0.999)
+phyllo.perm.p.FDR <- p.adjust(phyllo.perm.p, method = "fdr")
+png(filename = "phyllo_sensiphy_p.png", width = 4500, height = 2000, units="px", res = 300, bg = "white")
+boxplot(phyllo.sensiphy.p, main="sensiPhy p-values over 1000 trees compared to single corrected permutation p-values, Phyllostomidae", xlab="Variables studied", ylab="P-values", horizontal = FALSE, outpch = 19, outcex = 0.5)
+stripchart(phyllo.sensiphy.p, method = "jitter", jitter = 0.1, vertical = TRUE, cex = 0.2, add = TRUE, col = alpha("#636363", 0.4))
+points(phyllo.perm.p.FDR, col = "red", pch = 7, cex = 1.5, bg = 2, lwd = 2)
+abline(h = 0.05, col = "grey", lty = "dashed")
 dev.off()
 ```
 
@@ -164,14 +168,14 @@ class(sorex.multiphylo) <- "multiPhylo"
 ```{r}
 ## use summary(x) and sensi_plot(x) to check results
 ## p-values for each test are located in x$sensi.estimates$pval.estimate
-sorex.sensiphy.rangesize <- tree_phyglm(XYorvariant ~ RangeSize, data = tetrapodtraits.sorex, phy = sorex.multiphylo, n.tree = 1000, track = FALSE)
+sorex.sensiphy.rangesize <- tree_phyglm(XYorvariant ~ RangeSize, data = tetrapodtraits.sorex, phy = sorex.multiphylo, n.tree = 1000, track = FALSE, btol = 35)
 sorex.sensiphy.abslat <- tree_phyglm(XYorvariant ~ AbsoluteLatitude, data = tetrapodtraits.sorex, phy = sorex.multiphylo, n.tree = 1000, track = FALSE)
-sorex.sensiphy.annumeantemp <- tree_phyglm(XYorvariant ~ AnnuMeanTemp, data = tetrapodtraits.sorex, phy = sorex.multiphylo, n.tree = 1000, track = FALSE)
-sorex.sensiphy.annuprecip <- tree_phyglm(XYorvariant ~ AnnuPrecip, data = tetrapodtraits.sorex, phy = sorex.multiphylo, n.tree = 1000, track = FALSE)
+sorex.sensiphy.annumeantemp <- tree_phyglm(XYorvariant ~ AnnuMeanTemp, data = tetrapodtraits.sorex, phy = sorex.multiphylo, n.tree = 1000, track = FALSE, btol = 35)
+sorex.sensiphy.annuprecip <- tree_phyglm(XYorvariant ~ AnnuPrecip, data = tetrapodtraits.sorex, phy = sorex.multiphylo, n.tree = 1000, track = FALSE, btol = 35)
 sorex.sensiphy.tempseason <- tree_phyglm(XYorvariant ~ TempSeasonality, data = tetrapodtraits.sorex, phy = sorex.multiphylo, n.tree = 1000, track = FALSE)
-sorex.sensiphy.precipseason <- tree_phyglm(XYorvariant ~ PrecipSeasonality, data = tetrapodtraits.sorex, phy = sorex.multiphylo, n.tree = 1000, track = FALSE)
-sorex.sensiphy.elevation <- tree_phyglm(XYorvariant ~ Elevation, data = tetrapodtraits.sorex, phy = sorex.multiphylo, n.tree = 1000, track = FALSE)
-sorex.sensiphy.percacro <- tree_phyglm(XYorvariant ~ perc.acro, data = tetrapodtraits.sorex.known.karyo, phy = sorex.multiphylo, n.tree = 1000, track = FALSE)
+sorex.sensiphy.precipseason <- tree_phyglm(XYorvariant ~ PrecipSeasonality, data = tetrapodtraits.sorex, phy = sorex.multiphylo, n.tree = 1000, track = FALSE, btol = 35)
+sorex.sensiphy.elevation <- tree_phyglm(XYorvariant ~ Elevation, data = tetrapodtraits.sorex, phy = sorex.multiphylo, n.tree = 1000, track = FALSE, btol = 35)
+sorex.sensiphy.percacro <- tree_phyglm(XYorvariant ~ perc.acro, data = tetrapodtraits.sorex.known.karyo, phy = sorex.multiphylo, n.tree = 1000, track = FALSE, btol = 35)
 ```
 
 ```{r}
@@ -186,11 +190,13 @@ sorex.sensiphy.p <- list("RangeSize"=sorex.sensiphy.rangesize$sensi.estimates$pv
 ```
 
 ```{r}
-## reproduces scatterplots of sensiPhy p-values (vs. single corrected p-value from phyloglm & consensus tree) for Soricidae
-sorex_adjusted_p <- read.csv(file = "sorex_adjusted_p_values.csv")
-sorex_adjusted_p <- sorex_adjusted_p$x
-png(filename = "sorex_sensiphy_p.png", width = 4000, height = 2000, units="px", res = 300, bg = NA)
-stripchart(sorex.sensiphy.p, main="sensiPhy p-values over 1000 trees compared to single consensus tree result, Soricidae", xlab="Eco-environmental variables studied", ylab="P-values", method = "jitter", jitter = 0.1, vertical = TRUE, cex = 0.2)
-points(sorex_adjusted_p, col = "red", pch = 7, cex = 1.5, bg = 2, lwd = 2)
+## reproduces box-and-whisker plots of sensiPhy p-values (vs. single corrected permutation p-value over 8 tests) for Soricidae
+sorex.perm.p <- c(0.999, 0.977, 0.886, 0.999, 0.999, 0.999, 0.999, 0.999)
+sorex.perm.p.FDR <- p.adjust(sorex.perm.p, method = "fdr")
+png(filename = "sorex_sensiphy_p.png", width = 4500, height = 2000, units="px", res = 300, bg = "white")
+boxplot(sorex.sensiphy.p, main="sensiPhy p-values over 1000 trees compared to single corrected permutation p-values, Soricidae", xlab="Variables studied", ylab="P-values", horizontal = FALSE, outpch = 19, outcex = 0.5)
+stripchart(sorex.sensiphy.p, method = "jitter", jitter = 0.1, vertical = TRUE, cex = 0.2, add = TRUE, col = alpha("#636363", 0.4))
+points(sorex.perm.p.FDR, col = "red", pch = 7, cex = 1.5, bg = 2, lwd = 2)
+abline(h = 0.05, col = "grey", lty = "dashed")
 dev.off()
 ```
