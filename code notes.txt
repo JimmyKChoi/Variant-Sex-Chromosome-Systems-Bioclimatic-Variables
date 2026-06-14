@@ -39,59 +39,59 @@ Permutation p-values (uncorrected)
 
 Herpestidae
 Rangesize: 1 - (359/1001) = 0.641
-Abslat: 0 tests under p≤0.05
-Annumeantemp: 0 tests under p≤0.05
-Annuprecip: 0 tests under p≤0.05
+Abslat: 0 tests under p≤0.05 [1 - (1/1001)] = 0.999
+Annumeantemp: 0 tests under p≤0.05 = 0.999
+Annuprecip: 0 tests under p≤0.05 = 0.999
 Tempseason: 1 - (836/1001) = 0.165
-Precipseason: 0 tests under p≤0.05
-Elevation: 0 tests under p≤0.05
-%acro: 0 tests under p≤0.05
+Precipseason: 0 tests under p≤0.05 = 0.999
+Elevation: 0 tests under p≤0.05 = 0.999
+%acro: 0 tests under p≤0.05 = 0.999
 
 Soricidae
-Rangesize: 0 tests under p≤0.05
+Rangesize: 0 tests under p≤0.05 = 0.999 
 Abslat: 1 - (23/1001) = 0.977
 Annumeantemp: 1 - (114/1001) = 0.886
-Annuprecip: 0 tests under p≤0.05
-Tempseason: 0 tests under p≤0.05
-Precipseason: 0 tests under p≤0.05
-Elevation: 0 tests under p≤0.05
-%acro: 0 tests under p≤0.05
+Annuprecip: 0 tests under p≤0.05 = 0.999
+Tempseason: 0 tests under p≤0.05 = 0.999
+Precipseason: 0 tests under p≤0.05 = 0.999
+Elevation: 0 tests under p≤0.05 = 0.999
+%acro: 0 tests under p≤0.05 = 0.999
 
 Phyllostomidae
-Rangesize: 1 - (1001/1001) = ?
+Rangesize: 1 - (1001/1001) = 0.001
 Abslat: 1 - (8/1001) = 0.992
 Annumeantemp: 1 - (727/1001) = 0.274
-Annuprecip: 0 tests under p≤0.05
-Tempseason: 0 tests under p≤0.05
+Annuprecip: 0 tests under p≤0.05 = 0.999
+Tempseason: 0 tests under p≤0.05 = 0.999
 Precipseason: 1 - (47/1001) = 0.953
 Elevation: 1 - (28/1001) = 0.972
-%acro: 0 tests under p≤0.05
+%acro: 0 tests under p≤0.05 = 0.999
 
 known.karyo sensiphy results:
 
 Herpestidae
-Rangesize: 0 tests under p≤0.05
-Abslat: 0 tests under p≤0.05
-Annumeantemp: 0 tests under p≤0.05
-Annuprecip: 0 tests under p≤0.05
-Tempseason: 0 tests under p≤0.05
-Precipseason: 0 tests under p≤0.05
-Elevation: 0 tests under p≤0.05
+Rangesize: 0 tests under p≤0.05 = 0.999
+Abslat: 0 tests under p≤0.05 = 0.999
+Annumeantemp: 0 tests under p≤0.05 = 0.999
+Annuprecip: 0 tests under p≤0.05 = 0.999
+Tempseason: 0 tests under p≤0.05 = 0.999
+Precipseason: 0 tests under p≤0.05 = 0.999
+Elevation: 0 tests under p≤0.05 = 0.999
 
 Soricidae
-Rangesize: 0 tests under p≤0.05
-Abslat: 0 tests under p≤0.05
-Annumeantemp: 0 tests under p≤0.05
-Annuprecip: 0 tests under p≤0.05
-Tempseason: 0 tests under p≤0.05
+Rangesize: 0 tests under p≤0.05 = 0.999
+Abslat: 0 tests under p≤0.05 = 0.999
+Annumeantemp: 0 tests under p≤0.05 = 0.999
+Annuprecip: 0 tests under p≤0.05 = 0.999
+Tempseason: 0 tests under p≤0.05 = 0.999
 Precipseason: 1 - (2/1001) = 0.998
-Elevation: 0 tests under p≤0.05
+Elevation: 0 tests under p≤0.05 = 0.999
 
 Phyllostomidae
-Rangesize: 0 tests under p≤0.05
-Abslat: 0 tests under p≤0.05
-Annumeantemp: 0 tests under p≤0.05
-Annuprecip: 0 tests under p≤0.05
-Tempseason: 0 tests under p≤0.05
-Precipseason: 0 tests under p≤0.05
-Elevation: 0 tests under p≤0.05
+Rangesize: 0 tests under p≤0.05 = 0.999
+Abslat: 0 tests under p≤0.05 = 0.999
+Annumeantemp: 0 tests under p≤0.05 = 0.999
+Annuprecip: 0 tests under p≤0.05 = 0.999
+Tempseason: 0 tests under p≤0.05 = 0.999
+Precipseason: 0 tests under p≤0.05 = 0.999
+Elevation: 0 tests under p≤0.05 = 0.999
