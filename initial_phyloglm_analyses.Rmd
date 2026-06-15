@@ -262,7 +262,7 @@ tetrapodtraits.phyllostom$sex[which(tetrapodtraits.phyllostom$Scientific.Name %i
 tetrapodtraits.phyllostom$sex[which(tetrapodtraits.phyllostom$sex == "XY")] <- c("XYimputed")
 color <- recode(tetrapodtraits.phyllostom$sex, "XYknown" = "black", "XAYAfusion" = "#CC79A7", "XAfusion" = "#56B4E9", "XYimputed" = "grey")
 phyllo.mycol <- with(tetrapodtraits.phyllostom, as.character(color[match(phyllostom.tree$tip.label, tetrapodtraits.phyllostom$Scientific.Name)]))
-plot(phyllostom.tree, no.margin = TRUE, cex = 0.3, tip.color = phyllo.mycol)
+plot.phylo(phyllostom.tree, type = "fan", open.angle = 180, no.margin = TRUE, cex = 0.3, tip.color = phyllo.mycol)
 ```
 
 ```{r}
