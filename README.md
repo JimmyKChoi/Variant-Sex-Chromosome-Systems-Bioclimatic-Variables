@@ -4,9 +4,11 @@ Other tangentially related stuff includes ancestral state reconstruction, etc.
 
 <ins>Input and output data</ins>
 
+**input/** - Subdirectory containing all input files/functions for our pipeline.
+
 **sexreferencedfupdated.csv** - A dataset containing every mammal species considered for this study, their associated sex chromosome systems, whether these sex chromosomes are known or imputed, citation if known, and miscellaneous comments. Also **Supplemental Table 1** for our paper. Table caption: "Comprehensive list of mammal species included in our analysis, sampled from three mammalian families. Of 34 total species from Herpestidae included in our analysis (excluding _Urva auropunctata_), 9 species were coded as possessing a Y-autosome fusion. Of 413 total species from Soricidae (excluding _Sorex kozlovi_), 10 species were coded as possessing an X-autosome fusion. Of 205 total species from Phyllostomidae, 15 species were coded as possessing an X-autosome fusion and 14 species were coded as possessing both an X- and Y-autosome fusion, summing to 29 variant species total."
 
-**sexreferencedf.csv** - Simplified version of above dataset that gets used in our analyses.
+**code_notes.txt** - Collected raw karyotype observations and math used for calculating our permutation p-values (before FDR correction).
 
 **multiphylo** - Nexus files for each of our three mammal families included in this study, sets of 1000 credible trees for use in **sensiphy_analyses.Rmd**.
 
@@ -24,19 +26,21 @@ Other tangentially related stuff includes ancestral state reconstruction, etc.
 
 <ins>Archived scripts</ins>
 
-**updated herpestidae stuff.Rmd** - Original script for this project, analyses of species in family Herpestidae with variant sex chromosome systems, plus data visualizations
+**test_herp_stuff.Rmd** - Original script for this project, analyses of species in family Herpestidae with variant sex chromosome systems, plus data visualizations
 
 **batproject.Rmd** - Analyses of species in family Phyllostomidae with variant sex chromosome system
 
-**asr stuff.Rmd** - Ancestral state reconstruction script for variant Herpestidae species
+**asr_stuff.Rmd** - Ancestral state reconstruction script for variant Herpestidae species
 
-**sex chromosome project updated.Rmd** - Master script used for analysis and testing, new & updated version of analysis scripts integrating all three mammal clades of interest, using data from Moura _et al._ (2024). Includes single-tree analyses using _phylolm_ (phylo. log regression) and multiPhylo analyses using _sensiPhy_. Now split into four separate scripts.
+**sex_chromosome_proj_legacy.Rmd** - Master script used for analysis and testing, new & updated version of analysis scripts integrating all three mammal clades of interest, using data from Moura _et al._ (2024). Includes single-tree analyses using _phylolm_ (phylo. log regression) and multiPhylo analyses using _sensiPhy_. Now split into four separate scripts.
 
 **shapefile_stuff.Rmd** - A testbench script, mostly meant as an experiment in plotting shapefiles with ggplot to build Figure 2 in our paper. Allows for visualization of distributions for our mammal families of interest.
 
 <ins>Citations</ins>
 
 Blackmon, H. "Meiotic drive shapes rates of karyotype evolution in mammals." Evolution 73, 511-523 (2019). Chromosome morphology data ("chroms.csv") collected from here.
+
+Chien, S. and Blackmon, H. "Chromosomal rearrangements: tempo and mode of karyotype evolution in Scarabaeoidea." J. Evol. Biol. 39, 699-708 (2026). Functions/code for sex-autosome fusion vs null rate analyses derived from here.
 
 David, K. T. "Global gradients in the distribution of animal polyploids." Proc. Natl. Acad. Sci. U.S.A. 119, e2214070119 (2022). Code modified from original scripts.
 
@@ -45,6 +49,8 @@ Hughes, J. J. et al. "The role of conflict in the formation and maintenance of v
 Moura, M. R. et al. "A phylogeny-informed characterisation of global tetrapod traits addresses data gaps and biases." PLOS Biology 22, e3002658 (2024). Ecological & species data collected from here.
 
 Upham, N. S. et al. "Inferring the mammal tree: Species-level sets of phylogenies for questions in ecology, evolution, and conservation." PLOS Biology 17, e3000494 (2019). Mammal tree collected from here.
+
+
 
 
 
