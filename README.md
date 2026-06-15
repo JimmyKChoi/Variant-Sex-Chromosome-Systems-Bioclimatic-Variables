@@ -20,11 +20,11 @@ Other tangentially related stuff includes ancestral state reconstruction, etc.
 
 **sensiphy_analyses.Rmd** - The second in a series of scripts acting as polished versions of the master script. This one focuses on the _sensiPhy_ analyses performing phylogenetic log regression over sets of 1000 trees from the posterior distribution for each mammal family of interest.
 
-**chromeplus** > **multiphylo** > **chromeplus_simulation_x.R** & **chromeplus_1000trees_x.R** - The third/fourth in a series of scripts acting as polished versions of the master script. These are the _chromePlus_ simulations, with the 1000trees one performing the simulation (you guessed it) over the set of 1000 trees we use for _sensiPhy_. The 1000trees option is probably the more robust option for most use cases.
+**chromeplus/multiphylo/chromeplus_simulation_x.R** & **chromeplus_1000trees_x.R** - The third/fourth in a series of scripts acting as polished versions of the master script. These are the _chromePlus_ simulations, with the 1000trees one performing the simulation (you guessed it) over the set of 1000 trees we use for _sensiPhy_. The 1000trees option is probably the more robust option for most use cases.
 
 **known_karyo_reanalysis.Rmd** - Additional script re-running the initial _phylolm_ and _sensiPhy_ analyses looking at ecoclimatic variables, but only for species in known.karyo (removing the "XY for species with unknown karyotype" assumption).
 
-**sa_fusion_functions.Rmd** > **run_sa_fusion.Rmd** - TBD
+**sa_fusion_functions.R** > **run_sa_fusion.R** - TBD
 
 <ins>Archived scripts</ins>
 
