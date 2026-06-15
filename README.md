@@ -24,6 +24,8 @@ Other tangentially related stuff includes ancestral state reconstruction, etc.
 
 **known_karyo_reanalysis.Rmd** - Additional script re-running the initial _phylolm_ and _sensiPhy_ analyses looking at ecoclimatic variables, but only for species in known.karyo (removing the "XY for species with unknown karyotype" assumption).
 
+**sa_fusion_functions.Rmd** > **run_sa_fusion.Rmd** - TBD
+
 <ins>Archived scripts</ins>
 
 **test_herp_stuff.Rmd** - Original script for this project, analyses of species in family Herpestidae with variant sex chromosome systems, plus data visualizations
