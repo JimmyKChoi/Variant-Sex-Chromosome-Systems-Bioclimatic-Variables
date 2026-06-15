@@ -22,12 +22,13 @@ library(rnaturalearth)
 ```
 
 ```{r}
-tetrapodtraits.shapefile <- read_sf("GridCellShapefile/Shapefiles/gridcells_110km.shp")
+tetrapodtraits.shapefile <- read_sf("input/GridCellShapefile/Shapefiles/gridcells_110km.shp")
 tetrapodtraits.shapefile
 ```
 
 ```{r}
-tetrapod360 <- read.csv("Tetrapod_360_v.2.0.0.csv")
+## Tetrapod360 is too large to commit to git repo uncompressed, unzip tetrapod360v2.zip in input directory if running this code
+tetrapod360 <- read.csv("tetrapod360v2/tetrapod360/Tetrapod_360_v.2.0.0.csv")
 tetrapod360$Scientific.Name <- mapvalues(tetrapod360$Scientific.Name, from = c("Herpestes brachyurus", "Herpestes edwardsii", "Herpestes fuscus", "Herpestes javanicus", "Herpestes naso", "Herpestes semitorquatus", "Herpestes smithii", "Herpestes urva", "Herpestes vitticollis"), to = c("Urva brachyura", "Urva edwardsii", "Urva fusca", "Urva javanica", "Xenogale naso", "Urva semitorquata", "Urva smithii", "Urva urva", "Urva vitticollis"))
 herp.cells <- tetrapod360[which(tetrapod360$Scientific.Name %in% tetrapodtraits.herp$Scientific.Name),]
 herp.cells

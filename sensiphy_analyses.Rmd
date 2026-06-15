@@ -20,17 +20,17 @@ library(sensiPhy) ## v0.8.5
 
 ```{r}
 ## reading in tetrapodtraits datasets & subsets for species w/ known karyotype
-tetrapodtraits.herp <- read.csv(file = "tetrapodtraits_herp.csv", row.names = 1)
-tetrapodtraits.herp.known.karyo <- read.csv(file = "tetrapodtraits_herp_known_karyo.csv", row.names = 1)
-tetrapodtraits.phyllostom <- read.csv(file = "tetrapodtraits_phyllo.csv", row.names = 1)
-tetrapodtraits.phyllo.known.karyo <- read.csv(file = "tetrapodtraits_phyllo_known_karyo.csv", row.names = 1)
-tetrapodtraits.sorex <- read.csv(file = "tetrapodtraits_sorex.csv", row.names = 1)
-tetrapodtraits.sorex.known.karyo <- read.csv(file = "tetrapodtraits_sorex_known_karyo.csv", row.names = 1)
+tetrapodtraits.herp <- read.csv(file = "output/tetrapodtraits_herp.csv", row.names = 1)
+tetrapodtraits.herp.known.karyo <- read.csv(file = "output/tetrapodtraits_herp_known_karyo.csv", row.names = 1)
+tetrapodtraits.phyllostom <- read.csv(file = "output/tetrapodtraits_phyllo.csv", row.names = 1)
+tetrapodtraits.phyllo.known.karyo <- read.csv(file = "output/tetrapodtraits_phyllo_known_karyo.csv", row.names = 1)
+tetrapodtraits.sorex <- read.csv(file = "output/tetrapodtraits_sorex.csv", row.names = 1)
+tetrapodtraits.sorex.known.karyo <- read.csv(file = "output/tetrapodtraits_sorex_known_karyo.csv", row.names = 1)
 ```
 
 ```{r}
 ## reading in sets of 1000 trees from the posterior distribution for each mammal family of interest
-herp.multiphylo <- read.nexus(file = "herpoutput.nex")
+herp.multiphylo <- read.nexus(file = "multiphylo/herpoutput.nex")
 herp.multiphylo
 ```
 
@@ -90,7 +90,7 @@ dev.off()
 
 
 ```{r}
-phyllostom.multiphylo <- read.nexus(file = "phyllostomoutput.nex")
+phyllostom.multiphylo <- read.nexus(file = "multiphylo/phyllostomoutput.nex")
 phyllostom.multiphylo
 ```
 
@@ -148,7 +148,7 @@ dev.off()
 
 
 ```{r}
-sorex.multiphylo <- read.nexus(file = "sorexoutput.nex")
+sorex.multiphylo <- read.nexus(file = "multiphylo/sorexoutput.nex")
 sorex.multiphylo
 ```
 

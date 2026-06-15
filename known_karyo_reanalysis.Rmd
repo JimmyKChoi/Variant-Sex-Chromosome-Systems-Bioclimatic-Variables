@@ -21,18 +21,18 @@ library(sensiPhy) ## v0.8.5
 
 ```{r}
 ## reading in tetrapodtraits subsets for species w/ known karyotype only
-tetrapodtraits.herp.known.karyo <- read.csv(file = "tetrapodtraits_herp_known_karyo.csv", row.names = 1)
-herpestidae.tree <- read.tree(file = "herpestidae_tree.txt")
+tetrapodtraits.herp.known.karyo <- read.csv(file = "output/tetrapodtraits_herp_known_karyo.csv", row.names = 1)
+herpestidae.tree <- read.tree(file = "output/herpestidae_tree.txt")
 herpestidae.tree$tip.label <- gsub('_', ' ', herpestidae.tree$tip.label)
 herp.tree.known.karyo <- keep.tip(herpestidae.tree, tetrapodtraits.herp.known.karyo$Scientific.Name)
 
-tetrapodtraits.phyllo.known.karyo <- read.csv(file = "tetrapodtraits_phyllo_known_karyo.csv", row.names = 1)
-phyllostom.tree <- read.tree(file = "phyllostom_tree.txt")
+tetrapodtraits.phyllo.known.karyo <- read.csv(file = "output/tetrapodtraits_phyllo_known_karyo.csv", row.names = 1)
+phyllostom.tree <- read.tree(file = "output/phyllostom_tree.txt")
 phyllostom.tree$tip.label <- gsub('_', ' ', phyllostom.tree$tip.label)
 phyllo.tree.known.karyo <- keep.tip(phyllostom.tree, tetrapodtraits.phyllo.known.karyo$Scientific.Name)
 
-tetrapodtraits.sorex.known.karyo <- read.csv(file = "tetrapodtraits_sorex_known_karyo.csv", row.names = 1)
-sorex.tree <- read.tree(file = "sorex_tree.txt")
+tetrapodtraits.sorex.known.karyo <- read.csv(file = "output/tetrapodtraits_sorex_known_karyo.csv", row.names = 1)
+sorex.tree <- read.tree(file = "output/sorex_tree.txt")
 sorex.tree$tip.label <- gsub('_', ' ', sorex.tree$tip.label)
 sorex.tree.known.karyo <- keep.tip(sorex.tree, tetrapodtraits.sorex.known.karyo$Scientific.Name)
 ```
@@ -143,7 +143,7 @@ known_sorex_adjusted_p
 
 ```{r}
 ## reading in 1000 trees for each family for sensiPhy analysis & taxonomic corrections
-herp.multiphylo <- read.nexus(file = "herpoutput.nex")
+herp.multiphylo <- read.nexus(file = "multiphylo/herpoutput.nex")
 phy.replace.herp <- function(tree) {
   tree$tip.label <- sub("_", " ", tree$tip.label)
   tree$tip.label <- mapvalues(tree$tip.label, from=c("Herpestes brachyurus","Herpestes edwardsii","Herpestes fuscus","Herpestes semitorquatus","Herpestes smithii","Herpestes urva","Herpestes vitticollis","Herpestes javanicus","Herpestes naso"), to=c("Urva brachyura","Urva edwardsii","Urva fusca","Urva semitorquata","Urva smithii","Urva urva","Urva vitticollis","Urva javanica","Xenogale naso"))
@@ -152,7 +152,7 @@ phy.replace.herp <- function(tree) {
 herp.multiphylo <- lapply(herp.multiphylo, phy.replace.herp)
 class(herp.multiphylo) <- "multiPhylo"
 
-phyllostom.multiphylo <- read.nexus(file = "phyllostomoutput.nex")
+phyllostom.multiphylo <- read.nexus(file = "multiphylo/phyllostomoutput.nex")
 phy.replace.phyllostom <- function(tree) {
   tree$tip.label <- sub("_", " ", tree$tip.label)
   tree$tip.label <- mapvalues(tree$tip.label, from=c("Dermanura aztecus", "Dermanura cinereus", "Dermanura glaucus", "Dermanura gnomus", "Dermanura rosenbergii", "Dermanura toltecus", "Lophostoma aequatorialis", "Lophostoma silvicolum", "Mimon crenulatum", "Mimon koepckeae", "Vampyressa bidens", "Vampyressa brocki", "Vampyressa nymphaea", "Diaemus youngi"), to=c("Dermanura azteca", "Dermanura cinerea", "Dermanura glauca", "Dermanura gnoma", "Dermanura rosenbergi", "Dermanura tolteca", "Lophostoma occidentale", "Lophostoma silvicola", "Gardnerycteris crenulata", "Gardnerycteris koepckeae", "Vampyriscus bidens", "Vampyriscus brocki", "Vampyriscus nymphaeus", "Diaemus youngii"))
@@ -161,7 +161,7 @@ phy.replace.phyllostom <- function(tree) {
 phyllostom.multiphylo <- lapply(phyllostom.multiphylo, phy.replace.phyllostom)
 class(phyllostom.multiphylo) <- "multiPhylo"
 
-sorex.multiphylo <- read.nexus(file = "sorexoutput.nex")
+sorex.multiphylo <- read.nexus(file = "multiphylo/sorexoutput.nex")
 phy.replace.sorex <- function(tree) {
   tree$tip.label <- sub("_", " ", tree$tip.label)
   tree <- drop.tip(tree, c("Sorex kozlovi"))
