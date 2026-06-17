@@ -8,7 +8,7 @@ library(phytools)
 library(coda)
 
 if (!exists("FUSION_DIR")) {
-  FUSION_DIR <- "input/"
+  FUSION_DIR <- "./input/"
 }
 .oldwd <- getwd()
 setwd(FUSION_DIR)
