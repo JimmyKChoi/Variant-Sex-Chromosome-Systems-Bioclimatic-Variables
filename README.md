@@ -4,7 +4,7 @@ Other tangentially related stuff includes ancestral state reconstruction, etc.
 
 <ins>Input and output data</ins>
 
-**input/** - Subdirectory containing all input files/functions for our pipeline.
+**input/** - Subdirectory containing all input files/functions for our pipeline (make sure you unzip the compressed Tetrapod360 folder in here!).
 
 **sexreferencedfupdated.csv** - A dataset containing every mammal species considered for this study, their associated sex chromosome systems, whether these sex chromosomes are known or imputed, citation if known, and miscellaneous comments. Also **Supplemental Table 1** for our paper. Table caption: "Comprehensive list of mammal species included in our analysis, sampled from three mammalian families. Of 34 total species from Herpestidae included in our analysis (excluding _Urva auropunctata_), 9 species were coded as possessing a Y-autosome fusion. Of 413 total species from Soricidae (excluding _Sorex kozlovi_), 10 species were coded as possessing an X-autosome fusion. Of 205 total species from Phyllostomidae, 15 species were coded as possessing an X-autosome fusion and 14 species were coded as possessing both an X- and Y-autosome fusion, summing to 29 variant species total."
 
@@ -12,7 +12,7 @@ Other tangentially related stuff includes ancestral state reconstruction, etc.
 
 **multiphylo** - Nexus files for each of our three mammal families included in this study, sets of 1000 credible trees for use in **sensiphy_analyses.Rmd**.
 
-**output** - Output files from code, essentially subsets of TetrapodTraits v2.0.1 containing only our species of interest for each of our three mammal families. Some extra variables from other datasets (e.g. % acrocentric and haploid number from "chroms.csv") have been added.
+**output** - Output files from code, essentially subsets of TetrapodTraits v2.0.1 containing only our species of interest for each of our three mammal families. Some extra variables from other datasets (e.g. % acrocentric and haploid number from "chroms.csv") have been added. Also includes output from SAfusion rate tests.
 
 <ins>Ready-to-run scripts (run these in sequence!)</ins>
 
@@ -24,7 +24,7 @@ Other tangentially related stuff includes ancestral state reconstruction, etc.
 
 **known_karyo_reanalysis.Rmd** - Additional script re-running the initial _phylolm_ and _sensiPhy_ analyses looking at ecoclimatic variables, but only for species in known.karyo (removing the "XY for species with unknown karyotype" assumption).
 
-**sa_fusion_functions.R** > **run_sa_fusion.R** - TBD
+**sa_fusion_functions.R** > **run_sa_fusion.R** - The setup functions + actual analysis script for testing whether sex-autosome fusion rates in Herpestidae and Phyllostomidae (no Soricidae due to the putative single evolutionary event leading to XA fusion in sole variant clade) are higher than expected compared to general rates of chromosome fusion. Adapted from Chien and Blackmon's (2026) work in Scarabaeoidea.
 
 <ins>Archived scripts</ins>
 
@@ -36,7 +36,7 @@ Other tangentially related stuff includes ancestral state reconstruction, etc.
 
 **sex_chromosome_proj_legacy.Rmd** - Master script used for analysis and testing, new & updated version of analysis scripts integrating all three mammal clades of interest, using data from Moura _et al._ (2024). Includes single-tree analyses using _phylolm_ (phylo. log regression) and multiPhylo analyses using _sensiPhy_. Now split into four separate scripts.
 
-**shapefile_stuff.Rmd** - A testbench script, mostly meant as an experiment in plotting shapefiles with ggplot to build Figure 2 in our paper. Allows for visualization of distributions for our mammal families of interest.
+**shapefile_stuff.Rmd** - A testbench script, mostly meant as an experiment in plotting shapefiles with ggplot to build Figure 2 in our paper. Allows for visualization of distributions for our mammal families of interest (make sure you unzip the compressed Tetrapod360 folder in **input/** before running this code).
 
 <ins>Citations</ins>
 
