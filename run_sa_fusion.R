@@ -4,7 +4,7 @@
 ## Chien & Blackmon's Scarabaeoidea analysis 
 
 ## Written (ideally) for CLI use (cluster runs), usage:
-## > R run_sa_fusion.R [family] [n_trees] [nsim] [n_cores] [method]
+## > Rscript run_sa_fusion.R [family] [n_trees] [nsim] [n_cores] [method]
 ##     family:  herp, phyllo, or (default) both
 ##     n_trees: number of posterior trees to use (default 1000)
 ##     nsim:    stochastic maps per tree (default 100)
@@ -12,8 +12,8 @@
 ##     method:  pertree (estimate Q per tree, default) or fixedQ (Q estimated 
 ##              once and reused across trees)
 
-## e.g. > R run_sa_fusion.R both 15 2 (test run)
-##      > R run_sa_fusion.R both 1000 100 (full thing)
+## e.g. > Rscript run_sa_fusion.R both 15 2 (test run)
+##      > Rscript run_sa_fusion.R both 1000 100 (full thing)
 
 ## paths
 PROJ       <- "./"
