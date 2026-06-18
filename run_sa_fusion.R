@@ -67,6 +67,8 @@ TREE_RENAME <- list(
     "Diaemus_youngi"         = "Diaemus_youngii"
   )
 )
+## taxonomic reconciliation from Mammal Diversity Database v1.11
+## from https://zenodo.org/records/15007505
 MDD_UPDATE <- character(0)
 
 ## tree tip reconciliation
