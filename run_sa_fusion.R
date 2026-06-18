@@ -1,7 +1,9 @@
 ## run_sa_fusion.R
 ## Analysis script for our sex-autosome (SA) fusion rate test in mammal clades 
 ## with neo-sex chromosomes (Herpestidae, Phyllostomidae), adapted from 
-## Chien & Blackmon's Scarabaeoidea analysis 
+## Chien & Blackmon's Scarabaeoidea analysis
+## paper DOI: 10.1093/jeb/voag025
+## data DOI: 10.5281/zenodo.19457362
 
 ## Written (ideally) for CLI use (cluster runs), usage:
 ## > Rscript run_sa_fusion.R [family] [n_trees] [nsim] [n_cores] [method]
@@ -68,7 +70,7 @@ TREE_RENAME <- list(
   )
 )
 ## taxonomic reconciliation from Mammal Diversity Database v1.11
-## from https://zenodo.org/records/15007505
+## data DOI: 10.5281/zenodo.4139722
 MDD_UPDATE <- character(0)
 
 ## tree tip reconciliation

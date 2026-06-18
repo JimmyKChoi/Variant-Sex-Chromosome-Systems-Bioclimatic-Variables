@@ -2,7 +2,8 @@
 ## Functions for our sex-autosome (SA) fusion rate test, adapted from 
 ## Chien & Blackmon's Scarabaeoidea analysis (SA_fusion_prob.R & functions.R) 
 ## for our mammal clades with neo-sex chromosomes (Herpestidae, Phyllostomidae)
-## from https://zenodo.org/records/19457363
+## paper DOI: 10.1093/jeb/voag025
+## data DOI: 10.5281/zenodo.19457362
 
 library(ape)
 library(phytools)
