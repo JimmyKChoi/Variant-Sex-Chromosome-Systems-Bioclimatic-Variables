@@ -1,10 +1,10 @@
-This is a project for determining potential relationships between various bioclimatic variables and mammal sex chromosome systems that differ from the "classic" XX/XY system, through phylogenetic comparative methods using various R packages. Read the preprint [here.](https://doi.org/10.1101/2025.11.05.686331) 
+This is a project for determining potential relationships between various bioclimatic/karyotypic variables and the evolution of mammal sex chromosome systems that differ from the "classic" XX/XY system, through phylogenetic comparative methods using various R packages. Read the preprint [here.](https://doi.org/10.1101/2025.11.05.686331) 
 
 Other tangentially related stuff includes ancestral state reconstruction, etc.
 
 <ins>Input and output data</ins>
 
-**input/** - Subdirectory containing all input files/functions for our pipeline (make sure you unzip the compressed Tetrapod360 folder in here!).
+**input/** - Subdirectory containing all input files/functions for our pipeline (make sure you unzip the compressed Tetrapod360 folder in here!). This is mostly other people's hard work that we're utilizing, citations for these input files are in the code comments within the scripts whenever appropriate.
 
 **sexreferencedfupdated.csv** - A dataset containing every mammal species considered for this study, their associated sex chromosome systems, whether these sex chromosomes are known or imputed, citation if known, and miscellaneous comments. Also **Supplemental Table 1** for our paper. Table caption: "Comprehensive list of mammal species included in our analysis, sampled from three mammalian families. Of 34 total species from Herpestidae included in our analysis (excluding _Urva auropunctata_), 9 species were coded as possessing a Y-autosome fusion. Of 413 total species from Soricidae (excluding _Sorex kozlovi_), 10 species were coded as possessing an X-autosome fusion. Of 205 total species from Phyllostomidae, 15 species were coded as possessing an X-autosome fusion and 14 species were coded as possessing both an X- and Y-autosome fusion, summing to 29 variant species total."
 
