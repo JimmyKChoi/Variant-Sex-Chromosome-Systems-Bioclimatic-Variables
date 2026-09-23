@@ -92,6 +92,11 @@ tetrapodtraits.herp
 ```
 
 ```{r}
+tetrapodtraits.herp$XYorvardollo <- tetrapodtraits.herp$XYorvariant
+tetrapodtraits.herp$XYorvardollo[which(tetrapodtraits.herp$Scientific.Name %in% c("Xenogale naso", "Herpestes ochraceus", "Urva vitticollis", "Urva semitorquata", "Herpestes flavescens"))] <- 1
+```
+
+```{r}
 ## Herpestidae species considered XY (known) marked in black, XY (imputed) marked in grey, YAfusions marked in red
 tetrapodtraits.herp.sex <- tetrapodtraits.herp[,1:4]
 tetrapodtraits.herp.sex$sex[which(tetrapodtraits.herp.sex$sex.imputed == 1)] <- c("XYimputed")
@@ -119,6 +124,39 @@ print(test$alphaWarn)
 }
 log_reg[1:7,2]
 ## coefficients are stored in second column of log_reg
+```
+
+```{r}
+## rerun hypothesis tests under Dollo assumption
+rownames(tetrapodtraits.herp) <- unlist(tetrapodtraits.herp$Scientific.Name)
+var_names <- c("RangeSize","AbsoluteLatitude","AnnuMeanTemp","AnnuPrecip","TempSeasonality","PrecipSeasonality","Elevation")
+tetrapodtraits.herp[,var_names] <- sapply(tetrapodtraits.herp[,var_names], as.numeric)
+tetrapodtraits.herp$XYorvardollo <- as.numeric(tetrapodtraits.herp$XYorvardollo)
+log_reg_dollo <- c()
+
+for (var in var_names) {
+
+y <- tetrapodtraits.herp[[var]]
+names(y) <- unlist(tetrapodtraits.herp$Scientific.Name)
+group <- tetrapodtraits.herp$XYorvardollo
+test <- phyloglm(group ~ y, phy = keep.tip(herpestidae.tree, tetrapodtraits.herp[!(is.na(tetrapodtraits.herp[[var]])),]$Scientific.Name), data = tetrapodtraits.herp, method = c("logistic_MPLE"), boot = 1000)
+log_reg_dollo <- rbind(log_reg_dollo, summary(test))
+print(test$alphaWarn)
+}
+log_reg_dollo[1:7,2]
+```
+
+```{r}
+log_reg_p_values_herp_dollo <- c()
+log_reg_p_values_herp_dollo <- append(log_reg_p_values_herp_dollo, log_reg_dollo[1:7,2][[1]][12])
+log_reg_p_values_herp_dollo <- append(log_reg_p_values_herp_dollo, log_reg_dollo[1:7,2][[2]][12])
+log_reg_p_values_herp_dollo <- append(log_reg_p_values_herp_dollo, log_reg_dollo[1:7,2][[3]][12])
+log_reg_p_values_herp_dollo <- append(log_reg_p_values_herp_dollo, log_reg_dollo[1:7,2][[4]][12])
+log_reg_p_values_herp_dollo <- append(log_reg_p_values_herp_dollo, log_reg_dollo[1:7,2][[5]][12])
+log_reg_p_values_herp_dollo <- append(log_reg_p_values_herp_dollo, log_reg_dollo[1:7,2][[6]][12])
+log_reg_p_values_herp_dollo <- append(log_reg_p_values_herp_dollo, log_reg_dollo[1:7,2][[7]][12])
+herp_adjusted_p_dollo <- p.adjust(log_reg_p_values_herp_dollo, method = "fdr")
+herp_adjusted_p_dollo
 ```
 
 ```{r}
@@ -266,6 +304,11 @@ plot.phylo(phyllostom.tree, type = "fan", open.angle = 180, no.margin = TRUE, ce
 ```
 
 ```{r}
+tetrapodtraits.phyllostom$XYorvardollo <- tetrapodtraits.phyllostom$XYorvariant
+tetrapodtraits.phyllostom$XYorvardollo[which(tetrapodtraits.phyllostom$Scientific.Name %in% c("Dermanura rosenbergi", "Dermanura incomitatus", "Dermanura bogotensis", "Dermanura gnoma", "Dermanura glauca", "Dermanura rava", "Dermanura anderseni", "Artibeus concolor", "Artibeus fraterculus", "Artibeus amplus", "Artibeus inopinatus", "Artibeus hirsutus", "Pygoderma bilabiatum", "Stenoderma rufum", "Vampyressa sinchi", "Platyrrhinus brachycephalus", "Platyrrhinus angustirostris", "Platyrrhinus fusciventris", "Platyrrhinus nitelinea", "Platyrrhinus recifinus", "Platyrrhinus chocoensis", "Platyrrhinus guianensis", "Platyrrhinus matapalensis", "Platyrrhinus helleri", "Platyrrhinus albericoi", "Platyrrhinus nigellus", "Platyrrhinus ismaeli", "Platyrrhinus masu", "Platyrrhinus aurarius", "Platyrrhinus infuscus", "Platyrrhinus dorsalis", "Platyrrhinus umbratus", "Vampyressa elisabethae", "Uroderma bakeri", "Carollia benkeithi", "Carollia manu", "Carollia sowelli"))] <- 1
+```
+
+```{r}
 rownames(tetrapodtraits.phyllostom) <- unlist(tetrapodtraits.phyllostom$Scientific.Name)
 var_names <- c("RangeSize","AbsoluteLatitude","AnnuMeanTemp","AnnuPrecip","TempSeasonality","PrecipSeasonality","Elevation")
 tetrapodtraits.phyllostom[,var_names] <- sapply(tetrapodtraits.phyllostom[,var_names], as.numeric)
@@ -282,6 +325,39 @@ log_reg2 <- rbind(log_reg2, summary(test))
 print(test$alphaWarn)
 }
 log_reg2[1:7,2]
+```
+
+```{r}
+## rerun hypothesis tests under Dollo assumption
+rownames(tetrapodtraits.phyllostom) <- unlist(tetrapodtraits.phyllostom$Scientific.Name)
+var_names <- c("RangeSize","AbsoluteLatitude","AnnuMeanTemp","AnnuPrecip","TempSeasonality","PrecipSeasonality","Elevation")
+tetrapodtraits.phyllostom[,var_names] <- sapply(tetrapodtraits.phyllostom[,var_names], as.numeric)
+log_reg_dollo2 <- c()
+
+for (var in var_names) {
+
+y <- tetrapodtraits.phyllostom[[var]]
+names(y) <- unlist(tetrapodtraits.phyllostom$Scientific.Name)
+group <- factor(tetrapodtraits.phyllostom$XYorvardollo)
+names(group) <- unlist(tetrapodtraits.phyllostom$Scientific.Name) 
+test <- phyloglm(group ~ y, phy = keep.tip(phyllostom.tree, tetrapodtraits.phyllostom[!(is.na(tetrapodtraits.phyllostom[[var]])),]$Scientific.Name), data = tetrapodtraits.phyllostom, method = c("logistic_MPLE"), boot = 1000)
+log_reg_dollo2 <- rbind(log_reg_dollo2, summary(test))
+print(test$alphaWarn)
+}
+log_reg_dollo2[1:7,2]
+```
+
+```{r}
+log_reg_p_values_phyllo_dollo <- c()
+log_reg_p_values_phyllo_dollo <- append(log_reg_p_values_phyllo_dollo, log_reg_dollo2[1:7,2][[1]][12])
+log_reg_p_values_phyllo_dollo <- append(log_reg_p_values_phyllo_dollo, log_reg_dollo2[1:7,2][[2]][12])
+log_reg_p_values_phyllo_dollo <- append(log_reg_p_values_phyllo_dollo, log_reg_dollo2[1:7,2][[3]][12])
+log_reg_p_values_phyllo_dollo <- append(log_reg_p_values_phyllo_dollo, log_reg_dollo2[1:7,2][[4]][12])
+log_reg_p_values_phyllo_dollo <- append(log_reg_p_values_phyllo_dollo, log_reg_dollo2[1:7,2][[5]][12])
+log_reg_p_values_phyllo_dollo <- append(log_reg_p_values_phyllo_dollo, log_reg_dollo2[1:7,2][[6]][12])
+log_reg_p_values_phyllo_dollo <- append(log_reg_p_values_phyllo_dollo, log_reg_dollo2[1:7,2][[7]][12])
+phyllo_adjusted_p_dollo <- p.adjust(log_reg_p_values_phyllo_dollo, method = "fdr")
+phyllo_adjusted_p_dollo
 ```
 
 ```{r}
@@ -379,9 +455,12 @@ tetrapodtraits.sorex
 
 ```{r}
 ## Soricidae species considered XY marked in black, XAfusions marked in blue
-color <- recode(tetrapodtraits.sorex$sex, "XY" = "black", "XAfusion" = "#56B4E9")
+tetrapodtraits.sorex.XYknown <- tetrapodtraits.sorex.known.karyo[tetrapodtraits.sorex.known.karyo$sex == "XY",]
+tetrapodtraits.sorex$sex[which(tetrapodtraits.sorex$Scientific.Name %in% tetrapodtraits.sorex.XYknown$Scientific.Name)] <- c("XYknown")
+tetrapodtraits.sorex$sex[which(tetrapodtraits.sorex$sex == "XY")] <- c("XYimputed")
+color <- recode(tetrapodtraits.sorex$sex, "XYknown" = "black", "XAfusion" = "#56B4E9", "XYimputed" = "grey")
 sorex.mycol <- with(tetrapodtraits.sorex, as.character(color[match(sorex.tree$tip.label, tetrapodtraits.sorex$Scientific.Name)]))
-plot(sorex.tree, no.margin = TRUE, cex = 0.2, tip.color = sorex.mycol)
+plot.phylo(sorex.tree, type = "fan", open.angle = 180, no.margin = TRUE, cex = 0.3, tip.color = sorex.mycol)
 ```
 
 ```{r}

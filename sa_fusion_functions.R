@@ -14,7 +14,7 @@ if (!exists("FUSION_DIR")) {
 }
 .oldwd <- getwd()
 setwd(FUSION_DIR)
-source("functions.R")
+source("functions.R") ## from Chien and Blackmon
 setwd(.oldwd)
 
 ## call Pfsa2() function, except the null is the symmetric no-drive expectation

@@ -63,6 +63,17 @@ herp.sensiphy.percacro <- tree_phyglm(XYorvariant ~ perc.acro, data = tetrapodtr
 ```
 
 ```{r}
+## rerun hypothesis tests under Dollo assumption
+herp.sensiphy.rangesize.dollo <- tree_phyglm(XYorvardollo ~ RangeSize, data = tetrapodtraits.herp, phy = herp.multiphylo, n.tree = 1000, track = FALSE, btol = 30)
+herp.sensiphy.abslat.dollo <- tree_phyglm(XYorvardollo ~ AbsoluteLatitude, data = tetrapodtraits.herp, phy = herp.multiphylo, n.tree = 1000, track = FALSE, btol = 30)
+herp.sensiphy.annumeantemp.dollo <- tree_phyglm(XYorvardollo ~ AnnuMeanTemp, data = tetrapodtraits.herp, phy = herp.multiphylo, n.tree = 1000, track = FALSE)
+herp.sensiphy.annuprecip.dollo <- tree_phyglm(XYorvardollo ~ AnnuPrecip, data = tetrapodtraits.herp, phy = herp.multiphylo, n.tree = 1000, track = FALSE, btol = 35)
+herp.sensiphy.tempseason.dollo <- tree_phyglm(XYorvardollo ~ TempSeasonality, data = tetrapodtraits.herp, phy = herp.multiphylo, n.tree = 1000, track = FALSE)
+herp.sensiphy.precipseason.dollo <- tree_phyglm(XYorvardollo ~ PrecipSeasonality, data = tetrapodtraits.herp, phy = herp.multiphylo, n.tree = 1000, track = FALSE, btol = 35)
+herp.sensiphy.elevation.dollo <- tree_phyglm(XYorvardollo ~ Elevation, data = tetrapodtraits.herp, phy = herp.multiphylo, n.tree = 1000, track = FALSE, btol = 35)
+```
+
+```{r}
 herp.sensiphy.p <- list("RangeSize"=herp.sensiphy.rangesize$sensi.estimates$pval.estimate, 
                         "AbsoluteLat"=herp.sensiphy.abslat$sensi.estimates$pval.estimate, 
                         "AnnuMeanTemp"=herp.sensiphy.annumeantemp$sensi.estimates$pval.estimate,
@@ -71,6 +82,14 @@ herp.sensiphy.p <- list("RangeSize"=herp.sensiphy.rangesize$sensi.estimates$pval
                         "PrecipSeasonality"=herp.sensiphy.precipseason$sensi.estimates$pval.estimate,
                         "Elevation"=herp.sensiphy.elevation$sensi.estimates$pval.estimate,
                         "% Acrocentric"=herp.sensiphy.percacro$sensi.estimates$pval.estimate)
+
+herp.sensiphy.p.dollo <- list("RangeSize"=herp.sensiphy.rangesize.dollo$sensi.estimates$pval.estimate, 
+                        "AbsoluteLat"=herp.sensiphy.abslat.dollo$sensi.estimates$pval.estimate, 
+                        "AnnuMeanTemp"=herp.sensiphy.annumeantemp.dollo$sensi.estimates$pval.estimate,
+                        "AnnuPrecip"=herp.sensiphy.annuprecip.dollo$sensi.estimates$pval.estimate,
+                        "TempSeasonality"=herp.sensiphy.tempseason.dollo$sensi.estimates$pval.estimate,
+                        "PrecipSeasonality"=herp.sensiphy.precipseason.dollo$sensi.estimates$pval.estimate,
+                        "Elevation"=herp.sensiphy.elevation.dollo$sensi.estimates$pval.estimate)
 ```
 
 ```{r}
@@ -81,6 +100,18 @@ png(filename = "herp_sensiphy_p.png", width = 4500, height = 2000, units="px", r
 boxplot(herp.sensiphy.p, main="sensiPhy p-values over 1000 trees compared to single corrected permutation p-values, Herpestidae", xlab="Variables studied", ylab="P-values", horizontal = FALSE, outpch = 19, outcex = 0.5)
 stripchart(herp.sensiphy.p, method = "jitter", jitter = 0.1, vertical = TRUE, cex = 0.2, add = TRUE, col = alpha("#636363", 0.4))
 points(herp.perm.p.FDR, col = "red", pch = 7, cex = 1.5, bg = 2, lwd = 2)
+abline(h = 0.05, col = "grey", lty = "dashed")
+dev.off()
+```
+
+```{r}
+## same plot but under Dollo assumption
+herp.perm.p.dollo <- c(0.999, 0.999, 0.999, 0.999, 0.999, 0.999, 0.999)
+herp.perm.p.dollo.FDR <- p.adjust(herp.perm.p.dollo, method = "fdr")
+png(filename = "herp_sensiphy_p_dollo.png", width = 4500, height = 2000, units="px", res = 300, bg = "white")
+boxplot(herp.sensiphy.p.dollo, main="sensiPhy p-values over 1000 trees compared to single corrected permutation p-values under 'parsimonious karyotype' model, Herpestidae", xlab="Variables studied", ylab="P-values", horizontal = FALSE, outpch = 19, outcex = 0.5)
+stripchart(herp.sensiphy.p.dollo, method = "jitter", jitter = 0.1, vertical = TRUE, cex = 0.2, add = TRUE, col = alpha("#636363", 0.4))
+points(herp.perm.p.dollo.FDR, col = "red", pch = 7, cex = 1.5, bg = 2, lwd = 2)
 abline(h = 0.05, col = "grey", lty = "dashed")
 dev.off()
 ```
@@ -121,6 +152,17 @@ phyllo.sensiphy.percacro <- tree_phyglm(XYorvariant ~ perc.acro, data = tetrapod
 ```
 
 ```{r}
+## rerun hypothesis tests under Dollo assumption
+phyllo.sensiphy.rangesize.dollo <- tree_phyglm(XYorvardollo ~ RangeSize, data = tetrapodtraits.phyllostom, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE, btol = 35)
+phyllo.sensiphy.abslat.dollo <- tree_phyglm(XYorvardollo ~ AbsoluteLatitude, data = tetrapodtraits.phyllostom, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE, btol = 35)
+phyllo.sensiphy.annumeantemp.dollo <- tree_phyglm(XYorvardollo ~ AnnuMeanTemp, data = tetrapodtraits.phyllostom, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE)
+phyllo.sensiphy.annuprecip.dollo <- tree_phyglm(XYorvardollo ~ AnnuPrecip, data = tetrapodtraits.phyllostom, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE, btol = 35)
+phyllo.sensiphy.tempseason.dollo <- tree_phyglm(XYorvardollo ~ TempSeasonality, data = tetrapodtraits.phyllostom, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE)
+phyllo.sensiphy.precipseason.dollo <- tree_phyglm(XYorvardollo ~ PrecipSeasonality, data = tetrapodtraits.phyllostom, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE, btol = 35)
+phyllo.sensiphy.elevation.dollo <- tree_phyglm(XYorvardollo ~ Elevation, data = tetrapodtraits.phyllostom, phy = phyllostom.multiphylo, n.tree = 1000, track = FALSE, btol = 35)
+```
+
+```{r}
 phyllo.sensiphy.p <- list("RangeSize"=phyllo.sensiphy.rangesize$sensi.estimates$pval.estimate, 
                         "AbsoluteLat"=phyllo.sensiphy.abslat$sensi.estimates$pval.estimate, 
                         "AnnuMeanTemp"=phyllo.sensiphy.annumeantemp$sensi.estimates$pval.estimate,
@@ -129,6 +171,14 @@ phyllo.sensiphy.p <- list("RangeSize"=phyllo.sensiphy.rangesize$sensi.estimates$
                         "PrecipSeasonality"=phyllo.sensiphy.precipseason$sensi.estimates$pval.estimate,
                         "Elevation"=phyllo.sensiphy.elevation$sensi.estimates$pval.estimate,
                         "% Acrocentric"=phyllo.sensiphy.percacro$sensi.estimates$pval.estimate)
+
+phyllo.sensiphy.p.dollo <- list("RangeSize"=phyllo.sensiphy.rangesize.dollo$sensi.estimates$pval.estimate, 
+                        "AbsoluteLat"=phyllo.sensiphy.abslat.dollo$sensi.estimates$pval.estimate, 
+                        "AnnuMeanTemp"=phyllo.sensiphy.annumeantemp.dollo$sensi.estimates$pval.estimate,
+                        "AnnuPrecip"=phyllo.sensiphy.annuprecip.dollo$sensi.estimates$pval.estimate,
+                        "TempSeasonality"=phyllo.sensiphy.tempseason.dollo$sensi.estimates$pval.estimate,
+                        "PrecipSeasonality"=phyllo.sensiphy.precipseason.dollo$sensi.estimates$pval.estimate,
+                        "Elevation"=phyllo.sensiphy.elevation.dollo$sensi.estimates$pval.estimate)
 ```
 
 ```{r}
@@ -139,6 +189,18 @@ png(filename = "phyllo_sensiphy_p.png", width = 4500, height = 2000, units="px",
 boxplot(phyllo.sensiphy.p, main="sensiPhy p-values over 1000 trees compared to single corrected permutation p-values, Phyllostomidae", xlab="Variables studied", ylab="P-values", horizontal = FALSE, outpch = 19, outcex = 0.5)
 stripchart(phyllo.sensiphy.p, method = "jitter", jitter = 0.1, vertical = TRUE, cex = 0.2, add = TRUE, col = alpha("#636363", 0.4))
 points(phyllo.perm.p.FDR, col = "red", pch = 7, cex = 1.5, bg = 2, lwd = 2)
+abline(h = 0.05, col = "grey", lty = "dashed")
+dev.off()
+```
+
+```{r}
+## same plot but under Dollo assumption
+phyllo.perm.p.dollo <- c(0.999, 0.999, 0.999, 0.999, 0.999, 0.999, 0.999)
+phyllo.perm.p.dollo.FDR <- p.adjust(phyllo.perm.p.dollo, method = "fdr")
+png(filename = "phyllo_sensiphy_p_dollo.png", width = 4500, height = 2000, units="px", res = 300, bg = "white")
+boxplot(phyllo.sensiphy.p.dollo, main="sensiPhy p-values over 1000 trees compared to single corrected permutation p-values under 'parsimonious karyotype' model, Phyllostomidae", xlab="Variables studied", ylab="P-values", horizontal = FALSE, outpch = 19, outcex = 0.5)
+stripchart(phyllo.sensiphy.p.dollo, method = "jitter", jitter = 0.1, vertical = TRUE, cex = 0.2, add = TRUE, col = alpha("#636363", 0.4))
+points(phyllo.perm.p.dollo.FDR, col = "red", pch = 7, cex = 1.5, bg = 2, lwd = 2)
 abline(h = 0.05, col = "grey", lty = "dashed")
 dev.off()
 ```

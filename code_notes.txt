@@ -95,3 +95,24 @@ Annuprecip: 0 tests under p≤0.05 = 0.999
 Tempseason: 0 tests under p≤0.05 = 0.999
 Precipseason: 0 tests under p≤0.05 = 0.999
 Elevation: 0 tests under p≤0.05 = 0.999
+
+Dollo assumption perm. p-values:
+
+Herpestidae:
+Rangesize: 0 tests under p≤0.05 = 0.999
+Abslat: 0 tests under p≤0.05 = 0.999
+Annumeantemp: 0 tests under p≤0.05 = 0.999
+Annuprecip: 0 tests under p≤0.05 = 0.999
+Tempseason: 0 tests under p≤0.05 = 0.999
+Precipseason: 0 tests under p≤0.05 = 0.999
+Elevation: 0 tests under p≤0.05 = 0.999
+
+Phyllostomidae:
+
+Rangesize: 0 tests under p≤0.05 = 0.999
+Abslat: 0 tests under p≤0.05 = 0.999
+Annumeantemp: 0 tests under p≤0.05 = 0.999
+Annuprecip: 0 tests under p≤0.05 = 0.999
+Tempseason: 0 tests under p≤0.05 = 0.999
+Precipseason: 0 tests under p≤0.05 = 0.999
+Elevation: 0 tests under p≤0.05 = 0.999
