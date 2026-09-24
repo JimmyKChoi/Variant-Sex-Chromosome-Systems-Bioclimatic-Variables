@@ -12,9 +12,9 @@ Herpestidae,Cynictis penicillata,XY,Known,Blackmon et al. (2019),NA
 Herpestidae,Dologale dybowskii,XY,Assumed,NA,NA
 Herpestidae,Helogale hirtula,XY,Known,Perez et al. (2006),"While this karyotype has been studied, certain chromosome morphology attributes relevant to our study were not recorded."
 Herpestidae,Helogale parvula,XY,Known,Blackmon et al. (2019),NA
-Herpestidae,Herpestes flavescens,XY,Assumed,NA,NA
+Herpestidae,Herpestes flavescens,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
 Herpestidae,Herpestes ichneumon,YAfusion,Known,Blackmon et al. (2019),NA
-Herpestidae,Herpestes ochraceus,XY,Assumed,NA,NA
+Herpestidae,Herpestes ochraceus,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
 Herpestidae,Herpestes pulverulentus,YAfusion,Known,Blackmon et al. (2019),NA
 Herpestidae,Herpestes sanguineus,YAfusion,Known,Fredga (1972),NA
 Herpestidae,Ichneumia albicauda,XY,Known,Wurster and Benirschke (1968),NA
@@ -29,11 +29,11 @@ Herpestidae,Urva brachyura,YAfusion,Known,Fredga (1972),NA
 Herpestidae,Urva edwardsii,YAfusion,Known,Fredga (1972),NA
 Herpestidae,Urva fusca,YAfusion,Known,Fredga (1972),NA
 Herpestidae,Urva javanica,YAfusion,Known,Blackmon et al. (2019),NA
-Herpestidae,Urva semitorquata,XY,Assumed,NA,NA
+Herpestidae,Urva semitorquata,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
 Herpestidae,Urva smithii,XY,Assumed,NA,NA
 Herpestidae,Urva urva,YAfusion,Known,Fredga (1972),NA
-Herpestidae,Urva vitticollis,XY,Assumed,NA,NA
-Herpestidae,Xenogale naso,XY,Assumed,NA,NA
+Herpestidae,Urva vitticollis,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
+Herpestidae,Xenogale naso,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
 Soricidae,Anourosorex assamensis,XY,Assumed,NA,NA
 Soricidae,Anourosorex schmidi,XY,Assumed,NA,NA
 Soricidae,Anourosorex squamipes,XY,Known,Blackmon et al. (2019),NA
@@ -458,24 +458,24 @@ Phyllostomidae,Anoura latidens,XY,Assumed,NA,NA
 Phyllostomidae,Anoura luismanueli,XY,Assumed,NA,NA
 Phyllostomidae,Ardops nichollsi,XAfusion,Known,Blackmon et al. (2019),NA
 Phyllostomidae,Ariteus flavescens,XAfusion,Known,Greenbaum et al. (1975),NA
-Phyllostomidae,Artibeus amplus,XY,Assumed,NA,NA
-Phyllostomidae,Artibeus concolor,XY,Assumed,NA,NA
+Phyllostomidae,Artibeus amplus,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
+Phyllostomidae,Artibeus concolor,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
 Phyllostomidae,Artibeus fimbriatus,XAfusion,Known,Pinto et al. (2012),NA
-Phyllostomidae,Artibeus fraterculus,XY,Assumed,NA,NA
-Phyllostomidae,Artibeus hirsutus,XY,Assumed,NA,NA
-Phyllostomidae,Artibeus inopinatus,XY,Assumed,NA,NA
+Phyllostomidae,Artibeus fraterculus,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
+Phyllostomidae,Artibeus hirsutus,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
+Phyllostomidae,Artibeus inopinatus,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
 Phyllostomidae,Artibeus jamaicensis,XAfusion,Known,Baker (1967),NA
 Phyllostomidae,Artibeus lituratus,XAfusion,Known,Yonenaga et al. (1969),NA
 Phyllostomidae,Artibeus obscurus,XAfusion,Known,Pieczarka et al. (2013),NA
 Phyllostomidae,Artibeus planirostris,XAfusion,Known,Pinto et al. (2012),NA
 Phyllostomidae,Brachyphylla cavernarum,XY,Assumed,NA,NA
 Phyllostomidae,Brachyphylla nana,XY,Known,Blackmon et al. (2019),NA
-Phyllostomidae,Carollia benkeithi,XY,Assumed,NA,NA
+Phyllostomidae,Carollia benkeithi,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
 Phyllostomidae,Carollia brevicauda,XAfusion,Known,Blackmon et al. (2019),NA
 Phyllostomidae,Carollia castanea,XAfusion,Known,Blackmon et al. (2019),NA
-Phyllostomidae,Carollia manu,XY,Assumed,NA,NA
+Phyllostomidae,Carollia manu,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
 Phyllostomidae,Carollia perspicillata,XAfusion,Known,Yonenaga et al. (1969),NA
-Phyllostomidae,Carollia sowelli,XY,Assumed,NA,NA
+Phyllostomidae,Carollia sowelli,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
 Phyllostomidae,Carollia subrufa,XAfusion,Known,Blackmon et al. (2019),NA
 Phyllostomidae,Centurio senex,XY,Known,Blackmon et al. (2019),NA
 Phyllostomidae,Chiroderma doriae,XY,Assumed,NA,NA
@@ -489,16 +489,16 @@ Phyllostomidae,Choeroniscus minor,XY,Known,Baker et al. (1982),NA
 Phyllostomidae,Choeroniscus periosus,XY,Assumed,NA,NA
 Phyllostomidae,Choeronycteris mexicana,XY,Assumed,NA,NA
 Phyllostomidae,Chrotopterus auritus,XY,Known,Baker et al. (1982),NA
-Phyllostomidae,Dermanura anderseni,XY,Assumed,NA,NA
+Phyllostomidae,Dermanura anderseni,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
 Phyllostomidae,Dermanura azteca,XAfusion,Known,Webster and Jones (1982),NA
-Phyllostomidae,Dermanura bogotensis,XY,Assumed,NA,NA
+Phyllostomidae,Dermanura bogotensis,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
 Phyllostomidae,Dermanura cinerea,XAYAfusion,Known,Santos and Souza (1998),NA
-Phyllostomidae,Dermanura glauca,XY,Assumed,NA,NA
-Phyllostomidae,Dermanura gnoma,XY,Assumed,NA,NA
-Phyllostomidae,Dermanura incomitatus,XY,Assumed,NA,NA
+Phyllostomidae,Dermanura glauca,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
+Phyllostomidae,Dermanura gnoma,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
+Phyllostomidae,Dermanura incomitatus,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
 Phyllostomidae,Dermanura phaeotis,XAYAfusion,Known,Hsu et al. (1968),NA
-Phyllostomidae,Dermanura rava,XY,Assumed,NA,NA
-Phyllostomidae,Dermanura rosenbergi,XY,Assumed,NA,NA
+Phyllostomidae,Dermanura rava,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
+Phyllostomidae,Dermanura rosenbergi,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
 Phyllostomidae,Dermanura tolteca,XAfusion,Known,Hsu et al. (1968),NA
 Phyllostomidae,Dermanura watsoni,XAYAfusion,Known,Blackmon et al. (2019),NA
 Phyllostomidae,Desmodus draculae,XY,Assumed,NA,NA
@@ -587,32 +587,32 @@ Phyllostomidae,Phyllostomus elongatus,XY,Known,Blackmon et al. (2019),NA
 Phyllostomidae,Phyllostomus hastatus,XY,Known,Blackmon et al. (2019),NA
 Phyllostomidae,Phyllostomus latifolius,XY,Known,Baker et al. (1982),NA
 Phyllostomidae,Platalina genovensium,XY,Assumed,NA,NA
-Phyllostomidae,Platyrrhinus albericoi,XY,Assumed,NA,NA
-Phyllostomidae,Platyrrhinus angustirostris,XY,Assumed,NA,NA
-Phyllostomidae,Platyrrhinus aurarius,XY,Assumed,NA,NA
-Phyllostomidae,Platyrrhinus brachycephalus,XY,Assumed,NA,NA
-Phyllostomidae,Platyrrhinus chocoensis,XY,Assumed,NA,NA
-Phyllostomidae,Platyrrhinus dorsalis,XY,Assumed,NA,NA
-Phyllostomidae,Platyrrhinus fusciventris,XY,Assumed,NA,NA
-Phyllostomidae,Platyrrhinus guianensis,XY,Assumed,NA,NA
-Phyllostomidae,Platyrrhinus helleri,XY,Assumed,NA,NA
-Phyllostomidae,Platyrrhinus infuscus,XY,Assumed,NA,NA
-Phyllostomidae,Platyrrhinus ismaeli,XY,Assumed,NA,NA
+Phyllostomidae,Platyrrhinus albericoi,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
+Phyllostomidae,Platyrrhinus angustirostris,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
+Phyllostomidae,Platyrrhinus aurarius,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
+Phyllostomidae,Platyrrhinus brachycephalus,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
+Phyllostomidae,Platyrrhinus chocoensis,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
+Phyllostomidae,Platyrrhinus dorsalis,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
+Phyllostomidae,Platyrrhinus fusciventris,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
+Phyllostomidae,Platyrrhinus guianensis,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
+Phyllostomidae,Platyrrhinus helleri,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
+Phyllostomidae,Platyrrhinus infuscus,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
+Phyllostomidae,Platyrrhinus ismaeli,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
 Phyllostomidae,Platyrrhinus lineatus,XAYAfusion,Known,Baker and Bickham (1980),"While this karyotype has been studied, certain chromosome morphology attributes relevant to our study were not recorded."
-Phyllostomidae,Platyrrhinus masu,XY,Assumed,NA,NA
-Phyllostomidae,Platyrrhinus matapalensis,XY,Assumed,NA,NA
-Phyllostomidae,Platyrrhinus nigellus,XY,Assumed,NA,NA
-Phyllostomidae,Platyrrhinus nitelinea,XY,Assumed,NA,NA
-Phyllostomidae,Platyrrhinus recifinus,XY,Assumed,NA,NA
-Phyllostomidae,Platyrrhinus umbratus,XY,Assumed,NA,NA
+Phyllostomidae,Platyrrhinus masu,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
+Phyllostomidae,Platyrrhinus matapalensis,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
+Phyllostomidae,Platyrrhinus nigellus,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
+Phyllostomidae,Platyrrhinus nitelinea,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
+Phyllostomidae,Platyrrhinus recifinus,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
+Phyllostomidae,Platyrrhinus umbratus,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
 Phyllostomidae,Platyrrhinus vittatus,XAYAfusion,Known,Varella-Garcia et al. (1989),NA
-Phyllostomidae,Pygoderma bilabiatum,XY,Assumed,NA,NA
+Phyllostomidae,Pygoderma bilabiatum,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
 Phyllostomidae,Rhinophylla alethina,XY,Assumed,NA,NA
 Phyllostomidae,Rhinophylla fischerae,XY,Assumed,NA,NA
 Phyllostomidae,Rhinophylla pumilio,XY,Assumed,NA,NA
 Phyllostomidae,Scleronycteris ega,XY,Assumed,NA,NA
 Phyllostomidae,Sphaeronycteris toxophyllum,XY,Assumed,NA,NA
-Phyllostomidae,Stenoderma rufum,XY,Assumed,NA,NA
+Phyllostomidae,Stenoderma rufum,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
 Phyllostomidae,Sturnira angeli,XY,Assumed,NA,NA
 Phyllostomidae,Sturnira aratathomasi,XY,Assumed,NA,NA
 Phyllostomidae,Sturnira bakeri,XY,Assumed,NA,NA
@@ -639,13 +639,13 @@ Phyllostomidae,Tonatia bidens,XY,Known,Blackmon et al. (2019),NA
 Phyllostomidae,Tonatia saurophila,XY,Assumed,NA,NA
 Phyllostomidae,Trachops cirrhosus,XY,Known,Baker et al. (1982),NA
 Phyllostomidae,Trinycteris nicefori,XY,Known,Baker et al. (1982),NA
-Phyllostomidae,Uroderma bakeri,XY,Assumed,NA,NA
+Phyllostomidae,Uroderma bakeri,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
 Phyllostomidae,Uroderma bilobatum,XAYAfusion,Known,Blackmon et al. (2019),NA
 Phyllostomidae,Uroderma magnirostrum,XAYAfusion,Known,Pieczarka et al. (2013),NA
-Phyllostomidae,Vampyressa elisabethae,XY,Assumed,NA,NA
+Phyllostomidae,Vampyressa elisabethae,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
 Phyllostomidae,Vampyressa melissa,XY,Known,Blackmon et al. (2019),NA
 Phyllostomidae,Vampyressa pusilla,XAYAfusion,Known,Blackmon et al. (2019),NA
-Phyllostomidae,Vampyressa sinchi,XY,Assumed,NA,NA
+Phyllostomidae,Vampyressa sinchi,XY,Assumed,NA,Considered a variant sex chromosome species in “Parsimonious Karyotype” dataset.
 Phyllostomidae,Vampyressa thyone,XAYAfusion,Known,Baker (1973),NA
 Phyllostomidae,Vampyriscus bidens,XAYAfusion,Known,Blackmon et al. (2019),NA
 Phyllostomidae,Vampyriscus brocki,XAYAfusion,Known,Blackmon et al. (2019),NA
